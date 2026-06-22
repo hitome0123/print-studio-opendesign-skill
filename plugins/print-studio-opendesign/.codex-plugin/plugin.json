@@ -1,0 +1,40 @@
+{
+  "name": "print-studio-opendesign",
+  "version": "0.1.0",
+  "description": "A modular Codex plugin for print-shop AI proofing: intake, material selection, layout proofing, calendar/card templates, commerce mockups, prepress QC, and delivery packaging.",
+  "author": {
+    "name": "Mantou AI Workspace",
+    "url": "https://github.com/hitome0123"
+  },
+  "homepage": "https://github.com/hitome0123/print-studio-opendesign-skill",
+  "repository": "https://github.com/hitome0123/print-studio-opendesign-skill",
+  "license": "MIT",
+  "keywords": [
+    "print-design",
+    "opendesign",
+    "proofing",
+    "prepress",
+    "calendar",
+    "greeting-card"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Print Studio OpenDesign",
+    "shortDescription": "Print-shop AI proofing suite for cards, calendars, and small print products.",
+    "longDescription": "Print Studio OpenDesign turns client images into configurable print proofs. The plugin is split into focused skills for order intake, size/material selection, constrained AI layout, calendar/card rendering, white-background and ambiance mockups, prepress QC, and handoff packaging.",
+    "developerName": "Mantou AI Workspace",
+    "category": "Design",
+    "capabilities": [
+      "Read",
+      "Write"
+    ],
+    "websiteURL": "https://github.com/hitome0123/print-studio-opendesign-skill",
+    "defaultPrompt": [
+      "帮我用插画做一套 5×7 贺卡打样",
+      "生成 24 种纸张材质选择预览",
+      "检查这套卡片是否适合印刷交付"
+    ],
+    "brandColor": "#A06A3B",
+    "screenshots": []
+  }
+}

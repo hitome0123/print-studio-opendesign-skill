@@ -1,0 +1,104 @@
+{
+  "job": {
+    "client_name": "示例客户",
+    "job_name": "植物书签套装",
+    "product_line": "bookmark set proof",
+    "quantity": null
+  },
+  "theme": "植物书签套装",
+  "illustrations_dir": "example_illustrations",
+  "series": {
+    "type": "custom_cards",
+    "count": 4,
+    "template": "generic_card",
+    "_examples": [
+      "monthly_calendar",
+      "quarterly",
+      "seasonal",
+      "festival_set",
+      "custom_cards"
+    ]
+  },
+  "preset": {
+    "size": "bookmark_2x6",
+    "material": "white_card_300g",
+    "product_form": "single_card",
+    "style": "vintage_botanical",
+    "language": "en",
+    "product_type": "bookmark"
+  },
+  "content": {
+    "year": 2027,
+    "real_dates": false,
+    "week_start": "sunday",
+    "month_keywords": [
+      "HOPE",
+      "LOVE",
+      "DREAM",
+      "BLOOM",
+      "GRACE",
+      "JOY",
+      "WARMTH",
+      "SHINE",
+      "CALM",
+      "HARVEST",
+      "GRATITUDE",
+      "PEACE"
+    ],
+    "corner_poem_left": "A quiet beginning,\nsoft as morning light.",
+    "corner_poem_right": "Where small things\nbloom in their season.",
+    "seal_initials": "JB",
+    "keep_poems": true,
+    "keep_seal": true,
+    "keep_botanical_notes": true,
+    "front_title": "Read",
+    "front_subtitle": "SLOWLY",
+    "message": "Keep your place among quiet flowers.",
+    "back_title": "Thank you",
+    "back_body": "Printed with care. Final colors should be confirmed by physical proof.",
+    "card_titles": [],
+    "card_subtitles": []
+  },
+  "outputs": {
+    "versions": [
+      "screen",
+      "print"
+    ],
+    "types": [
+      "single",
+      "grid"
+    ],
+    "series_grid_layout": "4x3",
+    "product_shot_months": [
+      1
+    ]
+  },
+  "advanced": {
+    "_note": "留空(null)= 用预设/印刷经验默认。填了才覆盖。高风险值 resolver 会警告。",
+    "custom_size": null,
+    "bleed_mm": null,
+    "safe_margin_mm": null,
+    "bg_tone": null,
+    "saturation_boost_pct": null,
+    "title_font_scale": null,
+    "decor_complexity": null,
+    "ambiance_scene": null,
+    "brand_logo": null
+  },
+  "image_gen": {
+    "backend": "gemini",
+    "model": "gemini-2.5-flash-image"
+  },
+  "ai_layout": true,
+  "qc_ai": false,
+  "production": {
+    "double_sided": false,
+    "round_corners": {
+      "enabled": false,
+      "radius_mm": 3
+    },
+    "binding": "none",
+    "finishing": [],
+    "custom_notes": ""
+  }
+}

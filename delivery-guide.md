@@ -4,11 +4,30 @@
 
 更完整的产品化说明请阅读：`README.zh-CN.md`。
 
-本包交付一个 Codex 可调用的 Skill：`print-studio-opendesign`。
+本包交付两种 Codex 可调用形态：
+
+- 独立 Skill：`print-studio-opendesign`
+- 插件套件：`plugins/print-studio-opendesign`
 
 它用于印刷厂接单打样：客户给插画/图片，印刷厂选择产品类型、尺寸、纸张/材质、系列结构，Codex 在规则内生成客户预览、印刷文件、电商白底图/氛围图、QC 报告和交付包。
 
+## 推荐交付方式
+
+给印刷厂客户时，推荐交付插件套件，因为它更像一个产品：
+
+| Skill | 用途 |
+| --- | --- |
+| `print-studio-order-intake` | 接单配置 |
+| `print-studio-material-selector` | 材质选择预览 |
+| `print-studio-layout-proof` | 卡片/书签/吊牌/明信片排版 |
+| `print-studio-calendar-series` | 月历/季度/节日套装 |
+| `print-studio-commerce-mockup` | 白底图与氛围图 |
+| `print-studio-prepress-qc` | 印前质检与交付包 |
+| `print-studio-runtime` | 共用渲染引擎 |
+
 ## 安装方式
+
+### 方式 A：独立 Skill
 
 将文件夹：
 
@@ -21,6 +40,14 @@
 然后在 Codex 中说：
 
 “使用 print-studio-opendesign，给这组插画做 5×7 台历卡打样。”
+
+### 方式 B：插件套件
+
+将文件夹：
+
+`plugins/print-studio-opendesign/`
+
+作为 Codex Plugin 安装或放入团队插件仓库。插件内的小 Skill 会按任务自动触发。
 
 ## 快速演示
 
