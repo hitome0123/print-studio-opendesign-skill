@@ -1,0 +1,5 @@
+interface:
+  display_name: "Print Studio OpenDesign"
+  short_description: "印刷厂 AI 系列打样、材质选择预览与交付包生成工具"
+  brand_color: "#9B6D3C"
+  default_prompt: "Use $print-studio-opendesign to create a print-shop proofing package from client illustrations."

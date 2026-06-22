@@ -1,0 +1,67 @@
+{
+  "job": {
+    "client_name": "示例客户",
+    "job_name": "小兔子文具打样",
+    "product_line": "desk calendar card proof",
+    "quantity": null
+  },
+
+  "theme": "小兔子文具",
+  "illustrations_dir": "example_illustrations",
+
+  "series": {
+    "type": "monthly_calendar",
+    "count": 12,
+    "template": "calendar_series"
+  },
+
+  "preset": {
+    "size": "desk_cal_5x7",
+    "material": "white_card_300g",
+    "product_form": "desk_wood",
+    "style": "vintage_botanical",
+    "language": "en"
+  },
+
+  "content": {
+    "year": 2027,
+    "real_dates": true,
+    "week_start": "sunday",
+    "month_keywords": ["HOPE", "LOVE", "DREAM", "BLOOM", "GRACE", "JOY",
+                       "WARMTH", "SHINE", "CALM", "HARVEST", "GRATITUDE", "PEACE"],
+    "corner_poem_left": "A quiet beginning,\nsoft as morning light.",
+    "corner_poem_right": "Where small things\nbloom in their season.",
+    "seal_initials": "JB",
+    "keep_poems": true,
+    "keep_seal": true,
+    "keep_botanical_notes": true
+  },
+
+  "outputs": {
+    "versions": ["screen", "print", "commerce"],
+    "types": ["single", "grid", "whitebg", "ambiance"],
+    "series_grid_layout": "4x3",
+    "product_shot_months": [1]
+  },
+
+  "advanced": {
+    "_note": "留空(null)= 用预设/印刷经验默认。填了才覆盖。高风险值 resolver 会警告。",
+    "custom_size": null,
+    "bleed_mm": null,
+    "safe_margin_mm": null,
+    "bg_tone": null,
+    "saturation_boost_pct": null,
+    "title_font_scale": null,
+    "decor_complexity": null,
+    "ambiance_scene": null,
+    "brand_logo": null
+  },
+
+  "image_gen": {
+    "backend": "gemini",
+    "model": "gemini-2.5-flash-image"
+  },
+
+  "ai_layout": true,
+  "qc_ai": false
+}
