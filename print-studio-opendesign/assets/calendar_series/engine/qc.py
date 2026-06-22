@@ -32,12 +32,15 @@ def _checks(out_base, resolved, pages, render_meta, prod):
     types = set(resolved["outputs"].get("types", []))
     size = resolved["size"]
     safe_px = round(size.get("safe_margin_mm", 5) / 25.4 * DPI)
+    series = resolved.get("series", {}) or {}
+    expected_count = int(series.get("count") or 12)
+    requires_dates = bool(series.get("requires_dates"))
 
     # 1) 完整性
     if types & {"single", "grid", "whitebg", "ambiance"}:
-        miss = [m for m in range(1, 13) if m not in pages]
-        add("完整性·12月单图", PASS if not miss else (WARN if len(miss) < 12 else FAIL),
-            "齐全 12 月" if not miss else f"缺月份 {miss}")
+        miss = [m for m in range(1, expected_count + 1) if m not in pages]
+        add("完整性·系列单图", PASS if not miss else (WARN if len(miss) < expected_count else FAIL),
+            f"齐全 {expected_count} 张" if not miss else f"缺序号 {miss}")
     if "grid" in types:
         g = out_base / "almanac" / "series_grid.jpg"
         add("完整性·整套图", PASS if g.exists() else FAIL, g.name if g.exists() else "缺 series_grid.jpg")
@@ -45,12 +48,13 @@ def _checks(out_base, resolved, pages, render_meta, prod):
     # 2) 日期引擎(渲染天数 == 真实天数)
     yr = resolved["content"].get("year", 2027)
     bad = []
-    for m, meta in render_meta.items():
-        real = calendar.monthrange(yr, m)[1]
-        if meta.get("days") != real:
-            bad.append(f"{m}月 {meta.get('days')}≠{real}")
-    add("日期引擎·天数核对", PASS if not bad else FAIL,
-        f"{yr} 各月天数正确" if not bad else ";".join(bad))
+    if requires_dates:
+        for m, meta in render_meta.items():
+            real = calendar.monthrange(yr, m)[1]
+            if meta.get("days") != real:
+                bad.append(f"{m}月 {meta.get('days')}≠{real}")
+        add("日期引擎·天数核对", PASS if not bad else FAIL,
+            f"{yr} 各月天数正确" if not bad else ";".join(bad))
 
     # 3) 尺寸·DPI(印刷文件)
     pd = out_base / "print"
@@ -78,7 +82,7 @@ def _checks(out_base, resolved, pages, render_meta, prod):
             f"全部留足 {safe_px}px 安全边" if not viol else f"贴边风险月份 {viol}")
 
     # 5) 可印字号
-    if render_meta:
+    if render_meta and requires_dates:
         dsz = next(iter(render_meta.values())).get("day_sz_px", 0)
         pt = _pt(dsz)
         add("可印字号·日历数字", PASS if pt >= MIN_PT else WARN,

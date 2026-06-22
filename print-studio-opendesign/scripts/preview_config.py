@@ -13,6 +13,7 @@ sys.path.insert(0, str(ENGINE_ROOT / "engine"))
 
 from config_schema import resolve_config, _fmt  # noqa: E402
 from layout_engine import render_page  # noqa: E402
+from generic_card_engine import render_generic_card  # noqa: E402
 from profiles import apply_profile  # noqa: E402
 from print_export import build_print_file  # noqa: E402
 import ai_planner  # noqa: E402
@@ -237,18 +238,22 @@ def main():
     family = "landscape" if width > height else "portrait"
     content = resolved["content"]
     plan = ai_planner.default_plan()
+    template = resolved.get("series", {}).get("template") or resolved.get("product_type", {}).get("template") or "calendar_series"
     out_dir = SKILL_ROOT / "output" / resolved["theme"] / "preview"
     out_dir.mkdir(parents=True, exist_ok=True)
     design = out_dir / "01_design_preview.jpg"
-    render_page(
-        width, height, family, content.get("year", 2027), month, str(illustration), str(design),
-        keyword=(content.get("month_keywords") or [None])[month - 1] if content.get("month_keywords") else None,
-        accent=plan["accent"], vbias=plan["vbias"],
-        poem_left=content.get("corner_poem_left", "") if content.get("keep_poems", True) else "",
-        poem_right=content.get("corner_poem_right", "") if content.get("keep_poems", True) else "",
-        seal=content.get("seal_initials", "") if content.get("keep_seal", True) else "",
-        week_start=content.get("week_start", "sunday"),
-    )
+    if template == "calendar_series":
+        render_page(
+            width, height, family, content.get("year", 2027), month, str(illustration), str(design),
+            keyword=(content.get("month_keywords") or [None])[month - 1] if content.get("month_keywords") else None,
+            accent=plan["accent"], vbias=plan["vbias"],
+            poem_left=content.get("corner_poem_left", "") if content.get("keep_poems", True) else "",
+            poem_right=content.get("corner_poem_right", "") if content.get("keep_poems", True) else "",
+            seal=content.get("seal_initials", "") if content.get("keep_seal", True) else "",
+            week_start=content.get("week_start", "sunday"),
+        )
+    else:
+        render_generic_card(width, height, month, str(illustration), str(design), resolved, side="front")
     design_img = Image.open(design)
     material_img = apply_profile(design_img, "print_output", resolved["material"], resolved["advanced"].get("saturation_boost_pct"))
     material_img = _texture_overlay(material_img, resolved["material"])

@@ -14,9 +14,10 @@ The job: a print shop receives client images, chooses production specs, and quic
 ## What Is Bundled
 
 - `config.example.json`: editable job configuration.
+- `examples/`: ready-to-copy configs for greeting cards, postcards, bookmarks, and gift tags.
 - `scripts/preview_config.py`: fast no-AI preview and 24-material selector page.
 - `scripts/run.py`: full delivery run through the bundled calendar-series engine.
-- `assets/calendar_series/`: first implemented template engine and sample illustrations.
+- `assets/calendar_series/`: bundled print template engine, including calendar and generic-card renderers.
 - `references/operator-guide.md`: sales/operator notes and V1 boundaries.
 
 ## MVP Workflow
@@ -44,7 +45,7 @@ The job: a print shop receives client images, chooses production specs, and quic
 
 - Relative `illustrations_dir` is resolved against the config file first, then the bundled sample folder.
 - For customer work, prefer a copied config per job and an image folder with numbered filenames: `1.png`, `2.png`, ...
-- `monthly_calendar` is the implemented V1 template. Other series types are planned unless extended.
+- `monthly_calendar` uses the calendar renderer. `custom_cards`, `quarterly`, `seasonal`, and `festival_set` can use the bundled `generic_card` renderer with configurable `series.count`.
 - Use `preview_config.py` before full AI/mockup generation; it is fast, deterministic, and does not call image generation.
 
 ## Delivery Rules

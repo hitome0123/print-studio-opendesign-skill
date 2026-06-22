@@ -1,68 +1,592 @@
 {
   "_note": "预设库:客户从这里选 size/material/product_form/style/language。status=待确认/待补/待标定 的项 resolver 会给警告。新增预设只加条目,不改 key 结构。",
-
   "sizes": {
-    "greeting_5x7":  {"label": "贺卡竖版 5×7in", "status": "ok", "w_in": 5,    "h_in": 7,    "ratio": "5:7",  "note": "Etsy 最常见竖版贺卡"},
-    "desk_cal_5x7":  {"label": "台历卡 5×7in",  "status": "ok", "w_in": 5,    "h_in": 7,    "ratio": "5:7",  "note": "当前常做的桌面日历(默认)"},
-    "greeting_5x5":  {"label": "贺卡方形 5×5in", "status": "ok", "w_in": 5,    "h_in": 5,    "ratio": "1:1",  "note": "可爱风/节日卡/社媒方图"},
-    "postcard_7x5":  {"label": "明信片/横版卡 7×5in", "status": "ok", "w_in": 7, "h_in": 5,  "ratio": "7:5",  "note": "风景/横向插画"},
-    "tarot":         {"label": "塔罗牌 2.75×4.75in", "status": "ok", "w_in": 2.75, "h_in": 4.75, "ratio": "≈11:19", "note": "塔罗/神谕卡"},
-    "bookmark_2x6":  {"label": "书签 2×6in",    "status": "ok", "w_in": 2,    "h_in": 6,    "ratio": "1:3",  "note": "长条构图;另可 2×7"},
-    "letter_8_5x11": {"label": "信纸 8.5×11in", "status": "ok", "w_in": 8.5,  "h_in": 11,   "ratio": "Letter", "note": "文具页/打印页;A4 用 custom_size"}
+    "greeting_5x7": {
+      "label": "贺卡竖版 5×7in",
+      "status": "ok",
+      "w_in": 5,
+      "h_in": 7,
+      "ratio": "5:7",
+      "note": "Etsy 最常见竖版贺卡"
+    },
+    "desk_cal_5x7": {
+      "label": "台历卡 5×7in",
+      "status": "ok",
+      "w_in": 5,
+      "h_in": 7,
+      "ratio": "5:7",
+      "note": "当前常做的桌面日历(默认)"
+    },
+    "greeting_5x5": {
+      "label": "贺卡方形 5×5in",
+      "status": "ok",
+      "w_in": 5,
+      "h_in": 5,
+      "ratio": "1:1",
+      "note": "可爱风/节日卡/社媒方图"
+    },
+    "postcard_7x5": {
+      "label": "明信片/横版卡 7×5in",
+      "status": "ok",
+      "w_in": 7,
+      "h_in": 5,
+      "ratio": "7:5",
+      "note": "风景/横向插画"
+    },
+    "tarot": {
+      "label": "塔罗牌 2.75×4.75in",
+      "status": "ok",
+      "w_in": 2.75,
+      "h_in": 4.75,
+      "ratio": "≈11:19",
+      "note": "塔罗/神谕卡"
+    },
+    "bookmark_2x6": {
+      "label": "书签 2×6in",
+      "status": "ok",
+      "w_in": 2,
+      "h_in": 6,
+      "ratio": "1:3",
+      "note": "长条构图;另可 2×7"
+    },
+    "letter_8_5x11": {
+      "label": "信纸 8.5×11in",
+      "status": "ok",
+      "w_in": 8.5,
+      "h_in": 11,
+      "ratio": "Letter",
+      "note": "文具页/打印页;A4 用 custom_size"
+    },
+    "greeting_4x6": {
+      "label": "贺卡/邀请卡 4×6in",
+      "status": "ok",
+      "w_in": 4,
+      "h_in": 6,
+      "ratio": "2:3",
+      "note": "常见小贺卡/邀请卡"
+    },
+    "thankyou_3_5x5": {
+      "label": "感谢卡 3.5×5in",
+      "status": "ok",
+      "w_in": 3.5,
+      "h_in": 5,
+      "ratio": "7:10",
+      "note": "感谢卡/包装插卡常用"
+    },
+    "insert_4x4": {
+      "label": "包装插卡 4×4in",
+      "status": "ok",
+      "w_in": 4,
+      "h_in": 4,
+      "ratio": "1:1",
+      "note": "方形包装插卡/贴纸卡"
+    },
+    "gift_tag_2x3_5": {
+      "label": "礼品吊牌 2×3.5in",
+      "status": "ok",
+      "w_in": 2,
+      "h_in": 3.5,
+      "ratio": "4:7",
+      "note": "吊牌/小卡;可加打孔位"
+    }
   },
-
   "materials": {
-    "white_card_300g":        {"label": "300g 超白白卡纸",           "status": "基准",   "source_no": 1,  "gsm": "300g", "paper_type": "超白白卡纸",             "paper_tone": "超白", "texture_level": "none",   "detail_retention": "full",    "text_depth": "normal", "color_comp": "standard", "use_case": "日历卡/贺卡/明信片默认材质"},
-    "kraft_card_300g":        {"label": "300g 牛皮卡纸",             "status": "待标定", "source_no": 2,  "gsm": "300g", "paper_type": "牛皮卡纸",               "paper_tone": "牛皮", "texture_level": "none",   "detail_retention": "reduced", "text_depth": "deeper", "color_comp": "kraft",    "use_case": "复古/自然/手作风;浅色插画需谨慎"},
-    "pearl_ice_white_300g":   {"label": "300g 冰白珠光纸（白滑影子）", "status": "待标定", "source_no": 3,  "gsm": "300g", "paper_type": "冰白珠光纸（白滑影子）",   "paper_tone": "冰白", "texture_level": "pearl",  "detail_retention": "full",    "text_depth": "deeper", "color_comp": "pearl",   "use_case": "高级礼品感/节日卡;避免过浅小字"},
-    "fine_linen_superwhite_300g": {"label": "300g 超白细莱妮纹（细布纹）", "status": "待标定", "source_no": 4,  "gsm": "300g", "paper_type": "超白细莱妮纹（细布纹）", "paper_tone": "超白", "texture_level": "fine",   "detail_retention": "slightly_reduced", "text_depth": "deeper", "color_comp": "fine_textured", "use_case": "细腻质感卡片/日历"},
-    "fine_linen_ivory_300g":      {"label": "300g 雅白细莱妮纹（细布纹）", "status": "待标定", "source_no": 5,  "gsm": "300g", "paper_type": "雅白细莱妮纹（细布纹）", "paper_tone": "雅白", "texture_level": "fine",   "detail_retention": "slightly_reduced", "text_depth": "deeper", "color_comp": "fine_textured", "use_case": "温柔复古/高级留白"},
-    "linen_superwhite_300g":  {"label": "300g 超白莱妮纹（布纹）",     "status": "待标定", "source_no": 6,  "gsm": "300g", "paper_type": "超白莱妮纹（布纹）",     "paper_tone": "超白", "texture_level": "medium", "detail_retention": "reduced", "text_depth": "deeper", "color_comp": "textured", "use_case": "布纹质感卡/礼品日历"},
-    "linen_ivory_300g":       {"label": "300g 雅白莱妮纹（布纹）",     "status": "待标定", "source_no": 7,  "gsm": "300g", "paper_type": "雅白莱妮纹（布纹）",     "paper_tone": "雅白", "texture_level": "medium", "detail_retention": "reduced", "text_depth": "deeper", "color_comp": "textured", "use_case": "复古/手作/柔和主题"},
-    "eggshell_superwhite_300g": {"label": "300g 超白彩石纹（蛋壳纹）", "status": "待标定", "source_no": 8,  "gsm": "300g", "paper_type": "超白彩石纹（蛋壳纹）", "paper_tone": "超白", "texture_level": "medium", "detail_retention": "reduced", "text_depth": "deeper", "color_comp": "textured", "use_case": "自然颗粒质感/艺术卡"},
-    "eggshell_ivory_300g":    {"label": "300g 雅白彩石纹（蛋壳纹）",   "status": "待标定", "source_no": 9,  "gsm": "300g", "paper_type": "雅白彩石纹（蛋壳纹）",   "paper_tone": "雅白", "texture_level": "medium", "detail_retention": "reduced", "text_depth": "deeper", "color_comp": "textured", "use_case": "自然复古/柔和插画"},
-    "athens_superwhite_300g": {"label": "300g 超白雅典纹",           "status": "待标定", "source_no": 10, "gsm": "300g", "paper_type": "超白雅典纹",             "paper_tone": "超白", "texture_level": "medium", "detail_retention": "reduced", "text_depth": "deeper", "color_comp": "textured", "use_case": "高级纹理卡/礼品卡"},
-    "athens_ivory_300g":      {"label": "300g 雅白雅典纹",           "status": "待标定", "source_no": 11, "gsm": "300g", "paper_type": "雅白雅典纹",             "paper_tone": "雅白", "texture_level": "medium", "detail_retention": "reduced", "text_depth": "deeper", "color_comp": "textured", "use_case": "复古礼品卡/艺术卡"},
-    "wrinkle_superwhite_300g": {"label": "300g 超白皱纹",            "status": "待标定", "source_no": 12, "gsm": "300g", "paper_type": "超白皱纹",               "paper_tone": "超白", "texture_level": "strong", "detail_retention": "reduced", "text_depth": "deeper", "color_comp": "heavy_textured", "use_case": "强手作质感;减少细线小字"},
-    "wrinkle_ivory_300g":     {"label": "300g 雅白皱纹",             "status": "待标定", "source_no": 13, "gsm": "300g", "paper_type": "雅白皱纹",               "paper_tone": "雅白", "texture_level": "strong", "detail_retention": "reduced", "text_depth": "deeper", "color_comp": "heavy_textured", "use_case": "强复古/手作主题;避免浅色细节"},
-    "salon_superwhite_300g":  {"label": "300g 超白沙龙纹",           "status": "待标定", "source_no": 14, "gsm": "300g", "paper_type": "超白沙龙纹",             "paper_tone": "超白", "texture_level": "medium", "detail_retention": "reduced", "text_depth": "deeper", "color_comp": "textured", "use_case": "艺术卡/礼品卡"},
-    "salon_ivory_300g":       {"label": "300g 雅白沙龙纹",           "status": "待标定", "source_no": 15, "gsm": "300g", "paper_type": "雅白沙龙纹",             "paper_tone": "雅白", "texture_level": "medium", "detail_retention": "reduced", "text_depth": "deeper", "color_comp": "textured", "use_case": "复古艺术卡/礼品卡"},
-    "pvc_30c":                {"label": "30丝 PVC",                 "status": "待标定", "source_no": 16, "gsm": "30丝", "paper_type": "PVC",                    "paper_tone": "白/透明基材", "texture_level": "plastic", "detail_retention": "full", "text_depth": "normal", "color_comp": "pvc", "use_case": "防水耐磨;德州扑克/海外客户常用;一面光滑一面磨砂"},
-    "pvc_32c":                {"label": "32丝 PVC",                 "status": "待标定", "source_no": 17, "gsm": "32丝", "paper_type": "PVC",                    "paper_tone": "白/透明基材", "texture_level": "plastic", "detail_retention": "full", "text_depth": "normal", "color_comp": "pvc", "use_case": "防水耐磨卡牌/扑克类"},
-    "white_core_300g":        {"label": "300g 白芯纸",               "status": "待标定", "source_no": 18, "gsm": "300g", "paper_type": "白芯纸",                 "paper_tone": "白芯", "texture_level": "none", "detail_retention": "medium", "text_depth": "deeper", "color_comp": "budget_core", "use_case": "预算档;普通纸;有透光性;挺度低于蓝芯/黑芯"},
-    "white_core_350g":        {"label": "350g 白芯纸",               "status": "待标定", "source_no": 19, "gsm": "350g", "paper_type": "白芯纸",                 "paper_tone": "白芯", "texture_level": "none", "detail_retention": "medium", "text_depth": "deeper", "color_comp": "budget_core", "use_case": "预算档卡片;挺度较300g略好"},
-    "white_core_400g":        {"label": "400g 白芯纸",               "status": "待标定", "source_no": 20, "gsm": "400g", "paper_type": "白芯纸",                 "paper_tone": "白芯", "texture_level": "none", "detail_retention": "medium", "text_depth": "deeper", "color_comp": "budget_core", "use_case": "硬度和挺度更好;价格适中;国内常做"},
-    "blue_core_280g":         {"label": "280g 蓝芯纸",               "status": "待标定", "source_no": 21, "gsm": "280g", "paper_type": "蓝芯纸",                 "paper_tone": "蓝芯", "texture_level": "none", "detail_retention": "full", "text_depth": "normal", "color_comp": "premium_core", "use_case": "中高端卡牌/礼品卡;抗透光"},
-    "blue_core_300g":         {"label": "300g 蓝芯纸",               "status": "待标定", "source_no": 22, "gsm": "300g", "paper_type": "蓝芯纸",                 "paper_tone": "蓝芯", "texture_level": "none", "detail_retention": "full", "text_depth": "normal", "color_comp": "premium_core", "use_case": "挺度好、韧性好、耐折、抗透光;赌场卡/信用卡/中高端礼品定制"},
-    "black_core_310g":        {"label": "310g 黑芯纸",               "status": "待标定", "source_no": 23, "gsm": "310g", "paper_type": "黑芯纸",                 "paper_tone": "黑芯", "texture_level": "none", "detail_retention": "full", "text_depth": "normal", "color_comp": "premium_core", "use_case": "高端卡牌/礼品卡;抗透光强"},
-    "black_core_330g":        {"label": "330g 黑芯纸",               "status": "待标定", "source_no": 24, "gsm": "330g", "paper_type": "黑芯纸",                 "paper_tone": "黑芯", "texture_level": "none", "detail_retention": "full", "text_depth": "normal", "color_comp": "premium_core", "use_case": "高端卡牌/礼品卡;更厚更挺"}
+    "white_card_300g": {
+      "label": "300g 超白白卡纸",
+      "status": "基准",
+      "source_no": 1,
+      "gsm": "300g",
+      "paper_type": "超白白卡纸",
+      "paper_tone": "超白",
+      "texture_level": "none",
+      "detail_retention": "full",
+      "text_depth": "normal",
+      "color_comp": "standard",
+      "use_case": "日历卡/贺卡/明信片默认材质"
+    },
+    "kraft_card_300g": {
+      "label": "300g 牛皮卡纸",
+      "status": "待标定",
+      "source_no": 2,
+      "gsm": "300g",
+      "paper_type": "牛皮卡纸",
+      "paper_tone": "牛皮",
+      "texture_level": "none",
+      "detail_retention": "reduced",
+      "text_depth": "deeper",
+      "color_comp": "kraft",
+      "use_case": "复古/自然/手作风;浅色插画需谨慎"
+    },
+    "pearl_ice_white_300g": {
+      "label": "300g 冰白珠光纸（白滑影子）",
+      "status": "待标定",
+      "source_no": 3,
+      "gsm": "300g",
+      "paper_type": "冰白珠光纸（白滑影子）",
+      "paper_tone": "冰白",
+      "texture_level": "pearl",
+      "detail_retention": "full",
+      "text_depth": "deeper",
+      "color_comp": "pearl",
+      "use_case": "高级礼品感/节日卡;避免过浅小字"
+    },
+    "fine_linen_superwhite_300g": {
+      "label": "300g 超白细莱妮纹（细布纹）",
+      "status": "待标定",
+      "source_no": 4,
+      "gsm": "300g",
+      "paper_type": "超白细莱妮纹（细布纹）",
+      "paper_tone": "超白",
+      "texture_level": "fine",
+      "detail_retention": "slightly_reduced",
+      "text_depth": "deeper",
+      "color_comp": "fine_textured",
+      "use_case": "细腻质感卡片/日历"
+    },
+    "fine_linen_ivory_300g": {
+      "label": "300g 雅白细莱妮纹（细布纹）",
+      "status": "待标定",
+      "source_no": 5,
+      "gsm": "300g",
+      "paper_type": "雅白细莱妮纹（细布纹）",
+      "paper_tone": "雅白",
+      "texture_level": "fine",
+      "detail_retention": "slightly_reduced",
+      "text_depth": "deeper",
+      "color_comp": "fine_textured",
+      "use_case": "温柔复古/高级留白"
+    },
+    "linen_superwhite_300g": {
+      "label": "300g 超白莱妮纹（布纹）",
+      "status": "待标定",
+      "source_no": 6,
+      "gsm": "300g",
+      "paper_type": "超白莱妮纹（布纹）",
+      "paper_tone": "超白",
+      "texture_level": "medium",
+      "detail_retention": "reduced",
+      "text_depth": "deeper",
+      "color_comp": "textured",
+      "use_case": "布纹质感卡/礼品日历"
+    },
+    "linen_ivory_300g": {
+      "label": "300g 雅白莱妮纹（布纹）",
+      "status": "待标定",
+      "source_no": 7,
+      "gsm": "300g",
+      "paper_type": "雅白莱妮纹（布纹）",
+      "paper_tone": "雅白",
+      "texture_level": "medium",
+      "detail_retention": "reduced",
+      "text_depth": "deeper",
+      "color_comp": "textured",
+      "use_case": "复古/手作/柔和主题"
+    },
+    "eggshell_superwhite_300g": {
+      "label": "300g 超白彩石纹（蛋壳纹）",
+      "status": "待标定",
+      "source_no": 8,
+      "gsm": "300g",
+      "paper_type": "超白彩石纹（蛋壳纹）",
+      "paper_tone": "超白",
+      "texture_level": "medium",
+      "detail_retention": "reduced",
+      "text_depth": "deeper",
+      "color_comp": "textured",
+      "use_case": "自然颗粒质感/艺术卡"
+    },
+    "eggshell_ivory_300g": {
+      "label": "300g 雅白彩石纹（蛋壳纹）",
+      "status": "待标定",
+      "source_no": 9,
+      "gsm": "300g",
+      "paper_type": "雅白彩石纹（蛋壳纹）",
+      "paper_tone": "雅白",
+      "texture_level": "medium",
+      "detail_retention": "reduced",
+      "text_depth": "deeper",
+      "color_comp": "textured",
+      "use_case": "自然复古/柔和插画"
+    },
+    "athens_superwhite_300g": {
+      "label": "300g 超白雅典纹",
+      "status": "待标定",
+      "source_no": 10,
+      "gsm": "300g",
+      "paper_type": "超白雅典纹",
+      "paper_tone": "超白",
+      "texture_level": "medium",
+      "detail_retention": "reduced",
+      "text_depth": "deeper",
+      "color_comp": "textured",
+      "use_case": "高级纹理卡/礼品卡"
+    },
+    "athens_ivory_300g": {
+      "label": "300g 雅白雅典纹",
+      "status": "待标定",
+      "source_no": 11,
+      "gsm": "300g",
+      "paper_type": "雅白雅典纹",
+      "paper_tone": "雅白",
+      "texture_level": "medium",
+      "detail_retention": "reduced",
+      "text_depth": "deeper",
+      "color_comp": "textured",
+      "use_case": "复古礼品卡/艺术卡"
+    },
+    "wrinkle_superwhite_300g": {
+      "label": "300g 超白皱纹",
+      "status": "待标定",
+      "source_no": 12,
+      "gsm": "300g",
+      "paper_type": "超白皱纹",
+      "paper_tone": "超白",
+      "texture_level": "strong",
+      "detail_retention": "reduced",
+      "text_depth": "deeper",
+      "color_comp": "heavy_textured",
+      "use_case": "强手作质感;减少细线小字"
+    },
+    "wrinkle_ivory_300g": {
+      "label": "300g 雅白皱纹",
+      "status": "待标定",
+      "source_no": 13,
+      "gsm": "300g",
+      "paper_type": "雅白皱纹",
+      "paper_tone": "雅白",
+      "texture_level": "strong",
+      "detail_retention": "reduced",
+      "text_depth": "deeper",
+      "color_comp": "heavy_textured",
+      "use_case": "强复古/手作主题;避免浅色细节"
+    },
+    "salon_superwhite_300g": {
+      "label": "300g 超白沙龙纹",
+      "status": "待标定",
+      "source_no": 14,
+      "gsm": "300g",
+      "paper_type": "超白沙龙纹",
+      "paper_tone": "超白",
+      "texture_level": "medium",
+      "detail_retention": "reduced",
+      "text_depth": "deeper",
+      "color_comp": "textured",
+      "use_case": "艺术卡/礼品卡"
+    },
+    "salon_ivory_300g": {
+      "label": "300g 雅白沙龙纹",
+      "status": "待标定",
+      "source_no": 15,
+      "gsm": "300g",
+      "paper_type": "雅白沙龙纹",
+      "paper_tone": "雅白",
+      "texture_level": "medium",
+      "detail_retention": "reduced",
+      "text_depth": "deeper",
+      "color_comp": "textured",
+      "use_case": "复古艺术卡/礼品卡"
+    },
+    "pvc_30c": {
+      "label": "30丝 PVC",
+      "status": "待标定",
+      "source_no": 16,
+      "gsm": "30丝",
+      "paper_type": "PVC",
+      "paper_tone": "白/透明基材",
+      "texture_level": "plastic",
+      "detail_retention": "full",
+      "text_depth": "normal",
+      "color_comp": "pvc",
+      "use_case": "防水耐磨;德州扑克/海外客户常用;一面光滑一面磨砂"
+    },
+    "pvc_32c": {
+      "label": "32丝 PVC",
+      "status": "待标定",
+      "source_no": 17,
+      "gsm": "32丝",
+      "paper_type": "PVC",
+      "paper_tone": "白/透明基材",
+      "texture_level": "plastic",
+      "detail_retention": "full",
+      "text_depth": "normal",
+      "color_comp": "pvc",
+      "use_case": "防水耐磨卡牌/扑克类"
+    },
+    "white_core_300g": {
+      "label": "300g 白芯纸",
+      "status": "待标定",
+      "source_no": 18,
+      "gsm": "300g",
+      "paper_type": "白芯纸",
+      "paper_tone": "白芯",
+      "texture_level": "none",
+      "detail_retention": "medium",
+      "text_depth": "deeper",
+      "color_comp": "budget_core",
+      "use_case": "预算档;普通纸;有透光性;挺度低于蓝芯/黑芯"
+    },
+    "white_core_350g": {
+      "label": "350g 白芯纸",
+      "status": "待标定",
+      "source_no": 19,
+      "gsm": "350g",
+      "paper_type": "白芯纸",
+      "paper_tone": "白芯",
+      "texture_level": "none",
+      "detail_retention": "medium",
+      "text_depth": "deeper",
+      "color_comp": "budget_core",
+      "use_case": "预算档卡片;挺度较300g略好"
+    },
+    "white_core_400g": {
+      "label": "400g 白芯纸",
+      "status": "待标定",
+      "source_no": 20,
+      "gsm": "400g",
+      "paper_type": "白芯纸",
+      "paper_tone": "白芯",
+      "texture_level": "none",
+      "detail_retention": "medium",
+      "text_depth": "deeper",
+      "color_comp": "budget_core",
+      "use_case": "硬度和挺度更好;价格适中;国内常做"
+    },
+    "blue_core_280g": {
+      "label": "280g 蓝芯纸",
+      "status": "待标定",
+      "source_no": 21,
+      "gsm": "280g",
+      "paper_type": "蓝芯纸",
+      "paper_tone": "蓝芯",
+      "texture_level": "none",
+      "detail_retention": "full",
+      "text_depth": "normal",
+      "color_comp": "premium_core",
+      "use_case": "中高端卡牌/礼品卡;抗透光"
+    },
+    "blue_core_300g": {
+      "label": "300g 蓝芯纸",
+      "status": "待标定",
+      "source_no": 22,
+      "gsm": "300g",
+      "paper_type": "蓝芯纸",
+      "paper_tone": "蓝芯",
+      "texture_level": "none",
+      "detail_retention": "full",
+      "text_depth": "normal",
+      "color_comp": "premium_core",
+      "use_case": "挺度好、韧性好、耐折、抗透光;赌场卡/信用卡/中高端礼品定制"
+    },
+    "black_core_310g": {
+      "label": "310g 黑芯纸",
+      "status": "待标定",
+      "source_no": 23,
+      "gsm": "310g",
+      "paper_type": "黑芯纸",
+      "paper_tone": "黑芯",
+      "texture_level": "none",
+      "detail_retention": "full",
+      "text_depth": "normal",
+      "color_comp": "premium_core",
+      "use_case": "高端卡牌/礼品卡;抗透光强"
+    },
+    "black_core_330g": {
+      "label": "330g 黑芯纸",
+      "status": "待标定",
+      "source_no": 24,
+      "gsm": "330g",
+      "paper_type": "黑芯纸",
+      "paper_tone": "黑芯",
+      "texture_level": "none",
+      "detail_retention": "full",
+      "text_depth": "normal",
+      "color_comp": "premium_core",
+      "use_case": "高端卡牌/礼品卡;更厚更挺"
+    }
   },
-
   "product_forms": {
-    "single_card": {"label": "单张卡片"},
-    "card_set":    {"label": "套装卡片"},
-    "desk_wood":   {"label": "桌历木座"},
-    "wall_coil":   {"label": "挂历线圈"},
-    "postcard":    {"label": "明信片"}
+    "single_card": {
+      "label": "单张卡片"
+    },
+    "card_set": {
+      "label": "套装卡片"
+    },
+    "desk_wood": {
+      "label": "桌历木座"
+    },
+    "wall_coil": {
+      "label": "挂历线圈"
+    },
+    "postcard": {
+      "label": "明信片"
+    }
   },
-
   "styles": {
-    "vintage_botanical": {"label": "复古植物志", "engine": "almanac", "status": "implemented"},
-    "cozy_home":         {"label": "温馨家居",   "engine": "almanac", "status": "planned"},
-    "kids_storybook":    {"label": "儿童绘本",   "engine": "almanac", "status": "planned"},
-    "luxe_whitespace":   {"label": "高级留白",   "engine": "almanac", "status": "planned"},
-    "festive_gift":      {"label": "节日礼品",   "engine": "almanac", "status": "planned"}
+    "vintage_botanical": {
+      "label": "复古植物志",
+      "engine": "almanac",
+      "status": "implemented"
+    },
+    "cozy_home": {
+      "label": "温馨家居",
+      "engine": "almanac",
+      "status": "planned"
+    },
+    "kids_storybook": {
+      "label": "儿童绘本",
+      "engine": "almanac",
+      "status": "planned"
+    },
+    "luxe_whitespace": {
+      "label": "高级留白",
+      "engine": "almanac",
+      "status": "planned"
+    },
+    "festive_gift": {
+      "label": "节日礼品",
+      "engine": "almanac",
+      "status": "planned"
+    }
   },
-
   "languages": {
-    "en":        {"label": "英文月份", "status": "implemented"},
-    "cn":        {"label": "中文月份", "status": "planned"},
-    "bilingual": {"label": "中英双语", "status": "planned"}
+    "en": {
+      "label": "英文月份",
+      "status": "implemented"
+    },
+    "cn": {
+      "label": "中文月份",
+      "status": "planned"
+    },
+    "bilingual": {
+      "label": "中英双语",
+      "status": "planned"
+    }
   },
-
   "output_versions": {
-    "screen":   {"label": "客户预览版", "profile": "screen_preview"},
-    "print":    {"label": "印刷交付版", "profile": "print_output"},
-    "commerce": {"label": "电商展示版", "profile": "commerce_mockup"}
+    "screen": {
+      "label": "客户预览版",
+      "profile": "screen_preview"
+    },
+    "print": {
+      "label": "印刷交付版",
+      "profile": "print_output"
+    },
+    "commerce": {
+      "label": "电商展示版",
+      "profile": "commerce_mockup"
+    }
+  },
+  "product_types": {
+    "calendar_card": {
+      "label": "桌历/月历卡",
+      "default_size": "desk_cal_5x7",
+      "template": "calendar_series",
+      "supports_dates": true
+    },
+    "greeting_card": {
+      "label": "贺卡",
+      "default_size": "greeting_5x7",
+      "template": "generic_card",
+      "supports_dates": false
+    },
+    "postcard": {
+      "label": "明信片",
+      "default_size": "postcard_7x5",
+      "template": "generic_card",
+      "supports_dates": false
+    },
+    "bookmark": {
+      "label": "书签",
+      "default_size": "bookmark_2x6",
+      "template": "generic_card",
+      "supports_dates": false
+    },
+    "thank_you_card": {
+      "label": "感谢卡",
+      "default_size": "thankyou_3_5x5",
+      "template": "generic_card",
+      "supports_dates": false
+    },
+    "invitation_card": {
+      "label": "邀请卡",
+      "default_size": "greeting_4x6",
+      "template": "generic_card",
+      "supports_dates": false
+    },
+    "packaging_insert": {
+      "label": "包装插卡",
+      "default_size": "insert_4x4",
+      "template": "generic_card",
+      "supports_dates": false
+    },
+    "gift_tag": {
+      "label": "礼品吊牌",
+      "default_size": "gift_tag_2x3_5",
+      "template": "generic_card",
+      "supports_dates": false
+    },
+    "card_set": {
+      "label": "卡牌套装",
+      "default_size": "tarot",
+      "template": "generic_card",
+      "supports_dates": false
+    }
+  },
+  "series_types": {
+    "monthly_calendar": {
+      "label": "12个月月历",
+      "default_count": 12,
+      "requires_dates": true
+    },
+    "quarterly": {
+      "label": "四季度",
+      "default_count": 4,
+      "requires_dates": false
+    },
+    "seasonal": {
+      "label": "春夏秋冬",
+      "default_count": 4,
+      "requires_dates": false
+    },
+    "festival_set": {
+      "label": "节日套装",
+      "default_count": 6,
+      "requires_dates": false
+    },
+    "custom_cards": {
+      "label": "自定义N张",
+      "default_count": 1,
+      "requires_dates": false
+    }
+  },
+  "finishing": {
+    "none": {
+      "label": "无特殊工艺"
+    },
+    "round_corners": {
+      "label": "圆角",
+      "default_radius_mm": 3
+    },
+    "double_sided": {
+      "label": "双面排版"
+    },
+    "hole_punch": {
+      "label": "打孔/吊牌孔",
+      "default_diameter_mm": 4
+    },
+    "lamination_matte": {
+      "label": "哑膜"
+    },
+    "lamination_gloss": {
+      "label": "亮膜"
+    },
+    "foil": {
+      "label": "烫金/烫银",
+      "status": "preview_only"
+    },
+    "uv": {
+      "label": "局部UV",
+      "status": "preview_only"
+    }
   }
 }

@@ -35,6 +35,29 @@ def resolve_config(config_path=None):
     content = cfg.get("content", {})
     adv = cfg.get("advanced", {}) or {}
     outs = cfg.get("outputs", {})
+    series_cfg = cfg.get("series", {}) or {}
+    production = cfg.get("production", {}) or {}
+
+    # ── product / series ──
+    pkey = pre.get("product_type", "calendar_card")
+    pdef = presets.get("product_types", {}).get(pkey)
+    if not pdef:
+        err(f"preset.product_type '{pkey}' 不在 presets.product_types 中")
+        pdef = {"label": pkey, "template": series_cfg.get("template", "generic_card"), "supports_dates": False}
+
+    ser_key = series_cfg.get("type", "monthly_calendar")
+    ser_def = presets.get("series_types", {}).get(ser_key)
+    if not ser_def:
+        err(f"series.type '{ser_key}' 不在 presets.series_types 中")
+        ser_def = {"label": ser_key, "default_count": series_cfg.get("count", 1), "requires_dates": False}
+
+    try:
+        series_count = int(series_cfg.get("count") or ser_def.get("default_count") or 1)
+    except Exception:
+        err(f"series.count='{series_cfg.get('count')}' 不是有效数字")
+        series_count = 1
+    if not (1 <= series_count <= 60):
+        warn(f"series.count={series_count} 超出建议范围 1~60,请复核")
 
     # ── size ──
     skey = pre.get("size")
@@ -69,7 +92,7 @@ def resolve_config(config_path=None):
         bl_in = bleed_mm / MM_PER_IN
         size["bleed_px"] = (round((w_in + 2 * bl_in) * PRINT_DPI),
                             round((h_in + 2 * bl_in) * PRINT_DPI))
-        if content.get("real_dates", True) and min(w_in, h_in) < MIN_PRINT_SHORT_IN:
+        if content.get("real_dates", True) and ser_def.get("requires_dates", False) and min(w_in, h_in) < MIN_PRINT_SHORT_IN:
             warn(f"成品短边 {min(w_in, h_in)}in 偏小,真实日历数字可印性需复核(②印刷体系标定)")
 
     # ── material ──
@@ -106,15 +129,21 @@ def resolve_config(config_path=None):
         warn(f"decor_complexity='{dc}' 非法,应为 light/normal/rich;按 normal 处理")
 
     # ── content 必填 ──
-    if content.get("real_dates", True) and not content.get("year"):
-        err("content.real_dates=true 但缺 content.year")
+    if content.get("real_dates", True) and ser_def.get("requires_dates", False) and not content.get("year"):
+        err("content.real_dates=true 且当前系列需要日期,但缺 content.year")
+
+    if production.get("double_sided") and "back" not in outs.get("types", []):
+        warn("production.double_sided=true 但 outputs.types 未包含 back; 将只出正面,如需背面请加入 back")
 
     resolved = {
         "theme": cfg.get("theme"),
         "illustrations_dir": cfg.get("illustrations_dir"),
+        "series": {"key": ser_key, "count": series_count, "template": series_cfg.get("template") or pdef.get("template"), **ser_def},
+        "product_type": {"key": pkey, **pdef},
         "size": size,
         "material": {"key": mkey, **mdef},
         "product_form": pre.get("product_form"),
+        "production": production,
         "style": {"key": stkey, **stdef},
         "language": {"key": lgkey, **lgdef},
         "content": content,
@@ -134,8 +163,9 @@ def _fmt(r):
         f"主题: {r['theme']}   素材: {r['illustrations_dir']}",
         f"尺寸: {s['label']}  trim={s.get('trim_px')}px  含出血={s.get('bleed_px')}px  "
         f"(出血{s['bleed_mm']}mm/安全{s['safe_margin_mm']}mm @ {s['dpi']}dpi)",
-        f"材质: {r['material'].get('label')}  形态: {r['product_form']}  "
-        f"风格: {r['style'].get('label')}  语言: {r['language'].get('label')}",
+        f"产品: {r['product_type'].get('label')}  系列: {r['series'].get('label')}×{r['series'].get('count')}  "
+        f"材质: {r['material'].get('label')}",
+        f"形态: {r['product_form']}  风格: {r['style'].get('label')}  语言: {r['language'].get('label')}",
         f"年份: {r['content'].get('year')}  真实日期: {r['content'].get('real_dates')}  "
         f"周起始: {r['content'].get('week_start')}",
         f"输出版本: {r['outputs'].get('versions')}  类型: {r['outputs'].get('types')}  "

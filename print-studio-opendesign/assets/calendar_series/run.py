@@ -21,13 +21,14 @@ HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE / "engine"))
 from config_schema import resolve_config, _fmt                       # noqa: E402
 from layout_engine import render_page, render_series_grid            # noqa: E402
+from generic_card_engine import render_generic_card                  # noqa: E402
 import ai_planner                                                    # noqa: E402
 from profiles import apply_profile                                   # noqa: E402
 from print_export import build_print_file, build_package            # noqa: E402
 from qc import run_qc                                                # noqa: E402
 
 
-def find_illustrations(folder):
+def find_illustrations(folder, count=None):
     folder = Path(folder)
     if not folder.is_absolute():
         folder = (HERE / folder).resolve()
@@ -40,9 +41,16 @@ def find_illustrations(folder):
     found.sort(key=lambda x: x[0])
     if not found:
         sys.exit(f"❌ {folder} 没找到带月份序号的插画(命名以数字开头,如 1_xxx.png)")
-    if len(found) != 12:
-        print(f"⚠️  找到 {len(found)} 张(非12),按现有序号映射月份")
-    return {mon: path for mon, path in found}
+    if count and len(found) < count:
+        print(f"⚠️  需要 {count} 张,但只找到 {len(found)} 张;将循环复用已有素材")
+    mapped = {}
+    total = count or len(found)
+    for idx in range(1, total + 1):
+        if idx in dict(found):
+            mapped[idx] = dict(found)[idx]
+        else:
+            mapped[idx] = found[(idx - 1) % len(found)][1]
+    return mapped
 
 
 def main():
@@ -72,8 +80,10 @@ def main():
     cols = 3 if outs.get("series_grid_layout") == "3x4" else 4
     size, material = r["size"], r["material"]
     sat_boost = (r["advanced"] or {}).get("saturation_boost_pct")
+    template = r.get("series", {}).get("template") or r.get("product_type", {}).get("template") or "calendar_series"
+    series_count = r.get("series", {}).get("count") or 12
 
-    illos = find_illustrations(r["illustrations_dir"])
+    illos = find_illustrations(r["illustrations_dir"], count=series_count)
     out_root = Path(os.environ.get("PRINT_STUDIO_OUTPUT_ROOT", HERE / "output"))
     out_base = out_root / theme
     alm_dir = out_base / "almanac"
@@ -92,21 +102,27 @@ def main():
     if types & {"single", "grid", "whitebg", "ambiance"}:
         print(f"  版式: {family} {W}×{H}  AI排版: {'on' if ai_on else 'off(默认计划)'}")
         for mon, src in illos.items():
-            if ai_on and mon != min(illos):
+            if ai_on and template == "calendar_series" and mon != min(illos):
                 time.sleep(1.0)            # 月间轻节流,降限速
-            plan = ai_planner.plan_for(str(src), enabled=ai_on)
+            plan = ai_planner.plan_for(str(src), enabled=ai_on and template == "calendar_series")
             plans[mon] = plan
-            out = alm_dir / f"almanac_{mon:02d}.jpg"
-            meta = render_page(W, H, family, year, mon, str(src), str(out),
-                               keyword=(kws[mon - 1] if mon - 1 < len(kws) else None),
-                               accent=plan["accent"], vbias=plan["vbias"],
-                               poem_left=poem_l, poem_right=poem_r, seal=seal, week_start=week_start)
+            out = alm_dir / (f"almanac_{mon:02d}.jpg" if template == "calendar_series" else f"card_{mon:02d}_front.jpg")
+            if template == "calendar_series":
+                meta = render_page(W, H, family, year, mon, str(src), str(out),
+                                   keyword=(kws[mon - 1] if mon - 1 < len(kws) else None),
+                                   accent=plan["accent"], vbias=plan["vbias"],
+                                   poem_left=poem_l, poem_right=poem_r, seal=seal, week_start=week_start)
+            else:
+                meta = render_generic_card(W, H, mon, str(src), str(out), r, side="front")
             pages[mon] = out
             render_meta[mon] = meta
+            if "back" in types:
+                back = alm_dir / f"card_{mon:02d}_back.jpg"
+                render_generic_card(W, H, mon, str(src), str(back), r, side="back")
         (out_base / "plans.json").write_text(
             json.dumps(plans, ensure_ascii=False, indent=2), encoding="utf-8")
         src0 = plans.get(1, {}).get("source", "?")
-        print(f"  渲染 B masters ×{len(pages)}  (layout_plan 留痕 plans.json,source={src0})")
+        print(f"  渲染 masters ×{len(pages)}  (template={template}, layout_plan 留痕 plans.json,source={src0})")
     grid = None
     if "grid" in types and pages:
         grid = alm_dir / "series_grid.jpg"

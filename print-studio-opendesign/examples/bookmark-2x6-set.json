@@ -1,16 +1,16 @@
 {
   "job": {
     "client_name": "示例客户",
-    "job_name": "小兔子文具打样",
-    "product_line": "calendar card / greeting card / print proof",
+    "job_name": "植物书签套装",
+    "product_line": "bookmark set proof",
     "quantity": null
   },
-  "theme": "小兔子文具",
+  "theme": "植物书签套装",
   "illustrations_dir": "example_illustrations",
   "series": {
-    "type": "monthly_calendar",
-    "count": 12,
-    "template": "calendar_series",
+    "type": "custom_cards",
+    "count": 4,
+    "template": "generic_card",
     "_examples": [
       "monthly_calendar",
       "quarterly",
@@ -20,16 +20,16 @@
     ]
   },
   "preset": {
-    "size": "desk_cal_5x7",
+    "size": "bookmark_2x6",
     "material": "white_card_300g",
-    "product_form": "desk_wood",
+    "product_form": "single_card",
     "style": "vintage_botanical",
     "language": "en",
-    "product_type": "calendar_card"
+    "product_type": "bookmark"
   },
   "content": {
     "year": 2027,
-    "real_dates": true,
+    "real_dates": false,
     "week_start": "sunday",
     "month_keywords": [
       "HOPE",
@@ -51,9 +51,9 @@
     "keep_poems": true,
     "keep_seal": true,
     "keep_botanical_notes": true,
-    "front_title": "January",
-    "front_subtitle": "HOPE",
-    "message": "A quiet beginning, soft as morning light.",
+    "front_title": "Read",
+    "front_subtitle": "SLOWLY",
+    "message": "Keep your place among quiet flowers.",
     "back_title": "Thank you",
     "back_body": "Printed with care. Final colors should be confirmed by physical proof.",
     "card_titles": [],
@@ -62,14 +62,11 @@
   "outputs": {
     "versions": [
       "screen",
-      "print",
-      "commerce"
+      "print"
     ],
     "types": [
       "single",
-      "grid",
-      "whitebg",
-      "ambiance"
+      "grid"
     ],
     "series_grid_layout": "4x3",
     "product_shot_months": [
