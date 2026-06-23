@@ -92,8 +92,11 @@ Print Studio OpenDesign 是一个给印刷品系列打样使用的 Codex / Claud
         ├─ commerce/          白底图 / 氛围图 / 系列总览
         ├─ download_4k/       单张 4K 下载
         ├─ provider_previews/ 三模型首轮预览
-        ├─ qc_report.json     自动质检
-        └─ *_交付包.zip       打包文件
+        ├─ design_plan.json   多层设计计划
+        ├─ qc_report.json       自动质检
+        ├─ prepress_report.zh-CN.md 中文印前说明
+        ├─ reports/             打包报告目录
+        └─ *_交付包.zip         打包文件
 ```
 
 ---
@@ -240,7 +243,10 @@ examples/*.json
 | `commerce/` | 展示图 | 白底图、氛围图、系列总览图 |
 | `download_4k/` | 单张保存 | 每张图长边 4096px，可逐张下载保存 |
 | `provider_previews/` | 模型对比 | 即梦 / Gemini / GPT-Image2 首轮预览 |
+| `design_plan.json` | 设计计划 | 记录版式、字体、色彩 preset、图层结构和 prompt 联动说明 |
 | `qc_report.json` | 自动质检 | 检查尺寸、边距、日期、输出完整度 |
+| `prepress_report.zh-CN.md` | 印前说明 | 中文说明为什么可进入下一步、哪些地方需人工确认 |
+| `reports/` | 报告目录 | 随 ZIP 打包的配置、设计计划、QC 和印前说明 |
 | `*_交付包.zip` | 打包交付 | 把核心输出文件压成一个包 |
 
 重点要记住：

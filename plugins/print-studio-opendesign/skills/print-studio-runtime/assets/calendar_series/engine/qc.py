@@ -23,7 +23,7 @@ def _corner(im):
     return im.convert("RGB").getpixel((2, 2))
 
 
-def _checks(out_base, resolved, pages, render_meta, prod):
+def _checks(out_base, resolved, pages, render_meta, prod, design_plans=None):
     res = []
 
     def add(name, level, detail):
@@ -70,6 +70,18 @@ def _checks(out_base, resolved, pages, render_meta, prod):
         add("印刷·尺寸&300dpi", PASS if not wrong else FAIL,
             f"印刷文件 {bps}px@{DPI}dpi 正确" if not wrong else ";".join(wrong[:3]))
 
+    # 3.5) 素材分辨率:不是硬失败,但需要显式人工确认
+    if design_plans:
+        low = []
+        trim_w, trim_h = size.get("trim_px") or (0, 0)
+        need_min = min(trim_w, trim_h) * 0.75 if trim_w and trim_h else 1000
+        for idx, plan in design_plans.items():
+            src = plan.get("source_image", {})
+            if min(src.get("width_px", 0), src.get("height_px", 0)) < need_min:
+                low.append(f"{idx:02d}:{src.get('file')} {src.get('width_px')}×{src.get('height_px')}")
+        add("素材·分辨率人工确认", PASS if not low else WARN,
+            "素材尺寸满足首轮打样检查" if not low else "部分素材像素偏低,批量印刷前复核: " + "; ".join(low[:4]))
+
     # 4) 安全边距(内容 bbox 在安全区内)
     viol = []
     for m, meta in render_meta.items():
@@ -110,6 +122,85 @@ def _checks(out_base, resolved, pages, render_meta, prod):
     return res
 
 
+def _write_prepress_report(out_base, resolved, qc_obj, design_plans=None):
+    out_base = Path(out_base)
+    items = qc_obj["items"]
+    passed = [i for i in items if i["level"] == PASS]
+    warnings = [i for i in items if i["level"] == WARN]
+    failures = [i for i in items if i["level"] == FAIL]
+    size = resolved.get("size", {}) or {}
+    material = resolved.get("material", {}) or {}
+    outputs = resolved.get("outputs", {}) or {}
+    lines = [
+        "# 印前检查说明",
+        "",
+        "## 1. 当前结论",
+        "",
+        f"- 状态：**{qc_obj['status'].upper()}**",
+        f"- FAIL：{qc_obj['fail']} 项",
+        f"- WARN：{qc_obj['warn']} 项",
+        f"- 成品尺寸：{size.get('label')}，{size.get('trim_px')}px @ {size.get('dpi', DPI)}dpi",
+        f"- 材质：{material.get('label', material.get('key', '未指定'))}",
+        "",
+        "## 2. 为什么可以进入下一步",
+        "",
+    ]
+    if passed:
+        for item in passed:
+            lines.append(f"- {item['check']}：{item['detail']}")
+    else:
+        lines.append("- 暂无通过项。")
+    lines += [
+        "",
+        "## 3. 哪些地方需要人工确认",
+        "",
+    ]
+    if warnings or failures:
+        for item in failures + warnings:
+            prefix = "硬问题" if item["level"] == FAIL else "风险提示"
+            lines.append(f"- {prefix} · {item['check']}：{item['detail']}")
+    else:
+        lines.append("- 当前自动检查未发现必须人工介入的问题，但批量生产前仍建议实物打样。")
+    lines += [
+        "",
+        "## 4. 设计规则说明",
+        "",
+        "- AI 可以参与版式判断、展示图生成和风格建议。",
+        "- 日期、出血、安全边距、DPI、印刷文件导出由确定性规则控制。",
+        "- 白底图、氛围图、系列总览图、4K 下载图用于确认和展示，不替代 `print/` 目录里的生产文件。",
+        "- 材质纹理、珠光、PVC 光泽属于屏幕模拟，最终以纸样和实物打样为准。",
+        "",
+        "## 5. 设计计划摘要",
+        "",
+    ]
+    if design_plans:
+        first = design_plans.get(min(design_plans))
+        if first:
+            lines += [
+                f"- 版式 preset：{first.get('layout_preset', {}).get('label')}",
+                f"- 字体 preset：{first.get('typography_preset', {}).get('label')}",
+                f"- 背景色 preset：{first.get('color_preset', {}).get('background', {}).get('label')}",
+                "- 结构化计划：见 `design_plan.json`。",
+            ]
+    else:
+        lines.append("- 未生成结构化设计计划。")
+    lines += [
+        "",
+        "## 6. 输出文件分工",
+        "",
+        "| 文件夹 / 文件 | 用途 |",
+        "| --- | --- |",
+        "| `screen/` | 屏幕预览确认 |",
+        "| `print/` | 生产用 300dpi 印刷文件 |",
+        "| `commerce/` | 白底图、氛围图、系列展示 |",
+        "| `download_4k/` | 每张图单独保存的 4K 展示版 |",
+        "| `provider_previews/` | 即梦 / Gemini / GPT-Image2 首轮模型对比 |",
+        "| `qc_report.json` | 机器可读质检结果 |",
+        "| `design_plan.json` | 多层设计计划与 preset 选择说明 |",
+    ]
+    (out_base / "prepress_report.zh-CN.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
+
+
 def _ai_visual(pages, model="gemini-2.5-flash"):
     """可选:每张 B 页视觉检查压字/乱码/多余文字"""
     key = os.getenv("GEMINI_API_KEY")
@@ -139,9 +230,9 @@ def _ai_visual(pages, model="gemini-2.5-flash"):
     return out
 
 
-def run_qc(out_base, resolved, pages, render_meta, prod, qc_ai=False):
+def run_qc(out_base, resolved, pages, render_meta, prod, qc_ai=False, design_plans=None):
     out_base = Path(out_base)
-    report = _checks(out_base, resolved, pages, render_meta, prod)
+    report = _checks(out_base, resolved, pages, render_meta, prod, design_plans=design_plans)
     if qc_ai:
         report += _ai_visual(pages)
     n_fail = sum(1 for r in report if r["level"] == FAIL)
@@ -150,4 +241,6 @@ def run_qc(out_base, resolved, pages, render_meta, prod, qc_ai=False):
     (out_base / "qc_report.json").write_text(
         json.dumps({"status": status, "fail": n_fail, "warn": n_warn, "items": report},
                    ensure_ascii=False, indent=2), encoding="utf-8")
-    return {"status": status, "fail": n_fail, "warn": n_warn, "items": report}
+    qc_obj = {"status": status, "fail": n_fail, "warn": n_warn, "items": report}
+    _write_prepress_report(out_base, resolved, qc_obj, design_plans=design_plans)
+    return qc_obj

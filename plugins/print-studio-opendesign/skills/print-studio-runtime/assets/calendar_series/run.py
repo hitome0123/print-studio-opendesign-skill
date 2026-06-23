@@ -23,6 +23,7 @@ from config_schema import resolve_config, _fmt                       # noqa: E40
 from layout_engine import render_page, render_series_grid            # noqa: E402
 from generic_card_engine import render_generic_card                  # noqa: E402
 import ai_planner                                                    # noqa: E402
+import design_system                                                 # noqa: E402
 from profiles import apply_profile                                   # noqa: E402
 from print_export import build_print_file, build_package            # noqa: E402
 from qc import run_qc                                                # noqa: E402
@@ -230,7 +231,7 @@ def main():
     ai_on = r.get("ai_layout", True)
 
     # ── 渲染 masters:AI 排版脑 plan → 自适应渲染器 ──
-    pages, plans, render_meta = {}, {}, {}
+    pages, plans, render_meta, design_plans = {}, {}, {}, {}
     if types & {"single", "grid", "whitebg", "ambiance"}:
         print(f"  版式: {family} {W}×{H}  AI排版: {'on' if ai_on else 'off(默认计划)'}")
         for mon, src in illos.items():
@@ -249,13 +250,15 @@ def main():
                 meta = render_generic_card(W, H, mon, str(src), str(out), r, side="front")
             pages[mon] = out
             render_meta[mon] = meta
+            design_plans[mon] = design_system.build_design_plan(mon, str(src), plan, meta, r, template)
             if "back" in types:
                 back = alm_dir / f"card_{mon:02d}_back.jpg"
                 render_generic_card(W, H, mon, str(src), str(back), r, side="back")
         (out_base / "plans.json").write_text(
             json.dumps(plans, ensure_ascii=False, indent=2), encoding="utf-8")
+        design_system.write_design_plan(out_base, design_plans)
         src0 = plans.get(1, {}).get("source", "?")
-        print(f"  渲染 masters ×{len(pages)}  (template={template}, layout_plan 留痕 plans.json,source={src0})")
+        print(f"  渲染 masters ×{len(pages)}  (template={template}, layout_plan 留痕 plans.json/design_plan.json,source={src0})")
     grid = None
     if "grid" in types and pages:
         grid = alm_dir / "series_grid.jpg"
@@ -334,20 +337,28 @@ def main():
         print("  ℹ️ ", n)
 
     # ── ④ 自动质检 ──
-    qc = run_qc(out_base, r, pages, render_meta, prod, qc_ai=r.get("qc_ai", False))
+    qc = run_qc(out_base, r, pages, render_meta, prod, qc_ai=r.get("qc_ai", False), design_plans=design_plans)
     icon = {"pass": "✅", "warn": "⚠️", "fail": "❌"}
     print(f"\n=== 质检 {icon[qc['status']]} {qc['status'].upper()}  (FAIL {qc['fail']} / WARN {qc['warn']}) ===")
     for it in qc["items"]:
         if it["level"] != "pass":
             print(f"  {icon[it['level']]} {it['check']}: {it['detail']}")
-    print("  (完整报告 qc_report.json)")
+    print("  (完整报告 qc_report.json / prepress_report.zh-CN.md)")
+
+    reports_dir = out_base / "reports"
+    reports_dir.mkdir(exist_ok=True)
+    for report_name in ("resolved.json", "plans.json", "design_plan.json", "qc_report.json", "prepress_report.zh-CN.md"):
+        src = out_base / report_name
+        if src.exists():
+            (reports_dir / report_name).write_bytes(src.read_bytes())
+    vdirs["reports"] = reports_dir
 
     # ── 一键打包(质检 FAIL 时仍打包但提示)──
     if vdirs:
         zp = build_package(vdirs, out_base / f"{theme}_交付包.zip")
         print(f"  ▸ 打包 → {Path(zp).name}" + ("  ⚠️ 质检未过,慎交付" if qc["status"] == "fail" else ""))
 
-    print(f"\ndone -> {out_base}  (resolved.json / plans.json / qc_report.json 留痕)")
+    print(f"\ndone -> {out_base}  (resolved.json / plans.json / design_plan.json / qc_report.json 留痕)")
 
 
 if __name__ == "__main__":

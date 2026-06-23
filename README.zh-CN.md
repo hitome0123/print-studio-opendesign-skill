@@ -104,7 +104,10 @@ python scripts/run.py config.example.json
 - `commerce/`：电商展示版、白底图、氛围图、系列总览图
 - `download_4k/`：每张图单独保存的 4K 长边下载版，含 `index.html` 下载页
 - `provider_previews/`：首轮可选的即梦 / Gemini / GPT-Image2 白底图与氛围图对比
+- `design_plan.json`：多层设计计划，记录图片层、文字层、背景层、材质层、印刷安全层和 preset 选择理由
 - `qc_report.json`：自动质检报告
+- `prepress_report.zh-CN.md`：中文印前说明，解释为什么可进入下一步、哪些地方需人工确认
+- `reports/`：随 ZIP 打包的报告文件
 - `*_交付包.zip`：可交付压缩包
 
 ---
@@ -329,7 +332,9 @@ print-studio-opendesign/
         ├─ commerce 电商展示版
         ├─ download_4k 单张 4K 下载页
         ├─ provider_previews 三模型首轮预览
-        ├─ qc_report.json
+        ├─ design_plan.json 多层设计计划
+        ├─ qc_report.json / prepress_report.zh-CN.md
+        ├─ reports 报告打包目录
         └─ *_交付包.zip
 ```
 
@@ -345,7 +350,10 @@ print-studio-opendesign/
 | `commerce/` | 电商展示图 | 白底图、氛围图、系列总览，更亮更通透 |
 | `download_4k/` | 单张保存下载 | 4K 长边 JPG，适合逐张保存、发图确认、归档 |
 | `provider_previews/` | 首轮模型比较 | 即梦 / Gemini / GPT-Image2 对比白底图与氛围图，方便选定后续模型 |
+| `design_plan.json` | 设计计划 | 记录版式、字体、色彩 preset 与图层结构，方便复核和修改 |
 | `qc_report.json` | 交付前检查 | 检查尺寸、边距、日期、输出完整度 |
+| `prepress_report.zh-CN.md` | 印前说明 | 中文解释可印原因、风险与人工确认点 |
+| `reports/` | 报告打包 | 把配置、设计计划、QC、印前说明放入 ZIP |
 
 核心原则：展示图不能反向影响印刷源文件；印刷文件和电商 mockup 必须分离管理。
 
@@ -376,6 +384,9 @@ print-studio-opendesign/
 - 屏幕版 / 印刷版 / 电商版分离
 - 白底图、氛围图、系列总览图与逐张 4K 下载页
 - 即梦 / Gemini / GPT-Image2 首轮预览对比配置
+- 字体 / 版式 / 色彩 preset 库
+- `design_plan.json` 多层设计计划
+- `prepress_report.zh-CN.md` 中文印前说明
 - QC 报告与 ZIP 交付包
 - 干净安装包，无缓存、无输出、无本机绝对路径依赖
 

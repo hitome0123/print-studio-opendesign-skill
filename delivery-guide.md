@@ -109,7 +109,10 @@ python scripts/run.py config.example.json
 - 电商展示版：`commerce/`
 - 单张 4K 下载：`download_4k/index.html`
 - 首轮模型预览：`provider_previews/index.html`（可选开启）
+- 多层设计计划：`design_plan.json`
 - QC 报告：`qc_report.json`
+- 中文印前说明：`prepress_report.zh-CN.md`
+- 报告打包目录：`reports/`
 - ZIP 交付包
 
 ## V1 范围

@@ -19,6 +19,7 @@ The job: import images, choose production specs, and quickly create a proofing p
 - `scripts/preview_config.py`: fast no-AI preview and 24-material selector page.
 - `scripts/run.py`: full delivery run through the bundled calendar-series engine.
 - `assets/calendar_series/`: bundled print template engine, including calendar and generic-card renderers.
+- `assets/calendar_series/design_presets.json`: typography, layout, and color preset library with reasons and risks.
 - `references/operator-guide.md`: sales/operator notes and V1 boundaries.
 
 ## MVP Workflow
@@ -43,7 +44,10 @@ The job: import images, choose production specs, and quickly create a proofing p
    - `output/<theme>/commerce/` white-background, ambiance, and series overview product shots.
    - `output/<theme>/download_4k/` per-image 4K long-edge JPG files and download page.
    - `output/<theme>/provider_previews/` optional Jimeng / Gemini / GPT-Image2 comparison page.
-   - `output/<theme>/qc_report.json`.
+   - `output/<theme>/design_plan.json` CreatiPoster-style structured layer/preset plan.
+   - `output/<theme>/qc_report.json` machine-readable QC result.
+   - `output/<theme>/prepress_report.zh-CN.md` Chinese print-readiness report: why it can proceed and what needs manual confirmation.
+   - `output/<theme>/reports/` report files included in the ZIP.
    - `output/<theme>/*_交付包.zip`.
 7. Report whether the result is fit for: proposal preview, sample proof, or final print handoff.
 
@@ -54,6 +58,8 @@ The job: import images, choose production specs, and quickly create a proofing p
 - Recommend product, size, material, layout, typography, and model-preview choices with a reason and caution.
 - Offer a default recommendation, but keep alternatives visible.
 - Ground every recommendation in the supplied images plus print constraints.
+- Emit `design_plan.json` so typography/layout/color choices are explicit, reusable, and reviewable.
+- Emit `prepress_report.zh-CN.md` so every run explains print-readiness and manual confirmation points.
 
 ## Configuration Rules
 
