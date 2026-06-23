@@ -1,6 +1,6 @@
 ---
 name: print-studio-opendesign
-description: "印刷厂 AI 系列设计打样 Skill。Use when Codex needs to help a print shop turn client-provided illustrations/images into configurable print-ready product mockups and delivery packages: choose product type, series structure, size, material/paper, basic production specs, then generate customer previews, print files, white-background product shots, ambiance shots, QC reports, zipped handoff packages, and material selector previews. Applies to greeting cards, postcards, desk/wall calendars, monthly or quarterly cards, card sets, bookmarks, thank-you cards, invitation cards, packaging inserts, gift tags, sticker cards, and custom illustration series."
+description: "印刷厂 AI 系列设计打样 Skill。Use when Codex needs to help a print shop turn user-provided illustrations/images into configurable print-ready product mockups and delivery packages: choose product type, series structure, size, material/paper, basic production specs, then generate review previews, print files, white-background product shots, ambiance shots, QC reports, zipped handoff packages, and material selector previews. Applies to greeting cards, postcards, desk/wall calendars, monthly or quarterly cards, card sets, bookmarks, thank-you cards, invitation cards, packaging inserts, gift tags, sticker cards, and custom illustration series."
 ---
 
 # Print Studio OpenDesign
@@ -28,23 +28,23 @@ The job: a print shop receives client images, chooses production specs, and quic
    - `preset`: size, material, product form, visual style, language.
    - `series`: monthly, quarterly, seasonal, custom N-card set.
    - `outputs`: screen, print, commerce, single/grid/whitebg/ambiance.
-3. For quick customer confirmation, run:
+3. For quick review confirmation, run:
    - `python scripts/preview_config.py config.example.json --all-materials`
 4. For full delivery, run:
    - `python scripts/run.py config.example.json`
 5. Inspect:
-   - `output/<theme>/preview/` customer config/material preview.
-   - `output/<theme>/screen/` customer preview files.
+   - `output/<theme>/preview/` job config/material preview.
+   - `output/<theme>/screen/` preview files.
    - `output/<theme>/print/` 300dpi print files with bleed.
    - `output/<theme>/commerce/` white-background and ambiance product shots.
    - `output/<theme>/qc_report.json`.
    - `output/<theme>/*_交付包.zip`.
-6. Report whether the result is fit for: customer proposal, sample proof, or final print handoff.
+6. Report whether the result is fit for: proposal preview, sample proof, or final print handoff.
 
 ## Configuration Rules
 
 - Relative `illustrations_dir` is resolved against the config file first, then the bundled sample folder.
-- For customer work, prefer a copied config per job and an image folder with numbered filenames: `1.png`, `2.png`, ...
+- For project work, prefer a copied config per job and an image folder with numbered filenames: `1.png`, `2.png`, ...
 - `monthly_calendar` uses the calendar renderer. `custom_cards`, `quarterly`, `seasonal`, and `festival_set` can use the bundled `generic_card` renderer with configurable `series.count`.
 - Use `preview_config.py` before full AI/mockup generation; it is fast, deterministic, and does not call image generation.
 

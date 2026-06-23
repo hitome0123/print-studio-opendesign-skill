@@ -2,18 +2,18 @@
 
 ## Verdict
 
-**DONE_WITH_CONCERNS：可以作为 Beta 交付给客户试用，不建议直接承诺生产级印刷系统。**
+**DONE_WITH_CONCERNS：可以作为 Beta 提供给使用者试用，不建议直接承诺生产级印刷系统。**
 
 ## Score
 
 | Area | Score | Notes |
 | --- | ---: | --- |
 | Product positioning | 9/10 | 印刷厂 AI 打样套件定位清楚，Codex Plugin 与 Claude Code 都有入口。 |
-| Installability | 8/10 | Codex Plugin、独立 Skill、Claude Code dry-run 均通过；仍需客户环境实装测试。 |
+| Installability | 8/10 | Codex Plugin、独立 Skill、Claude Code dry-run 均通过；仍需使用环境实装测试。 |
 | Template coverage | 8/10 | 贺卡、明信片、书签、吊牌、月历、挂历已可跑；双面和复杂工艺仍是预览级。 |
 | Print safety | 8/10 | 有 300dpi、出血、安全区、QC、挂历装订区；未做 ICC/CMYK 真实色彩链路。 |
 | Material preview | 8/10 | 24 种材质页可生成，蓝芯/黑芯/PVC/珠光/纹理可视化；仍需实物纸样校准。 |
-| Documentation | 8/10 | README、delivery guide、Claude Code 文档齐全；缺一页客户版快速验收 SOP。 |
+| Documentation | 8/10 | README、delivery guide、Claude Code 文档齐全；缺一页使用者版快速验收 SOP。 |
 | Operational readiness | 7/10 | 示例全 PASS；但 runtime 在 Codex/Plugin 内有复制，后续维护要注意同步。 |
 
 **Overall: 8.0/10**
@@ -36,8 +36,8 @@
 
 ## Concerns Before Final Paid Delivery
 
-1. Add a one-page customer acceptance SOP: install, run one example, choose material, inspect output ZIP.
+1. Add a one-page user acceptance SOP: install, run one example, choose material, inspect output ZIP.
 2. Add a sync/check script for standalone runtime and plugin runtime to avoid future drift.
 3. Mark CMYK/ICC, foil/UV, and physical paper calibration as not included in V1 production guarantees.
-4. If the customer expects true production PDF, add PDF export or clarify current output is 300dpi JPG package.
+4. If the the workflow needs true production PDF, add PDF export or clarify current output is 300dpi JPG package.
 

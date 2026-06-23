@@ -1,13 +1,13 @@
 ---
 name: print-studio-material-selector
-description: "Use to generate or explain Print Studio OpenDesign material selection previews for paper, card stock, textured paper, pearl paper, blue-core/black-core/white-core stock, and PVC. Produces customer-facing material selector HTML/cards and sales notes such as suitable use cases, small-text cautions, gloss/matte simulation, and color compensation hints."
+description: "Use to generate or explain Print Studio OpenDesign material selection previews for paper, card stock, textured paper, pearl paper, blue-core/black-core/white-core stock, and PVC. Produces user-facing material selector HTML/cards and sales notes such as suitable use cases, small-text cautions, gloss/matte simulation, and color compensation hints."
 ---
 
 # Print Studio Material Selector
 
 ## Goal
 
-Help a print shop show customers selectable material options before final design proofing.
+Help print-shop users compare selectable material options before final design proofing.
 
 ## Workflow
 

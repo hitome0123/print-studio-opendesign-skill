@@ -7,7 +7,7 @@ description: "Use for print-shop order intake and configuration planning before 
 
 ## Goal
 
-Turn a customer request into a runnable Print Studio OpenDesign config.
+Turn a print request into a runnable Print Studio OpenDesign config.
 
 ## Workflow
 
@@ -16,7 +16,7 @@ Turn a customer request into a runnable Print Studio OpenDesign config.
 3. Select production specs: size, material, bleed, safe margin, double-sided, round corners, binding, finishing.
 4. Select outputs: `screen`, `print`, `commerce`, `single`, `grid`, `whitebg`, `ambiance`, `back`.
 5. Copy `../print-studio-runtime/config.example.json` or an example from `../print-studio-runtime/examples/`.
-6. Save a job-specific config next to the customer assets.
+6. Save a job-specific config next to the project assets.
 
 ## Required Fields
 
@@ -32,7 +32,7 @@ Turn a customer request into a runnable Print Studio OpenDesign config.
 
 ## Handoff
 
-- Use `print-studio-material-selector` when the customer needs to choose paper/material.
+- Use `print-studio-material-selector` when paper/material selection is needed paper/material.
 - Use `print-studio-layout-proof` for generic cards and small print products.
 - Use `print-studio-calendar-series` for monthly/quarterly/date-based layouts.
 - Use `print-studio-prepress-qc` before final delivery.

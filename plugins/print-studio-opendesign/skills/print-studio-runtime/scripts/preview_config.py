@@ -153,7 +153,7 @@ header{{max-width:1120px;margin:0 auto 24px}} h1{{font-size:30px;margin:0 0 8px}
 figure{{margin:0;background:white;border:1px solid #e7ded2;border-radius:12px;padding:12px;box-shadow:0 6px 24px rgba(60,48,36,.06)}}
 img{{width:100%;display:block;border-radius:8px}} figcaption{{font-size:13px;color:#7c746a;text-align:center;margin-top:8px}}
 </style><header><h1>{resolved['theme']} · 配置预览</h1>
-<p>用于客户确认尺寸、材质、版式和印刷边界。材质纹理为视觉模拟,不等同于真实打样。</p>
+<p>用于确认尺寸、材质、版式和印刷边界。材质纹理为视觉模拟,不等同于真实打样。</p>
 <div class="meta"><div class="card"><b>尺寸</b><br>{size['label']}<br>{size.get('trim_px')} px @ {size['dpi']}dpi</div>
 <div class="card"><b>材质</b><br>{material['label']}<br>{material.get('use_case','')}</div>
 <div class="card"><b>纸张补偿</b><br>{material.get('color_comp')} · {material.get('texture_level')}</div>
@@ -186,8 +186,8 @@ header{{max-width:1280px;margin:0 auto 22px}} h1{{font-size:30px;margin:0 0 8px}
 p{{font-size:13px;color:#625b52;margin:0 0 8px;line-height:1.55}} .tip{{font-size:12px;line-height:1.5;background:#fbf5ea;color:#7b5a36;border-left:3px solid #c9a56e;border-radius:7px;padding:7px 8px;margin:8px 0}}
 code{{font-size:11px;background:#f4eee5;color:#7a5a3a;padding:3px 6px;border-radius:6px}}
 </style><header><h1>{resolved['theme']} · 24 种材质选择预览</h1>
-<p>用于印刷厂销售/设计快速给客户看“同一版式在不同纸张上的大致视觉差异”。这是屏幕模拟,不等同真实纸样或打样。</p>
-<p>默认规则：纸芯类用侧边色条表达；PVC 模拟塑料高光；珠光纸模拟轻微反光；纹理纸会适度增强纹理，方便客户选择。</p>
+<p>用于印刷厂使用者快速查看“同一版式在不同纸张上的大致视觉差异”。这是屏幕模拟,不等同真实纸样或打样。</p>
+<p>默认规则：纸芯类用侧边色条表达；PVC 模拟塑料高光；珠光纸模拟轻微反光；纹理纸会适度增强纹理，方便选择。</p>
 <div class="toolbar"><span class="pill">当前尺寸：{size['label']}</span><span class="pill">当前选中：{resolved['material']['label']}</span><span class="pill">产品：{resolved.get('product_form')}</span><span class="pill">无 AI 调用，可快速反复生成</span></div>
 </header><section class="grid">{rows}</section></html>"""
     (out_dir / "materials.html").write_text(html, encoding="utf-8")

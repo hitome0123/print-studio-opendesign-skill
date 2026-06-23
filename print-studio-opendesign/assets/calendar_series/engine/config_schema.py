@@ -66,7 +66,7 @@ def resolve_config(config_path=None):
         err(f"preset.size '{skey}' 不在 presets.sizes 中")
         sdef = {"label": skey, "w_in": 6, "h_in": 6, "status": "?"}
     elif sdef.get("status") == "待确认":
-        warn(f"尺寸『{sdef['label']}』规格待客户确认 — 暂按 {sdef['w_in']}×{sdef['h_in']}in")
+        warn(f"尺寸『{sdef['label']}』规格待确认 — 暂按 {sdef['w_in']}×{sdef['h_in']}in")
 
     cs = adv.get("custom_size")
     if cs:
@@ -141,7 +141,7 @@ def resolve_config(config_path=None):
         elif binding not in ("top_wire", "top_hanger_hole", "top_clip", "wall_coil"):
             warn(f"挂历装订 binding='{binding}' 暂无专用预览,建议使用 top_wire/top_hanger_hole/top_clip")
         if not production.get("binding_reserved_mm"):
-            warn("挂历顶部装订区使用默认预留 12mm;如客户有线圈/夹条规格,请设置 production.binding_reserved_mm")
+            warn("挂历顶部装订区使用默认预留 12mm;如已有线圈/夹条规格,请设置 production.binding_reserved_mm")
 
     resolved = {
         "theme": cfg.get("theme"),

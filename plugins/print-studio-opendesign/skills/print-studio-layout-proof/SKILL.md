@@ -12,7 +12,7 @@ Create beautiful but controlled proofs for generic print products.
 ## Workflow
 
 1. Confirm the config uses a non-date product or `series.template: generic_card`.
-2. Put customer images into the configured `assets.illustrations_dir`.
+2. Put project images into the configured `assets.illustrations_dir`.
 3. Use examples in `../print-studio-runtime/examples/` when starting:
    - `greeting-card-5x7.json`
    - `postcard-7x5-set.json`

@@ -21,8 +21,8 @@ plugins/print-studio-opendesign/
 
 | Skill | 负责什么 | 典型触发 |
 | --- | --- | --- |
-| `print-studio-order-intake` | 接单信息、产品类型、尺寸、材质、工艺字段 | “客户要做贺卡，帮我整理配置” |
-| `print-studio-material-selector` | 24 种纸张/PVC 材质选择页、销售提示 | “生成材质预览给客户选” |
+| `print-studio-order-intake` | 接单信息、产品类型、尺寸、材质、工艺字段 | “要做贺卡，帮我整理配置” |
+| `print-studio-material-selector` | 24 种纸张/PVC 材质选择页、选择提示 | “生成材质预览用于选择” |
 | `print-studio-layout-proof` | AI 规则内排版打样，支持贺卡/明信片/书签/吊牌等 | “用这组图做 5×7 卡片打样” |
 | `print-studio-calendar-series` | 月历/季度/节气/节日套装 | “做 12 个月日历卡” |
 | `print-studio-commerce-mockup` | 白底图、氛围图、电商展示图 | “再出白底图和氛围图” |
@@ -33,21 +33,21 @@ plugins/print-studio-opendesign/
 
 先让 Codex 走 `print-studio-order-intake` 建配置，再按需要进入材质、排版、展示、质检。
 
-如果客户第一次使用，先读仓库根目录：
+如果第一次使用，先读仓库根目录：
 
-- `customer-workflow/customer-order-form.zh-CN.md`
-- `customer-workflow/customization-options.zh-CN.md`
-- `customer-workflow/conversation-examples.zh-CN.md`
-- `customer-workflow/customer-acceptance-sop.zh-CN.md`
+- `user-workflow/user-order-form.zh-CN.md`
+- `user-workflow/customization-options.zh-CN.md`
+- `user-workflow/conversation-examples.zh-CN.md`
+- `user-workflow/user-acceptance-sop.zh-CN.md`
 
 示例：
 
 ```text
-使用 Print Studio OpenDesign，客户要做 5×7 贺卡，白色 300g 硬卡纸，先整理订单配置并生成材质预览。
+使用 Print Studio OpenDesign，要做 5×7 贺卡，白色 300g 硬卡纸，先整理订单配置并生成材质预览。
 ```
 
 ```text
-使用 Print Studio OpenDesign，把这组插画做成 12 个月月历卡，输出客户预览、印刷文件、白底图和氛围图。
+使用 Print Studio OpenDesign，把这组插画做成 12 个月月历卡，输出预览、印刷文件、白底图和氛围图。
 ```
 
 ```text

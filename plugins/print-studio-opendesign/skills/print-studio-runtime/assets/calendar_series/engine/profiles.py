@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 """
 ② 印刷体系 · 三套色彩 profile + 材质补偿接口
-- screen_preview:客户线上看,柔和轻盈(接近原渲染)
+- screen_preview:线上查看,柔和轻盈(接近原渲染)
 - print_output  :印刷交付,高级饱和(+~12%)+对比+锐化,暖白底不发灰,文字可读
 - commerce_mockup:D/E 电商图,更亮更通透
-材质补偿(PAPER_COMP)= 基于客户纸张清单的预估分组;未打样前均视为初始值。
+材质补偿(PAPER_COMP)= 基于纸张清单的预估分组;未打样前均视为初始值。
 铁律:印刷源(print)与电商图(commerce)分开,互不污染。
 """
 from PIL import Image, ImageEnhance, ImageFilter

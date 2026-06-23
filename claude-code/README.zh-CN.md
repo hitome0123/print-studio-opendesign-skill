@@ -29,11 +29,11 @@ bash claude-code/install.sh
 ## 使用示例
 
 ```text
-使用 print-studio-order-intake，客户要做 8×12 挂历，300g 白卡纸，顶部线圈装订，先生成配置。
+使用 print-studio-order-intake，要做 8×12 挂历，300g 白卡纸，顶部线圈装订，先生成配置。
 ```
 
 ```text
-使用 print-studio-calendar-series，根据 wall-calendar 示例生成客户预览和印刷文件。
+使用 print-studio-calendar-series，根据 wall-calendar 示例生成预览和印刷文件。
 ```
 
 ## 注意

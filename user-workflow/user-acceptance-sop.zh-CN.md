@@ -1,6 +1,6 @@
-# 客户验收 SOP
+# 使用验收 SOP
 
-> 目标：客户拿到 Skill 后，能在 30 分钟内跑通第一套示例，并知道结果算不算成功。
+> 目标：使用者拿到 Skill 后，能在 30 分钟内跑通第一套示例，并知道结果算不算成功。
 
 ## 1. 安装
 
@@ -64,12 +64,12 @@ python scripts/run.py examples/wall-calendar-8x12.json
 - 顶部有线圈/装订区。
 - `qc_report.json` 无 FAIL。
 
-## 5. 客户修改自己的项目
+## 5. 修改自己的项目
 
-建议客户先复制一个示例配置：
+建议先复制一个示例配置：
 
 ```bash
-cp examples/greeting-card-5x7.json jobs/customer-a-card.json
+cp examples/greeting-card-5x7.json jobs/project-a-card.json
 ```
 
 然后改：
@@ -89,9 +89,9 @@ cp examples/greeting-card-5x7.json jobs/customer-a-card.json
 
 | 文件夹 / 文件 | 用途 |
 | --- | --- |
-| `preview/preview.html` | 客户快速看尺寸、材质、印刷 guide |
+| `preview/preview.html` | 快速查看尺寸、材质、印刷 guide |
 | `preview/materials.html` | 24 种材质选择页 |
-| `screen/` | 客户预览图 |
+| `screen/` | 预览图 |
 | `print/` | 300dpi 印刷文件 |
 | `commerce/` | 白底图 / 氛围图 |
 | `qc_report.json` | 自动质检 |
@@ -104,6 +104,5 @@ cp examples/greeting-card-5x7.json jobs/customer-a-card.json
 - 安装成功。
 - 至少一个贺卡示例 PASS。
 - 至少一个材质选择页生成成功。
-- 至少一个客户素材项目能生成预览。
-- 客户理解 V1 不承诺 CMYK/ICC、生产级烫金 UV、ERP 报价系统。
-
+- 至少一个自有素材项目能生成预览。
+- 使用者理解 V1 不承诺 CMYK/ICC、生产级烫金 UV、ERP 报价系统。

@@ -1,5 +1,5 @@
 {
-  "_note": "预设库:客户从这里选 size/material/product_form/style/language。status=待确认/待补/待标定 的项 resolver 会给警告。新增预设只加条目,不改 key 结构。",
+  "_note": "预设库:使用者从这里选 size/material/product_form/style/language。status=待确认/待补/待标定 的项 resolver 会给警告。新增预设只加条目,不改 key 结构。",
   "sizes": {
     "greeting_5x7": {
       "label": "贺卡竖版 5×7in",
@@ -313,7 +313,7 @@
       "detail_retention": "full",
       "text_depth": "normal",
       "color_comp": "pvc",
-      "use_case": "防水耐磨;德州扑克/海外客户常用;一面光滑一面磨砂"
+      "use_case": "防水耐磨;德州扑克/海外订单常用;一面光滑一面磨砂"
     },
     "pvc_32c": {
       "label": "32丝 PVC",
@@ -486,7 +486,7 @@
   },
   "output_versions": {
     "screen": {
-      "label": "客户预览版",
+      "label": "预览版",
       "profile": "screen_preview"
     },
     "print": {

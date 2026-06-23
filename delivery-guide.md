@@ -9,22 +9,22 @@
 - 独立 Skill：`print-studio-opendesign`
 - 插件套件：`plugins/print-studio-opendesign`
 
-它用于印刷厂接单打样：客户给插画/图片，印刷厂选择产品类型、尺寸、纸张/材质、系列结构，Codex 在规则内生成客户预览、印刷文件、电商白底图/氛围图、QC 报告和交付包。
+它用于印刷厂接单打样：导入插画/图片，印刷厂选择产品类型、尺寸、纸张/材质、系列结构，Codex 在规则内生成预览、印刷文件、电商白底图/氛围图、QC 报告和交付包。
 
-## 客户使用入口
+## 使用入口
 
-给客户培训时，优先打开：
+首次上手时，优先打开：
 
-- `customer-workflow/customer-order-form.zh-CN.md`
-- `customer-workflow/customization-options.zh-CN.md`
-- `customer-workflow/conversation-examples.zh-CN.md`
-- `customer-workflow/customer-acceptance-sop.zh-CN.md`
+- `user-workflow/user-order-form.zh-CN.md`
+- `user-workflow/customization-options.zh-CN.md`
+- `user-workflow/conversation-examples.zh-CN.md`
+- `user-workflow/user-acceptance-sop.zh-CN.md`
 
-客户不需要先理解 JSON。先按接单表填写，再让 Codex / Claude Code 生成配置。
+使用者不需要先理解 JSON。先按接单表填写，再让 Codex / Claude Code 生成配置。
 
 ## 推荐交付方式
 
-给印刷厂客户时，推荐交付插件套件，因为它更像一个产品：
+推荐优先使用插件套件，因为它更像一个完整产品：
 
 | Skill | 用途 |
 | --- | --- |
@@ -80,7 +80,7 @@ bash claude-code/install.sh
 
 然后在 Claude Code 里说：
 
-“使用 print-studio-order-intake，客户要做 8×12 挂历，顶部线圈装订，先生成配置。”
+“使用 print-studio-order-intake，要做 8×12 挂历，顶部线圈装订，先生成配置。”
 
 ## 快速演示
 
@@ -104,7 +104,7 @@ python scripts/run.py config.example.json
 
 输出：
 
-- 客户预览版：`screen/`
+- 预览版：`screen/`
 - 印刷交付版：`print/`
 - 电商展示版：`commerce/`
 - QC 报告：`qc_report.json`
@@ -117,7 +117,7 @@ python scripts/run.py config.example.json
 - 12 个月真实日期日历卡模板
 - 8×12 挂历模板，支持顶部线圈、挂孔、夹条装订安全区
 - 5×7、5×5、7×5、塔罗牌、书签、Letter 等尺寸预设
-- 客户提供的 24 种纸张/PVC 材质预设
+- 已内置的 24 种纸张/PVC 材质预设
 - 300dpi、出血、安全边距、印刷 guide
 - 屏幕预览版 / 印刷版 / 电商展示版分离
 - 材质选择预览页
@@ -131,4 +131,4 @@ python scripts/run.py config.example.json
 
 ## 重要说明
 
-材质预览为屏幕模拟，仅用于销售沟通和初步选材；最终颜色、纹理、珠光、PVC 光泽、纸芯侧边效果，以实物纸样和打样为准。
+材质预览为屏幕模拟，仅用于沟通确认和初步选材；最终颜色、纹理、珠光、PVC 光泽、纸芯侧边效果，以实物纸样和打样为准。

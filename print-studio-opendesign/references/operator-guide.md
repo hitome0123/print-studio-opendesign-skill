@@ -2,9 +2,9 @@
 
 ## What This Skill Sells
 
-客户给图，印刷厂选规格，Codex 快速生成：
+导入图像，印刷厂选规格，Codex 快速生成：
 
-- 客户预览图
+- 预览图
 - 印刷版文件
 - 白底产品图
 - 氛围产品图
@@ -13,7 +13,7 @@
 
 一句话话术：
 
-> 客户给一组图，我们 5-30 分钟出可确认的系列打样包。尺寸、纸张、出血、安全边距、预览图和印刷文件一起生成。
+> 导入一组图像，我们 5-30 分钟出可确认的系列打样包。尺寸、纸张、出血、安全边距、预览图和印刷文件一起生成。
 
 ## MVP Products
 
@@ -47,7 +47,7 @@ V1 engine fully supports `monthly_calendar`. Other series types should be treate
 - QC report has no FAIL.
 - The chosen paper/material key appears in resolved config.
 - Screen, print, and commerce files are separated.
-- Mockups match the selected product form closely enough for customer proofing.
+- Mockups match the selected product form closely enough for proofing.
 
 ## Do Not Include In V1
 

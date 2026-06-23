@@ -1,13 +1,13 @@
 ---
 name: print-studio-prepress-qc
-description: "Use for final prepress review of Print Studio OpenDesign outputs: bleed, trim, safe area, margins, text readability, date accuracy, contrast, material risk, output completeness, package zip, and whether files are suitable for customer preview, sample proof, or print-shop production handoff."
+description: "Use for final prepress review of Print Studio OpenDesign outputs: bleed, trim, safe area, margins, text readability, date accuracy, contrast, material risk, output completeness, package zip, and whether files are suitable for review preview, sample proof, or print-shop production handoff."
 ---
 
 # Print Studio Prepress QC
 
 ## Goal
 
-Decide whether a proof is ready for customer review, sample proofing, or production handoff.
+Decide whether a proof is ready for review, sample proofing, or production handoff.
 
 ## Workflow
 
@@ -18,7 +18,7 @@ Decide whether a proof is ready for customer review, sample proofing, or product
 2. Read `output/<job>/qc_report.json`.
 3. Inspect `screen/`, `print/`, and `commerce/` according to requested outputs.
 4. Report status as one of:
-   - customer proposal ready
+   - proposal preview ready
    - sample proof ready
    - production handoff ready
    - blocked, needs revision
