@@ -14,6 +14,12 @@ bash claude-code/install.sh
 
 ## Recommended Claude Workflow
 
+For a first-time customer simulation, start with:
+
+- `customer-workflow/customer-order-form.zh-CN.md`
+- `customer-workflow/conversation-examples.zh-CN.md`
+- `customer-workflow/customer-acceptance-sop.zh-CN.md`
+
 1. Use `print-studio-order-intake` to create a job config.
 2. Use `print-studio-material-selector` to generate material previews.
 3. Use `print-studio-layout-proof` or `print-studio-calendar-series` to render proofs.
@@ -21,4 +27,3 @@ bash claude-code/install.sh
 5. Use `print-studio-prepress-qc` before delivery.
 
 Keep generated `output/`, `.tmp/`, and `__pycache__/` files out of commits.
-

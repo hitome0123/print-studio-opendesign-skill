@@ -33,6 +33,13 @@ plugins/print-studio-opendesign/
 
 先让 Codex 走 `print-studio-order-intake` 建配置，再按需要进入材质、排版、展示、质检。
 
+如果客户第一次使用，先读仓库根目录：
+
+- `customer-workflow/customer-order-form.zh-CN.md`
+- `customer-workflow/customization-options.zh-CN.md`
+- `customer-workflow/conversation-examples.zh-CN.md`
+- `customer-workflow/customer-acceptance-sop.zh-CN.md`
+
 示例：
 
 ```text

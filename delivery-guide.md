@@ -11,6 +11,17 @@
 
 它用于印刷厂接单打样：客户给插画/图片，印刷厂选择产品类型、尺寸、纸张/材质、系列结构，Codex 在规则内生成客户预览、印刷文件、电商白底图/氛围图、QC 报告和交付包。
 
+## 客户使用入口
+
+给客户培训时，优先打开：
+
+- `customer-workflow/customer-order-form.zh-CN.md`
+- `customer-workflow/customization-options.zh-CN.md`
+- `customer-workflow/conversation-examples.zh-CN.md`
+- `customer-workflow/customer-acceptance-sop.zh-CN.md`
+
+客户不需要先理解 JSON。先按接单表填写，再让 Codex / Claude Code 生成配置。
+
 ## 推荐交付方式
 
 给印刷厂客户时，推荐交付插件套件，因为它更像一个产品：
