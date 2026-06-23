@@ -12,3 +12,4 @@
 - 插件内拆出 6 个面向业务动作的小 Skill，并保留 `print-studio-runtime` 作为共用渲染引擎。
 - 已通过插件 manifest 校验、7 个 Skill 校验、材质预览和吊牌示例运行。
 - 2026-06-23：追加 Claude Code 安装脚本与挂历顶部装订安全区。
+- 2026-06-23：gstack 交付体检评分 8.0/10，结论为 Beta 可交付，生产级仍需补 SOP/PDF/ICC 边界。
