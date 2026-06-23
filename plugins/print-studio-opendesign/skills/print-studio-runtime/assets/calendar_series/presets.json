@@ -88,6 +88,22 @@
       "h_in": 3.5,
       "ratio": "4:7",
       "note": "吊牌/小卡;可加打孔位"
+    },
+    "wall_cal_8x12": {
+      "label": "挂历竖版 8×12in",
+      "status": "ok",
+      "w_in": 8,
+      "h_in": 12,
+      "ratio": "2:3",
+      "note": "挂历常用竖版;顶部需预留装订/挂孔安全区"
+    },
+    "wall_cal_a4": {
+      "label": "挂历/A4 8.27×11.69in",
+      "status": "ok",
+      "w_in": 8.27,
+      "h_in": 11.69,
+      "ratio": "A4",
+      "note": "A4挂历/海报月历;适合线圈或夹条装订"
     }
   },
   "materials": {
@@ -419,6 +435,12 @@
     },
     "postcard": {
       "label": "明信片"
+    },
+    "wall_hanger": {
+      "label": "挂历挂孔/挂钩"
+    },
+    "wall_clip": {
+      "label": "挂历夹条"
     }
   },
   "styles": {
@@ -530,6 +552,13 @@
       "default_size": "tarot",
       "template": "generic_card",
       "supports_dates": false
+    },
+    "wall_calendar": {
+      "label": "挂历",
+      "default_size": "wall_cal_8x12",
+      "template": "calendar_series",
+      "supports_dates": true,
+      "default_binding": "top_wire"
     }
   },
   "series_types": {
@@ -587,6 +616,22 @@
     "uv": {
       "label": "局部UV",
       "status": "preview_only"
+    },
+    "top_wire": {
+      "label": "顶部线圈/YO圈",
+      "default_reserved_mm": 12,
+      "note": "顶部预留装订区;重要内容下移"
+    },
+    "top_hanger_hole": {
+      "label": "顶部挂孔",
+      "default_diameter_mm": 5,
+      "default_reserved_mm": 12,
+      "note": "中上方打孔;孔位周围不放文字和主体"
+    },
+    "top_clip": {
+      "label": "顶部夹条",
+      "default_reserved_mm": 14,
+      "note": "顶部夹条/木条装订;重要内容下移"
     }
   }
 }

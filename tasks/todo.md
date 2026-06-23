@@ -11,3 +11,4 @@
 - 已把原先“大 Skill”补充为 `plugins/print-studio-opendesign/` 插件套件。
 - 插件内拆出 6 个面向业务动作的小 Skill，并保留 `print-studio-runtime` 作为共用渲染引擎。
 - 已通过插件 manifest 校验、7 个 Skill 校验、材质预览和吊牌示例运行。
+- 2026-06-23：追加 Claude Code 安装脚本与挂历顶部装订安全区。

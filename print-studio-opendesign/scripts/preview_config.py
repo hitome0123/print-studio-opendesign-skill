@@ -251,6 +251,7 @@ def main():
             poem_right=content.get("corner_poem_right", "") if content.get("keep_poems", True) else "",
             seal=content.get("seal_initials", "") if content.get("keep_seal", True) else "",
             week_start=content.get("week_start", "sunday"),
+            production=resolved.get("production"),
         )
     else:
         render_generic_card(width, height, month, str(illustration), str(design), resolved, side="front")

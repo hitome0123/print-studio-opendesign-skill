@@ -25,6 +25,18 @@
 | `print-studio-prepress-qc` | 印前质检与交付包 |
 | `print-studio-runtime` | 共用渲染引擎 |
 
+## Claude Code 支持
+
+Claude Code 侧不依赖 Codex 插件 manifest，直接安装多个 `SKILL.md`：
+
+```bash
+bash claude-code/install.sh
+```
+
+安装位置：
+
+`~/.claude/skills/`
+
 ## 安装方式
 
 ### 方式 A：独立 Skill
@@ -48,6 +60,16 @@
 `plugins/print-studio-opendesign/`
 
 作为 Codex Plugin 安装或放入团队插件仓库。插件内的小 Skill 会按任务自动触发。
+
+### 方式 C：Claude Code
+
+运行：
+
+`bash claude-code/install.sh`
+
+然后在 Claude Code 里说：
+
+“使用 print-studio-order-intake，客户要做 8×12 挂历，顶部线圈装订，先生成配置。”
 
 ## 快速演示
 
@@ -82,6 +104,7 @@ python scripts/run.py config.example.json
 已支持：
 
 - 12 个月真实日期日历卡模板
+- 8×12 挂历模板，支持顶部线圈、挂孔、夹条装订安全区
 - 5×7、5×5、7×5、塔罗牌、书签、Letter 等尺寸预设
 - 客户提供的 24 种纸张/PVC 材质预设
 - 300dpi、出血、安全边距、印刷 guide

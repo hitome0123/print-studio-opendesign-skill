@@ -134,6 +134,14 @@ def resolve_config(config_path=None):
 
     if production.get("double_sided") and "back" not in outs.get("types", []):
         warn("production.double_sided=true 但 outputs.types 未包含 back; 将只出正面,如需背面请加入 back")
+    if pkey == "wall_calendar":
+        binding = production.get("binding") or pdef.get("default_binding") or "top_wire"
+        if binding in ("none", ""):
+            warn("挂历建议选择顶部装订方式: top_wire/top_hanger_hole/top_clip,否则只按普通日历页输出")
+        elif binding not in ("top_wire", "top_hanger_hole", "top_clip", "wall_coil"):
+            warn(f"挂历装订 binding='{binding}' 暂无专用预览,建议使用 top_wire/top_hanger_hole/top_clip")
+        if not production.get("binding_reserved_mm"):
+            warn("挂历顶部装订区使用默认预留 12mm;如客户有线圈/夹条规格,请设置 production.binding_reserved_mm")
 
     resolved = {
         "theme": cfg.get("theme"),

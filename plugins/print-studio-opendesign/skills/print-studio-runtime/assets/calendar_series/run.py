@@ -111,7 +111,8 @@ def main():
                 meta = render_page(W, H, family, year, mon, str(src), str(out),
                                    keyword=(kws[mon - 1] if mon - 1 < len(kws) else None),
                                    accent=plan["accent"], vbias=plan["vbias"],
-                                   poem_left=poem_l, poem_right=poem_r, seal=seal, week_start=week_start)
+                                   poem_left=poem_l, poem_right=poem_r, seal=seal, week_start=week_start,
+                                   production=r.get("production"))
             else:
                 meta = render_generic_card(W, H, mon, str(src), str(out), r, side="front")
             pages[mon] = out

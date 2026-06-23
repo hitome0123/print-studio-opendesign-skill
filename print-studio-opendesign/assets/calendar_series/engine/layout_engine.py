@@ -66,13 +66,57 @@ def _decor(d, W, H, poem_l, poem_r, seal, poem_sz):
         A._ctext(d, sx, sy - round(0.013 * W), seal, A._font(A.F_DIDOT, round(0.017 * W)), (206, 150, 138))
 
 
+def _binding_spec(W, H, production):
+    production = production or {}
+    binding = production.get("binding") or "none"
+    if binding not in {"top_wire", "top_hanger_hole", "top_clip", "wall_coil"}:
+        return {"binding": binding, "reserved_px": 0}
+    mm = production.get("binding_reserved_mm")
+    if mm is None:
+        mm = 14 if binding == "top_clip" else 12
+    reserved = max(round(float(mm) / 25.4 * 300), round(0.055 * min(W, H)))
+    return {"binding": binding, "reserved_px": reserved}
+
+
+def _draw_binding_guide(d, W, H, spec):
+    binding = spec.get("binding")
+    reserved = spec.get("reserved_px", 0)
+    if reserved <= 0:
+        return
+    guide = (178, 122, 88)
+    faint = (214, 188, 160)
+    d.rectangle((0, 0, W, reserved), fill=(248, 243, 232))
+    d.line((round(0.06 * W), reserved, round(0.94 * W), reserved), fill=faint, width=max(2, round(0.002 * W)))
+    if binding in {"top_wire", "wall_coil"}:
+        count = 9 if W < H else 13
+        start, end = round(0.12 * W), round(0.88 * W)
+        y = round(reserved * 0.46)
+        r = max(6, round(0.008 * W))
+        for i in range(count):
+            x = round(start + (end - start) * i / max(1, count - 1))
+            d.ellipse((x - r, y - r, x + r, y + r), outline=guide, width=max(2, r // 3))
+            d.line((x, y + r, x, reserved - round(0.18 * reserved)), fill=faint, width=max(1, r // 4))
+    elif binding == "top_hanger_hole":
+        r = max(10, round(0.014 * W))
+        x, y = W // 2, round(reserved * 0.45)
+        d.ellipse((x - r, y - r, x + r, y + r), outline=guide, width=max(2, r // 4))
+    elif binding == "top_clip":
+        h = max(10, round(reserved * 0.28))
+        y = round(reserved * 0.28)
+        d.rounded_rectangle((round(0.10 * W), y, round(0.90 * W), y + h), radius=max(4, h // 3),
+                            outline=guide, width=max(2, round(0.002 * W)))
+
+
 def render_page(W, H, family, year, month, illustration, out_path,
                 keyword=None, accent=None, vbias="center",
-                poem_left="", poem_right="", seal="", week_start="sunday"):
+                poem_left="", poem_right="", seal="", week_start="sunday",
+                production=None):
     cv = Image.new("RGB", (W, H), BG)
     d = ImageDraw.Draw(cv)
     accent = accent or DEFAULT_ACCENT
     kw = keyword or KEYWORD[month]
+    binding = _binding_spec(W, H, production)
+    top_reserved = binding["reserved_px"]
 
     if family == "landscape":
         S = H  # 文字尺度以短边为基准
@@ -87,13 +131,14 @@ def render_page(W, H, family, year, month, illustration, out_path,
         kw_top = hdr_top - round(kw_sz * 2.2)
         month_top = kw_top - round(month_sz * 0.95)
         # 左区插画
-        _draw_illo(cv, illustration, round(0.04 * W), round(0.08 * H),
-                   round(0.47 * W), round(0.84 * H), vbias)
+        content_top = max(round(0.08 * H), top_reserved + round(0.025 * H))
+        _draw_illo(cv, illustration, round(0.04 * W), content_top,
+                   round(0.47 * W), H - content_top - round(0.08 * H), vbias)
         A._ctext(d, rx0 + rcols_w / 2, month_top, MONTH_EN[month], A._font(A.F_SCRIPT, month_sz), accent)
         if kw:
             A._ctext(d, rx0 + rcols_w / 2, kw_top, kw, A._font(A.F_DIDOT, kw_sz), GRAY, ls=round(0.004 * S))
         _draw_calendar(d, year, month, rx0, hdr_top, rcols_w, row_h, hdr_sz, day_sz, week_start)
-        cx0, cy0, cx1, cy1, dsz = round(0.04 * W), round(0.08 * H), rx0 + rcols_w, grid_top + 6 * row_h, day_sz
+        cx0, cy0, cx1, cy1, dsz = round(0.04 * W), content_top, rx0 + rcols_w, grid_top + 6 * row_h, day_sz
     else:  # portrait / square
         month_sz, kw_sz = round(0.10 * W), round(0.026 * W)
         hdr_sz = day_sz = round(0.032 * W)
@@ -106,7 +151,7 @@ def render_page(W, H, family, year, month, illustration, out_path,
         hdr_top = grid_top - round(hdr_sz * 1.5) - round(0.012 * H)
         kw_top = hdr_top - round(kw_sz * 2.0)
         month_top = kw_top - round(month_sz * 0.95)
-        illo_y0 = round(0.05 * H)
+        illo_y0 = max(round(0.05 * H), top_reserved + round(0.02 * H))
         illo_y1 = month_top - round(0.012 * H)
         _decor(d, W, H, poem_left, poem_right, seal, poem_sz)
         _draw_illo(cv, illustration, x0, illo_y0, cols_w, illo_y1 - illo_y0, vbias)
@@ -118,10 +163,12 @@ def render_page(W, H, family, year, month, illustration, out_path,
         _draw_calendar(d, year, month, x0, hdr_top, cols_w, row_h, hdr_sz, day_sz, week_start)
         cx0, cy0, cx1, cy1, dsz = x0, illo_y0, x0 + cols_w, grid_top + 6 * row_h, day_sz
 
+    _draw_binding_guide(d, W, H, binding)
     Path(out_path).parent.mkdir(parents=True, exist_ok=True)
     cv.save(out_path, quality=95)
     return {"path": out_path, "family": family, "canvas": [W, H], "day_sz_px": dsz,
-            "content_bbox": [cx0, cy0, cx1, cy1], "days": calendar.monthrange(year, month)[1]}
+            "content_bbox": [cx0, cy0, cx1, cy1], "days": calendar.monthrange(year, month)[1],
+            "binding": binding}
 
 
 def render_series_grid(page_paths, out_path, cols=4, title="", accent=None):

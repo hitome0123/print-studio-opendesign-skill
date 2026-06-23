@@ -11,7 +11,7 @@ Turn a customer request into a runnable Print Studio OpenDesign config.
 
 ## Workflow
 
-1. Identify the product type: card, postcard, calendar, bookmark, tag, insert, card set, or custom.
+1. Identify the product type: card, postcard, desk calendar, wall calendar, bookmark, tag, insert, card set, or custom.
 2. Identify the series: single, monthly, quarterly, seasonal, festival set, or custom `N` cards.
 3. Select production specs: size, material, bleed, safe margin, double-sided, round corners, binding, finishing.
 4. Select outputs: `screen`, `print`, `commerce`, `single`, `grid`, `whitebg`, `ambiance`, `back`.
@@ -37,3 +37,9 @@ Turn a customer request into a runnable Print Studio OpenDesign config.
 - Use `print-studio-calendar-series` for monthly/quarterly/date-based layouts.
 - Use `print-studio-prepress-qc` before final delivery.
 
+## Wall Calendar Defaults
+
+- Use `preset.product_type: wall_calendar`.
+- Start from `../print-studio-runtime/examples/wall-calendar-8x12.json`.
+- Recommended bindings: `top_wire`, `top_hanger_hole`, or `top_clip`.
+- Set `production.binding_reserved_mm` when the print shop has exact coil, hook, or clip-strip specs.

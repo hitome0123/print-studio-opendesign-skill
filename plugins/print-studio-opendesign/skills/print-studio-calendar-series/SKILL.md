@@ -1,6 +1,6 @@
 ---
 name: print-studio-calendar-series
-description: "Use for date-based Print Studio OpenDesign products: 12-month calendar cards, quarterly cards, seasonal cards, solar-term/holiday sets, desk-calendar cards, and wall-calendar proofing. Handles real calendar dates, month labels, date readability, layout rhythm, bleed/safe margins, and print-aware color rules."
+description: "Use for date-based Print Studio OpenDesign products: 12-month calendar cards, quarterly cards, seasonal cards, solar-term/holiday sets, desk-calendar cards, and wall-calendar proofing. Handles real calendar dates, month labels, date readability, layout rhythm, bleed/safe margins, wall-calendar top binding zones, and print-aware color rules."
 ---
 
 # Print Studio Calendar Series
@@ -28,8 +28,17 @@ Create printable calendar or date-based card series from illustrations.
 - Week labels and month names must remain readable after print.
 - Thin decorative lines must not fall below printable visibility.
 - If the product is bound, reserve extra safe space near binding.
+- For wall calendars, use `preset.product_type: wall_calendar` and one of `production.binding: top_wire/top_hanger_hole/top_clip`.
+- If binding specs are unknown, default to 12mm top reserved area and flag it for physical proofing.
+
+## Wall Calendar Example
+
+Use:
+
+```bash
+python scripts/run.py examples/wall-calendar-8x12.json
+```
 
 ## Handoff
 
 Use `print-studio-prepress-qc` for print-readiness and package review.
-

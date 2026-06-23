@@ -43,10 +43,21 @@ plugins/print-studio-opendesign/
 使用 Print Studio OpenDesign，把这组插画做成 12 个月月历卡，输出客户预览、印刷文件、白底图和氛围图。
 ```
 
+```text
+使用 Print Studio OpenDesign，做 8×12 挂历，顶部线圈装订，预留装订安全区。
+```
+
+## Claude Code
+
+Claude Code 可直接使用本插件的 `skills/` 目录。仓库根目录提供安装脚本：
+
+```bash
+bash claude-code/install.sh
+```
+
 ## 设计原则
 
 - 插件负责“产品化入口”，小 Skill 负责“单一任务”。
 - AI 可以参与审美判断，但尺寸、出血、安全区、日期、导出和 QC 走确定性脚本。
 - 屏幕预览、印刷源文件、电商展示图分开管理，避免互相污染。
 - 材质预览只用于沟通选择，最终批量印刷仍以纸样和打样为准。
-

@@ -1,0 +1,107 @@
+{
+  "job": {
+    "client_name": "示例客户",
+    "job_name": "植物挂历打样",
+    "product_line": "wall calendar / print proof",
+    "quantity": null
+  },
+  "theme": "植物挂历",
+  "illustrations_dir": "example_illustrations",
+  "series": {
+    "type": "monthly_calendar",
+    "count": 12,
+    "template": "calendar_series",
+    "_examples": [
+      "monthly_calendar",
+      "quarterly",
+      "seasonal",
+      "festival_set",
+      "custom_cards"
+    ]
+  },
+  "preset": {
+    "size": "wall_cal_8x12",
+    "material": "white_card_300g",
+    "product_form": "wall_coil",
+    "style": "vintage_botanical",
+    "language": "en",
+    "product_type": "wall_calendar"
+  },
+  "content": {
+    "year": 2027,
+    "real_dates": true,
+    "week_start": "sunday",
+    "month_keywords": [
+      "HOPE",
+      "LOVE",
+      "DREAM",
+      "BLOOM",
+      "GRACE",
+      "JOY",
+      "WARMTH",
+      "SHINE",
+      "CALM",
+      "HARVEST",
+      "GRATITUDE",
+      "PEACE"
+    ],
+    "corner_poem_left": "A quiet beginning,\nsoft as morning light.",
+    "corner_poem_right": "Where small things\nbloom in their season.",
+    "seal_initials": "JB",
+    "keep_poems": true,
+    "keep_seal": true,
+    "keep_botanical_notes": true,
+    "front_title": "January",
+    "front_subtitle": "HOPE",
+    "message": "A quiet beginning, soft as morning light.",
+    "back_title": "Notes",
+    "back_body": "Wall-calendar binding area is reserved at the top.",
+    "card_titles": [],
+    "card_subtitles": []
+  },
+  "outputs": {
+    "versions": [
+      "screen",
+      "print"
+    ],
+    "types": [
+      "single",
+      "grid"
+    ],
+    "series_grid_layout": "4x3",
+    "product_shot_months": [
+      1
+    ]
+  },
+  "advanced": {
+    "_note": "挂历默认顶部预留装订区。批量前请按实际线圈/夹条规格调整 binding_reserved_mm。",
+    "custom_size": null,
+    "bleed_mm": null,
+    "safe_margin_mm": null,
+    "bg_tone": null,
+    "saturation_boost_pct": null,
+    "title_font_scale": null,
+    "decor_complexity": null,
+    "ambiance_scene": null,
+    "brand_logo": null
+  },
+  "image_gen": {
+    "backend": "gemini",
+    "model": "gemini-2.5-flash-image"
+  },
+  "ai_layout": true,
+  "qc_ai": false,
+  "production": {
+    "double_sided": false,
+    "round_corners": {
+      "enabled": false,
+      "radius_mm": 3
+    },
+    "binding": "top_wire",
+    "binding_reserved_mm": 12,
+    "finishing": [
+      "top_wire"
+    ],
+    "custom_notes": "顶部线圈装订，重要内容避开顶部装订区。"
+  }
+}

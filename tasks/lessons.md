@@ -7,3 +7,8 @@
 - Keep deterministic scripts and heavy assets in a shared runtime skill so task skills stay lightweight.
 - For print-shop workflows, separate intake, material selection, layout proofing, commerce mockups, and prepress QC.
 
+## 2026-06-23 · Cross-Agent Delivery
+
+- When the user asks for Claude Code support, provide a direct `~/.claude/skills` installation path, not only Codex plugin metadata.
+- Keep one canonical runtime shape and sync it into both Codex and Claude-facing skill packages.
+- Product status tables must match actual implementation; do not leave “planned” labels after adding functional presets and renderer rules.
