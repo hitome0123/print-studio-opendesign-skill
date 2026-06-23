@@ -11,7 +11,8 @@
 | 材质 | 24 种纸张/PVC | `blue_core_300g` |
 | 张数 | 单张、4 张、6 张、12 张、自定义 N 张 | `series.count = 8` |
 | 标题 | 主标题、副标题、每张标题 | `January`、`HOPE` |
-| 输出 | 预览、印刷、白底、氛围、材质页 | `screen`、`print` |
+| 输出 | 预览、印刷、白底、氛围、材质页、4K 下载页 | `screen`、`print`、`download_4k` |
+| 首轮模型预览 | 即梦、Gemini、GPT-Image2 对比 | `image_gen.provider_previews` |
 
 ## 专业可改
 
@@ -59,6 +60,17 @@
 - 材质预览是屏幕模拟。
 - 最终颜色和纹理要以实物纸样和打样为准。
 - 浅粉、浅黄、浅绿、浅灰字需要特别检查。
+
+## 输出预览可改
+
+可开启：
+
+- `download_4k`：每张输出图生成长边 4096px 的单独下载版。
+- `provider_previews`：首轮比较即梦、Gemini、GPT-Image2 的白底图和氛围图。
+- `provider_previews.months`：只选 1–2 张先比较，避免浪费额度。
+- `provider_previews.types`：可只看白底图，也可同时看氛围图。
+
+建议：确认模型路线后，再批量生成完整白底图和氛围图。
 
 ## 不建议随便改
 

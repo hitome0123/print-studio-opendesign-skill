@@ -13,7 +13,7 @@
 
 用法:python run.py [config.json]    |    lint:python engine/config_schema.py
 """
-import json, os, re, sys, time
+import html, json, os, re, sys, time
 from pathlib import Path
 from PIL import Image
 
@@ -26,6 +26,9 @@ import ai_planner                                                    # noqa: E40
 from profiles import apply_profile                                   # noqa: E402
 from print_export import build_print_file, build_package            # noqa: E402
 from qc import run_qc                                                # noqa: E402
+
+
+TARGET_4K_LONG_EDGE = 4096
 
 
 def find_illustrations(folder, count=None):
@@ -51,6 +54,135 @@ def find_illustrations(folder, count=None):
         else:
             mapped[idx] = found[(idx - 1) % len(found)][1]
     return mapped
+
+
+def _save_4k(img, out_path, long_edge=TARGET_4K_LONG_EDGE):
+    img = img.convert("RGB")
+    w, h = img.size
+    scale = long_edge / max(w, h)
+    target = (max(1, round(w * scale)), max(1, round(h * scale)))
+    if target != img.size:
+        img = img.resize(target, Image.LANCZOS)
+    Path(out_path).parent.mkdir(parents=True, exist_ok=True)
+    img.save(out_path, quality=94, dpi=(300, 300))
+    return Path(out_path)
+
+
+def _write_download_gallery(out_dir, title, files):
+    cards = []
+    for label, path in files:
+        rel = path.name
+        cards.append(
+            f"<figure><a href='{html.escape(rel)}' download>"
+            f"<img src='{html.escape(rel)}' alt='{html.escape(label)}'></a>"
+            f"<figcaption><b>{html.escape(label)}</b><br><a href='{html.escape(rel)}' download>下载保存 4K 图</a></figcaption></figure>"
+        )
+    page = f"""<!doctype html><meta charset="utf-8"><title>{html.escape(title)} · 4K 单张下载</title>
+<style>
+body{{margin:0;background:#f6f0e8;color:#2f2a24;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;padding:28px}}
+header{{max-width:1180px;margin:0 auto 22px}} h1{{margin:0 0 8px;font-size:28px}} p{{color:#756b60;line-height:1.55}}
+.grid{{max-width:1180px;margin:auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px}}
+figure{{margin:0;background:white;border:1px solid #e5dacd;border-radius:14px;padding:12px;box-shadow:0 8px 28px rgba(62,49,35,.08)}}
+img{{width:100%;display:block;border-radius:10px}} figcaption{{font-size:13px;line-height:1.5;margin-top:10px;color:#5e554c}} a{{color:#8b5a2b}}
+</style><header><h1>{html.escape(title)} · 4K 单张下载</h1>
+<p>每张图都可单独打开或下载保存。这里是展示/确认用 4K 长边版本,印刷生产仍以 <code>print/</code> 目录为准。</p></header>
+<main class="grid">{''.join(cards)}</main>"""
+    (out_dir / "index.html").write_text(page, encoding="utf-8")
+
+
+def export_download_4k(out_base, theme, pages, grid, prod, material, sat_boost):
+    out_dir = out_base / "download_4k"
+    out_dir.mkdir(exist_ok=True)
+    files = []
+    for m, p in sorted(pages.items()):
+        img = apply_profile(Image.open(p), "commerce_mockup", material, sat_boost)
+        saved = _save_4k(img, out_dir / f"B_{m:02d}_4k.jpg")
+        files.append((f"单张 {m:02d}", saved))
+    if grid:
+        img = apply_profile(Image.open(grid), "commerce_mockup", material, sat_boost)
+        saved = _save_4k(img, out_dir / "C_series_4k.jpg")
+        files.append(("系列总览", saved))
+    for name, p in sorted(prod.items()):
+        saved = _save_4k(Image.open(p), out_dir / f"{name}_4k.jpg")
+        files.append((name, saved))
+    if files:
+        _write_download_gallery(out_dir, theme, files)
+    return out_dir if files else None
+
+
+def _provider_label(provider):
+    return provider.get("label") or provider.get("backend") or "provider"
+
+
+def _write_provider_preview_html(out_dir, theme, results):
+    rows = []
+    for item in results:
+        media = ""
+        if item.get("path"):
+            rel = item["path"].relative_to(out_dir)
+            media = f"<img src='{html.escape(str(rel))}' alt='{html.escape(item['label'])}'>"
+        else:
+            media = f"<div class='error'>{html.escape(item.get('error') or '未生成')}</div>"
+        rows.append(
+            f"<figure>{media}<figcaption><b>{html.escape(item['label'])}</b><br>"
+            f"{html.escape(item['kind'])} · {html.escape(item['backend'])} · {html.escape(item.get('model') or '')}</figcaption></figure>"
+        )
+    page = f"""<!doctype html><meta charset="utf-8"><title>{html.escape(theme)} · 多模型预览</title>
+<style>
+body{{margin:0;background:#f6f0e8;color:#2f2a24;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;padding:28px}}
+header{{max-width:1280px;margin:0 auto 22px}} h1{{margin:0 0 8px;font-size:28px}} p{{color:#756b60;line-height:1.55}}
+.grid{{max-width:1280px;margin:auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px}}
+figure{{margin:0;background:white;border:1px solid #e5dacd;border-radius:14px;padding:12px;box-shadow:0 8px 28px rgba(62,49,35,.08)}}
+img{{width:100%;display:block;border-radius:10px}} figcaption{{font-size:13px;line-height:1.5;margin-top:10px;color:#5e554c}}
+.error{{min-height:220px;display:flex;align-items:center;justify-content:center;text-align:center;background:#fbf1ea;color:#9b3d2e;border-radius:10px;padding:18px;line-height:1.5}}
+</style><header><h1>{html.escape(theme)} · 即梦 / Gemini / GPT-Image2 预览对比</h1>
+<p>用于首轮确认不同图像模型对白底图、氛围图的理解差异。模型预览只用于展示选择,不替代印刷源文件。</p></header>
+<main class="grid">{''.join(rows)}</main>"""
+    (out_dir / "index.html").write_text(page, encoding="utf-8")
+
+
+def render_provider_previews(out_base, theme, pages, outs, image_gen):
+    cfg = image_gen.get("provider_previews") or {}
+    if not cfg.get("enabled"):
+        return None
+    providers = cfg.get("providers") or [
+        {"backend": "jimeng", "label": "即梦"},
+        {"backend": "gemini", "model": "gemini-2.5-flash-image", "label": "Gemini"},
+        {"backend": "gpt_image2", "model": "gpt-image-1", "label": "GPT-Image2"},
+    ]
+    kinds = cfg.get("types") or ["whitebg", "ambiance"]
+    months = cfg.get("months") or outs.get("product_shot_months", [1])
+    out_dir = out_base / "provider_previews"
+    out_dir.mkdir(exist_ok=True)
+    results = []
+    try:
+        from mockup_ai import render_whitebg, render_ambiance
+    except Exception as e:
+        _write_provider_preview_html(out_dir, theme, [{"label": "mockup_ai", "kind": "load", "backend": "-", "error": str(e)}])
+        return out_dir
+    for mon in months:
+        if mon not in pages:
+            continue
+        for provider in providers:
+            backend = provider.get("backend")
+            model = provider.get("model")
+            label = _provider_label(provider)
+            for kind in kinds:
+                path = out_dir / f"{label}_{kind}_{mon:02d}.jpg"
+                item = {"label": label, "kind": kind, "backend": backend or "", "model": model, "path": None}
+                try:
+                    if kind == "whitebg":
+                        render_whitebg(str(pages[mon]), str(path), backend=backend, model=model)
+                    elif kind == "ambiance":
+                        render_ambiance(str(pages[mon]), str(path), backend=backend, model=model)
+                    else:
+                        raise RuntimeError(f"未知预览类型: {kind}")
+                    item["path"] = path
+                except Exception as e:
+                    item["error"] = str(e)
+                results.append(item)
+    _write_provider_preview_html(out_dir, theme, results)
+    return out_dir
 
 
 def main():
@@ -153,9 +285,15 @@ def main():
         except Exception as e:
             print(f"  ⚠️  D/E 生图跳过: {e}")
 
+    provider_preview_dir = render_provider_previews(out_base, theme, pages, outs, r.get("image_gen", {}))
+    if provider_preview_dir:
+        print(f"  ▸ provider_previews 多模型预览 → {provider_preview_dir.name}/index.html")
+
     # ── 导出三版本 ──
     vdirs = {}
     notes = set()
+    if provider_preview_dir:
+        vdirs["provider_previews"] = provider_preview_dir
     # screen:B + C,柔和预览
     if "screen" in versions:
         sd = out_base / "screen"; sd.mkdir(exist_ok=True); vdirs["screen"] = sd
@@ -185,6 +323,12 @@ def main():
         for name, p in prod.items():
             apply_profile(Image.open(p), "commerce_mockup", material).save(cd / f"{name}.jpg", quality=92)
         print(f"  ▸ commerce 电商版 → {cd.name}/")
+
+    if outs.get("download_4k", True):
+        d4 = export_download_4k(out_base, theme, pages, grid, prod, material, sat_boost)
+        if d4:
+            vdirs["download_4k"] = d4
+            print(f"  ▸ download_4k 单张保存版 → {d4.name}/index.html")
 
     for n in notes:
         print("  ℹ️ ", n)

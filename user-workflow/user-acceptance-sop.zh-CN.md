@@ -39,6 +39,7 @@ python scripts/run.py examples/greeting-card-5x7.json
 - 终端出现 `质检 ✅ PASS`
 - 出现 `output/花园贺卡/`
 - 出现 `花园贺卡_交付包.zip`
+- 出现 `download_4k/index.html`
 
 ## 3. 跑材质选择页
 
@@ -93,7 +94,9 @@ cp examples/greeting-card-5x7.json jobs/project-a-card.json
 | `preview/materials.html` | 24 种材质选择页 |
 | `screen/` | 预览图 |
 | `print/` | 300dpi 印刷文件 |
-| `commerce/` | 白底图 / 氛围图 |
+| `commerce/` | 白底图 / 氛围图 / 系列总览图 |
+| `download_4k/index.html` | 单张 4K 下载页 |
+| `provider_previews/index.html` | 即梦 / Gemini / GPT-Image2 首轮预览对比，可选开启 |
 | `qc_report.json` | 自动质检 |
 | `*_交付包.zip` | 交付压缩包 |
 
@@ -104,5 +107,6 @@ cp examples/greeting-card-5x7.json jobs/project-a-card.json
 - 安装成功。
 - 至少一个贺卡示例 PASS。
 - 至少一个材质选择页生成成功。
+- 单张 4K 下载页能打开，每张图可独立保存。
 - 至少一个自有素材项目能生成预览。
 - 使用者理解 V1 不承诺 CMYK/ICC、生产级烫金 UV、ERP 报价系统。

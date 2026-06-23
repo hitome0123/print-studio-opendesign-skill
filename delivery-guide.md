@@ -9,7 +9,7 @@
 - 独立 Skill：`print-studio-opendesign`
 - 插件套件：`plugins/print-studio-opendesign`
 
-它用于印刷厂接单打样：导入插画/图片，印刷厂选择产品类型、尺寸、纸张/材质、系列结构，Codex 在规则内生成预览、印刷文件、电商白底图/氛围图、QC 报告和交付包。
+它用于印刷品系列打样：导入插画/图片，选择产品类型、尺寸、纸张/材质、系列结构，Codex 在规则内生成预览、印刷文件、电商白底图/氛围图、系列总览、4K 单张下载图、三模型预览、QC 报告和交付包。
 
 ## 使用入口
 
@@ -107,6 +107,8 @@ python scripts/run.py config.example.json
 - 预览版：`screen/`
 - 印刷交付版：`print/`
 - 电商展示版：`commerce/`
+- 单张 4K 下载：`download_4k/index.html`
+- 首轮模型预览：`provider_previews/index.html`（可选开启）
 - QC 报告：`qc_report.json`
 - ZIP 交付包
 
@@ -121,6 +123,8 @@ python scripts/run.py config.example.json
 - 300dpi、出血、安全边距、印刷 guide
 - 屏幕预览版 / 印刷版 / 电商展示版分离
 - 材质选择预览页
+- 4K 单张下载页
+- 即梦 / Gemini / GPT-Image2 首轮预览对比
 
 暂不承诺：
 

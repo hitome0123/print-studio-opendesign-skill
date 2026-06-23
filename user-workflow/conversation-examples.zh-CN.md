@@ -33,6 +33,8 @@ python scripts/run.py <config.json>
 - `preview/materials.html`
 - `screen/`
 - `print/`
+- `commerce/`
+- `download_4k/index.html`
 - `qc_report.json`
 - `*_交付包.zip`
 
@@ -180,6 +182,48 @@ preset.product_type = packaging_insert
   "types": ["single", "grid", "back"]
 }
 ```
+
+
+## 场景 6：首轮比较三个图像模型
+
+使用者说：
+
+```text
+使用 print-studio-commerce-mockup。
+这套贺卡先不要批量出图，先拿第 1 张比较即梦、Gemini、GPT-Image2。
+白底图和氛围图都要，方便选后续使用哪个模型。
+```
+
+AI 应该做：
+
+1. 在配置中开启：
+
+```json
+"image_gen": {
+  "provider_previews": {
+    "enabled": true,
+    "months": [1],
+    "types": ["whitebg", "ambiance"],
+    "providers": [
+      {"backend": "jimeng", "label": "即梦"},
+      {"backend": "gemini", "label": "Gemini"},
+      {"backend": "gpt_image2", "label": "GPT-Image2"}
+    ]
+  }
+}
+```
+
+2. 运行：
+
+```bash
+python scripts/run.py <config.json>
+```
+
+3. 提示查看：
+
+- `provider_previews/index.html`
+- `download_4k/index.html`
+- 每个模型的白底图 / 氛围图是否保持产品形态
 
 ## 确认话术
 

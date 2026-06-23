@@ -9,7 +9,7 @@ description: "Shared runtime for the Print Studio OpenDesign plugin. Use this wh
 
 Use this skill as a **print shop AI proofing assistant**, not a one-off calendar tool.
 
-The job: a print shop receives client images, chooses production specs, and quickly creates a proofing package for sales confirmation, design review, and print handoff.
+The job: import images, choose production specs, and quickly create a proofing package for confirmation, design review, ecommerce display, and print handoff.
 
 ## What Is Bundled
 
@@ -24,7 +24,7 @@ The job: a print shop receives client images, chooses production specs, and quic
 
 1. Read or create a config based on `config.example.json`.
 2. Confirm the four decision layers:
-   - `job`: client/job metadata.
+   - `job`: project metadata.
    - `preset`: size, material, product form, visual style, language.
    - `series`: monthly, quarterly, seasonal, custom N-card set.
    - `outputs`: screen, print, commerce, single/grid/whitebg/ambiance.
@@ -36,7 +36,9 @@ The job: a print shop receives client images, chooses production specs, and quic
    - `output/<theme>/preview/` job config/material preview.
    - `output/<theme>/screen/` preview files.
    - `output/<theme>/print/` 300dpi print files with bleed.
-   - `output/<theme>/commerce/` white-background and ambiance product shots.
+   - `output/<theme>/commerce/` white-background, ambiance, and series overview product shots.
+   - `output/<theme>/download_4k/` per-image 4K long-edge JPG files and download page.
+   - `output/<theme>/provider_previews/` optional Jimeng / Gemini / GPT-Image2 comparison page.
    - `output/<theme>/qc_report.json`.
    - `output/<theme>/*_交付包.zip`.
 6. Report whether the result is fit for: proposal preview, sample proof, or final print handoff.
@@ -51,7 +53,7 @@ The job: a print shop receives client images, chooses production specs, and quic
 ## Delivery Rules
 
 - Keep AI layout constrained. AI may choose visual emphasis, title accent, and layout hints. Rendering, date accuracy, bleed, safe margins, and print sizing must remain deterministic.
-- Keep print files separate from commerce mockups. Product mockups are for selling and presentation; print files are the production source.
+- Keep print files separate from commerce mockups. Product mockups are for visual confirmation and presentation; print files are the production source.
 - Treat all non-tested paper compensation as estimated. Recommend physical proofing before batch print.
 - Do not promise CMYK/ICC-perfect color unless a real ICC workflow is added and tested.
 - Material selector previews are screen simulations only: paper core colors, PVC gloss, pearl reflections, and texture strength are visual aids, not production guarantees.
@@ -59,6 +61,6 @@ The job: a print shop receives client images, chooses production specs, and quic
 
 ## Read When Needed
 
-- For operator workflow and sales language: `references/operator-guide.md`.
+- For operator workflow and usage language: `references/operator-guide.md`.
 - For paper/material keys: `assets/calendar_series/presets.json`.
 - For print compensation behavior: `assets/calendar_series/engine/profiles.py`.

@@ -71,7 +71,8 @@
     "series_grid_layout": "4x3",
     "product_shot_months": [
       1
-    ]
+    ],
+    "download_4k": true
   },
   "advanced": {
     "_note": "留空(null)= 用预设/印刷经验默认。填了才覆盖。高风险值 resolver 会警告。",
@@ -87,7 +88,35 @@
   },
   "image_gen": {
     "backend": "gemini",
-    "model": "gemini-2.5-flash-image"
+    "model": "gemini-2.5-flash-image",
+    "provider_previews": {
+      "enabled": false,
+      "_note": "首轮需要比较即梦/Gemini/GPT-Image2时改为 true;缺少对应 API 时会生成对比页并标注失败原因。",
+      "months": [
+        1
+      ],
+      "types": [
+        "whitebg",
+        "ambiance"
+      ],
+      "providers": [
+        {
+          "backend": "jimeng",
+          "model": "jimeng-image",
+          "label": "即梦"
+        },
+        {
+          "backend": "gemini",
+          "model": "gemini-2.5-flash-image",
+          "label": "Gemini"
+        },
+        {
+          "backend": "gpt_image2",
+          "model": "gpt-image-1",
+          "label": "GPT-Image2"
+        }
+      ]
+    }
   },
   "ai_layout": true,
   "qc_ai": false,
