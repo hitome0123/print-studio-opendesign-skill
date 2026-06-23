@@ -9,6 +9,7 @@ D 产品白底图 / E 产品氛围图 — AI 生图(锚图法把成品卡放进�
 """
 import os
 from pathlib import Path
+from PIL import Image, ImageDraw, ImageFilter, ImageOps
 
 # ── 场景提示词(锁定风格,一般不动;config 可追加 *_prompt_extra)──
 WHITEBG_PROMPT = (
@@ -121,11 +122,74 @@ def _gen(card_path, out_path, prompt, backend, model, retries=3):
     raise RuntimeError(f"{backend} 生图失败({retries}次): {last}")
 
 
+def _fit_card(card_path, max_w, max_h):
+    card = ImageOps.exif_transpose(Image.open(card_path)).convert("RGB")
+    card.thumbnail((max_w, max_h), Image.LANCZOS)
+    return card
+
+
+def _paste_with_shadow(canvas, card, x, y, radius=26, shadow=(70, 45, 25, 70)):
+    shadow_img = Image.new("RGBA", (card.width + 80, card.height + 80), (0, 0, 0, 0))
+    sd = ImageDraw.Draw(shadow_img)
+    sd.rounded_rectangle((40, 40, card.width + 40, card.height + 40), radius=radius, fill=shadow)
+    shadow_img = shadow_img.filter(ImageFilter.GaussianBlur(22))
+    canvas.paste(shadow_img, (x - 40, y - 28), shadow_img)
+    canvas.paste(card, (x, y))
+
+
+def render_whitebg_local(card_path, out_path):
+    """本地白底图兜底:不调用模型,用于 API 不可用时保持展示交付完整。"""
+    size = 1600
+    canvas = Image.new("RGB", (size, size), (255, 255, 255))
+    card = _fit_card(card_path, 980, 1280)
+    x = (size - card.width) // 2
+    y = (size - card.height) // 2 - 20
+    _paste_with_shadow(canvas, card, x, y)
+    draw = ImageDraw.Draw(canvas)
+    stand_y = y + card.height - 10
+    draw.rounded_rectangle((x + 90, stand_y, x + card.width - 90, stand_y + 58),
+                           radius=18, fill=(171, 121, 73), outline=(140, 92, 52), width=2)
+    draw.ellipse((x + 160, stand_y + 38, x + card.width - 160, stand_y + 96), fill=(0, 0, 0, 18))
+    Path(out_path).parent.mkdir(parents=True, exist_ok=True)
+    canvas.save(out_path, quality=94, dpi=(300, 300))
+    return out_path
+
+
+def render_ambiance_local(card_path, out_path):
+    """本地氛围图兜底:浅木桌+花朵/杯子抽象道具,不改卡面。"""
+    size = 1600
+    canvas = Image.new("RGB", (size, size), (239, 222, 198))
+    draw = ImageDraw.Draw(canvas)
+    for y in range(0, size, 42):
+        draw.line((0, y, size, y + 8), fill=(226, 204, 176), width=3)
+    # background props
+    draw.ellipse((1050, 170, 1460, 580), fill=(248, 241, 229), outline=(218, 198, 171), width=5)
+    draw.ellipse((1120, 245, 1380, 505), fill=(231, 201, 166), outline=(183, 139, 93), width=5)
+    draw.rounded_rectangle((160, 1050, 620, 1330), radius=34, fill=(247, 239, 225), outline=(214, 191, 160), width=4)
+    for cx, cy, col in [(220, 330, (190, 82, 72)), (300, 260, (221, 154, 70)), (370, 360, (160, 110, 74)), (260, 410, (123, 145, 95))]:
+        draw.ellipse((cx - 46, cy - 46, cx + 46, cy + 46), fill=col)
+    card = _fit_card(card_path, 880, 1220)
+    x = (size - card.width) // 2
+    y = 190
+    _paste_with_shadow(canvas, card, x, y, shadow=(65, 38, 20, 88))
+    stand_y = y + card.height - 6
+    draw.rounded_rectangle((x + 88, stand_y, x + card.width - 88, stand_y + 64),
+                           radius=18, fill=(161, 111, 66), outline=(130, 83, 47), width=3)
+    canvas = canvas.filter(ImageFilter.UnsharpMask(radius=1.2, percent=105, threshold=3))
+    Path(out_path).parent.mkdir(parents=True, exist_ok=True)
+    canvas.save(out_path, quality=94, dpi=(300, 300))
+    return out_path
+
+
 def render_whitebg(card_path, out_path, backend="gemini", model=None, extra=""):
+    if backend == "local_mockup":
+        return render_whitebg_local(card_path, out_path)
     return _gen(card_path, out_path, (WHITEBG_PROMPT + " " + extra).strip(), backend, model)
 
 
 def render_ambiance(card_path, out_path, backend="gemini", model=None, extra=""):
+    if backend == "local_mockup":
+        return render_ambiance_local(card_path, out_path)
     return _gen(card_path, out_path, (AMBIANCE_PROMPT + " " + extra).strip(), backend, model)
 
 

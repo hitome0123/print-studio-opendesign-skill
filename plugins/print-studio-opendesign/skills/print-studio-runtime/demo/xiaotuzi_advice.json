@@ -1,0 +1,422 @@
+{
+  "source_dir": "/Users/mantou/Downloads/小兔子文具主题1 ：1 比例",
+  "summary": {
+    "count": 12,
+    "avg_ratio": 0.979,
+    "ratio_stdev": 0.069,
+    "avg_brightness": 0.769,
+    "avg_saturation": 0.309,
+    "avg_warmth": 0.215,
+    "avg_contrast": 0.5,
+    "avg_edge_density": 0.104,
+    "avg_centered": 0.976,
+    "avg_coverage": 0.894,
+    "brightness_stdev": 0.056,
+    "saturation_stdev": 0.1
+  },
+  "traits": {
+    "orientation": "方形/接近方形为主",
+    "color_mood": "柔和浅色",
+    "detail_level": "细节适中",
+    "composition": "主体居中",
+    "fill": "主体较满",
+    "temperature": "偏暖",
+    "series": "适合做完整系列"
+  },
+  "recommendations": {
+    "products": [
+      {
+        "title": "5×5 英寸方卡",
+        "reason": "图片接近方形，方卡会更有礼品感和套装感。",
+        "caution": "",
+        "default": true
+      },
+      {
+        "title": "5×7 英寸贺卡",
+        "reason": "如果需要更多文字空间，可以使用竖版卡并保留上下留白。",
+        "caution": "",
+        "default": false
+      },
+      {
+        "title": "12 张月历卡",
+        "reason": "图片数量足够做完整月份系列，方形图也适合做上方插画、下方日历的结构。",
+        "caution": "需要确认是否要真实日期，以及月份文字放在何处。",
+        "default": false
+      },
+      {
+        "title": "12 张自定义套装",
+        "reason": "素材数量已经具备系列化基础，可以先按现有张数做一套。",
+        "caution": "",
+        "default": false
+      }
+    ],
+    "sizes": [
+      {
+        "title": "5×5 英寸",
+        "reason": "匹配方形构图，适合可爱、艺术、礼品感系列。",
+        "caution": "",
+        "default": true
+      },
+      {
+        "title": "5×7 英寸",
+        "reason": "需要标题和文案时更好排。",
+        "caution": "",
+        "default": false
+      }
+    ],
+    "materials": [
+      {
+        "title": "300g 超白白卡纸",
+        "reason": "最稳定，能保持图片干净明亮，适合首轮打样。",
+        "caution": "",
+        "default": true
+      },
+      {
+        "title": "300g 冰白珠光纸",
+        "reason": "图片偏柔和浅色，珠光能增加礼品感和梦幻感。",
+        "caution": "小字要加深，浅色区域要检查发灰。",
+        "default": false
+      },
+      {
+        "title": "300g 雅白细莱妮纹",
+        "reason": "适合温柔、复古、高级留白方向。",
+        "caution": "纹理会削弱极细线条。",
+        "default": false
+      },
+      {
+        "title": "不优先选牛皮纸",
+        "reason": "这组图偏浅，牛皮底色可能让画面变灰变脏。",
+        "caution": "除非明确想要复古手作感。",
+        "default": false
+      }
+    ],
+    "layouts": [
+      {
+        "title": "大插画满版 + 小标题",
+        "reason": "主体占比较满，应该突出图本身，减少文字干扰。",
+        "caution": "",
+        "default": true
+      },
+      {
+        "title": "底部窄信息区",
+        "reason": "如果必须放标题/日期，建议只留底部一条清楚信息区。",
+        "caution": "避免文字压在复杂画面上。",
+        "default": false
+      },
+      {
+        "title": "系列总览网格",
+        "reason": "多张图需要放在一起看统一性，建议输出系列总览。",
+        "caution": "",
+        "default": false
+      }
+    ],
+    "typography": [
+      {
+        "title": "优雅衬线标题 + 低调无衬线小字",
+        "reason": "柔和图片适合轻盈、有礼品感的文字层级。",
+        "caution": "",
+        "default": true
+      },
+      {
+        "title": "手写风点缀",
+        "reason": "可以增加温度，但只适合标题或短句。",
+        "caution": "手写小字不能太小，印刷容易糊。",
+        "default": false
+      }
+    ],
+    "provider_previews": [
+      {
+        "title": "先跑即梦 / Gemini / GPT-Image2 三模型预览",
+        "reason": "先用 1 张图比较白底图和氛围图稳定性，再决定后续批量使用哪个模型。",
+        "caution": "默认不要全量跑，避免浪费额度；缺 API 时只生成错误说明页。",
+        "default": true
+      }
+    ],
+    "prepress_checks": [
+      {
+        "title": "印刷版提高饱和度和文字对比",
+        "reason": "图片偏浅，印出来容易更灰，需要比屏幕版更扎实。",
+        "caution": "",
+        "default": true
+      },
+      {
+        "title": "保留出血和安全边距",
+        "reason": "所有重要文字和主体不能靠边，避免裁切误差。",
+        "caution": "",
+        "default": true
+      },
+      {
+        "title": "展示图与印刷文件分离",
+        "reason": "白底图/氛围图用于确认和展示，生产仍以 print/ 为准。",
+        "caution": "",
+        "default": true
+      }
+    ]
+  },
+  "images": [
+    {
+      "file": "1——3：2.png",
+      "width": 675,
+      "height": 900,
+      "ratio": 0.75,
+      "orientation": "竖图",
+      "brightness": 0.75,
+      "saturation": 0.345,
+      "value": 0.846,
+      "warmth": 0.235,
+      "contrast": 0.567,
+      "edge_density": 0.088,
+      "bbox": [
+        41,
+        43,
+        641,
+        863
+      ],
+      "centered": 0.982,
+      "coverage": 0.81,
+      "edge_margin": 0.041
+    },
+    {
+      "file": "2——1：1.png",
+      "width": 900,
+      "height": 900,
+      "ratio": 1.0,
+      "orientation": "近方图",
+      "brightness": 0.778,
+      "saturation": 0.224,
+      "value": 0.854,
+      "warmth": 0.129,
+      "contrast": 0.491,
+      "edge_density": 0.111,
+      "bbox": [
+        41,
+        19,
+        871,
+        891
+      ],
+      "centered": 0.974,
+      "coverage": 0.894,
+      "edge_margin": 0.01
+    },
+    {
+      "file": "3——1：1.png",
+      "width": 900,
+      "height": 900,
+      "ratio": 1.0,
+      "orientation": "近方图",
+      "brightness": 0.845,
+      "saturation": 0.2,
+      "value": 0.928,
+      "warmth": 0.165,
+      "contrast": 0.399,
+      "edge_density": 0.096,
+      "bbox": [
+        26,
+        57,
+        877,
+        857
+      ],
+      "centered": 0.976,
+      "coverage": 0.84,
+      "edge_margin": 0.026
+    },
+    {
+      "file": "4——1：1.png",
+      "width": 900,
+      "height": 900,
+      "ratio": 1.0,
+      "orientation": "近方图",
+      "brightness": 0.797,
+      "saturation": 0.227,
+      "value": 0.866,
+      "warmth": 0.163,
+      "contrast": 0.439,
+      "edge_density": 0.109,
+      "bbox": [
+        3,
+        43,
+        900,
+        880
+      ],
+      "centered": 0.961,
+      "coverage": 0.927,
+      "edge_margin": 0.0
+    },
+    {
+      "file": "5——1 ：1.png",
+      "width": 900,
+      "height": 900,
+      "ratio": 1.0,
+      "orientation": "近方图",
+      "brightness": 0.858,
+      "saturation": 0.198,
+      "value": 0.894,
+      "warmth": 0.144,
+      "contrast": 0.412,
+      "edge_density": 0.094,
+      "bbox": [
+        51,
+        33,
+        855,
+        877
+      ],
+      "centered": 0.981,
+      "coverage": 0.838,
+      "edge_margin": 0.026
+    },
+    {
+      "file": "6——1 ：1.png",
+      "width": 900,
+      "height": 900,
+      "ratio": 1.0,
+      "orientation": "近方图",
+      "brightness": 0.786,
+      "saturation": 0.322,
+      "value": 0.89,
+      "warmth": 0.248,
+      "contrast": 0.494,
+      "edge_density": 0.101,
+      "bbox": [
+        16,
+        24,
+        884,
+        886
+      ],
+      "centered": 0.983,
+      "coverage": 0.924,
+      "edge_margin": 0.016
+    },
+    {
+      "file": "7——1 ：1.png",
+      "width": 900,
+      "height": 900,
+      "ratio": 1.0,
+      "orientation": "近方图",
+      "brightness": 0.729,
+      "saturation": 0.259,
+      "value": 0.809,
+      "warmth": 0.17,
+      "contrast": 0.496,
+      "edge_density": 0.136,
+      "bbox": [
+        19,
+        29,
+        885,
+        881
+      ],
+      "centered": 0.982,
+      "coverage": 0.911,
+      "edge_margin": 0.017
+    },
+    {
+      "file": "8——1 ：1.png",
+      "width": 900,
+      "height": 900,
+      "ratio": 1.0,
+      "orientation": "近方图",
+      "brightness": 0.755,
+      "saturation": 0.384,
+      "value": 0.837,
+      "warmth": 0.274,
+      "contrast": 0.512,
+      "edge_density": 0.101,
+      "bbox": [
+        44,
+        10,
+        859,
+        889
+      ],
+      "centered": 0.995,
+      "coverage": 0.884,
+      "edge_margin": 0.011
+    },
+    {
+      "file": "9——1：1.png",
+      "width": 900,
+      "height": 900,
+      "ratio": 1.0,
+      "orientation": "近方图",
+      "brightness": 0.727,
+      "saturation": 0.38,
+      "value": 0.818,
+      "warmth": 0.249,
+      "contrast": 0.604,
+      "edge_density": 0.125,
+      "bbox": [
+        3,
+        8,
+        900,
+        880
+      ],
+      "centered": 0.979,
+      "coverage": 0.966,
+      "edge_margin": 0.0
+    },
+    {
+      "file": "10——1：1.png",
+      "width": 900,
+      "height": 900,
+      "ratio": 1.0,
+      "orientation": "近方图",
+      "brightness": 0.671,
+      "saturation": 0.556,
+      "value": 0.82,
+      "warmth": 0.412,
+      "contrast": 0.519,
+      "edge_density": 0.107,
+      "bbox": [
+        12,
+        9,
+        900,
+        890
+      ],
+      "centered": 0.98,
+      "coverage": 0.966,
+      "edge_margin": 0.0
+    },
+    {
+      "file": "11——1 ：1.png",
+      "width": 900,
+      "height": 900,
+      "ratio": 1.0,
+      "orientation": "近方图",
+      "brightness": 0.835,
+      "saturation": 0.25,
+      "value": 0.894,
+      "warmth": 0.193,
+      "contrast": 0.417,
+      "edge_density": 0.093,
+      "bbox": [
+        51,
+        33,
+        858,
+        884
+      ],
+      "centered": 0.968,
+      "coverage": 0.848,
+      "edge_margin": 0.018
+    },
+    {
+      "file": "12——1：1.png",
+      "width": 900,
+      "height": 900,
+      "ratio": 1.0,
+      "orientation": "近方图",
+      "brightness": 0.701,
+      "saturation": 0.359,
+      "value": 0.778,
+      "warmth": 0.203,
+      "contrast": 0.649,
+      "edge_density": 0.087,
+      "bbox": [
+        10,
+        41,
+        883,
+        890
+      ],
+      "centered": 0.947,
+      "coverage": 0.915,
+      "edge_margin": 0.011
+    }
+  ]
+}

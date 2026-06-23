@@ -270,21 +270,34 @@ def main():
     prod = {}
     if types & {"whitebg", "ambiance"}:
         try:
-            from mockup_ai import render_whitebg, render_ambiance
+            from mockup_ai import render_whitebg, render_ambiance, render_whitebg_local, render_ambiance_local
             ig = r["image_gen"]
             pdir = out_base / "products"
             pdir.mkdir(parents=True, exist_ok=True)
+            mockup_warnings = []
             for mon in outs.get("product_shot_months", [1]):
                 if mon not in pages:
                     continue
                 card = str(pages[mon])
                 if "whitebg" in types:
                     o = pdir / f"whitebg_{mon:02d}.jpg"
-                    render_whitebg(card, str(o), ig["backend"], ig.get("model")); prod[f"whitebg_{mon:02d}"] = o
+                    try:
+                        render_whitebg(card, str(o), ig["backend"], ig.get("model"))
+                    except Exception as e:
+                        render_whitebg_local(card, str(o))
+                        mockup_warnings.append(f"whitebg_{mon:02d} 使用本地兜底 mockup: {e}")
+                    prod[f"whitebg_{mon:02d}"] = o
                 if "ambiance" in types:
                     o = pdir / f"ambiance_{mon:02d}.jpg"
-                    render_ambiance(card, str(o), ig["backend"], ig.get("model")); prod[f"ambiance_{mon:02d}"] = o
+                    try:
+                        render_ambiance(card, str(o), ig["backend"], ig.get("model"))
+                    except Exception as e:
+                        render_ambiance_local(card, str(o))
+                        mockup_warnings.append(f"ambiance_{mon:02d} 使用本地兜底 mockup: {e}")
+                    prod[f"ambiance_{mon:02d}"] = o
             print(f"  生图 D/E masters ×{len(prod)}")
+            for warning in mockup_warnings:
+                print(f"  ⚠️  {warning}")
         except Exception as e:
             print(f"  ⚠️  D/E 生图跳过: {e}")
 
