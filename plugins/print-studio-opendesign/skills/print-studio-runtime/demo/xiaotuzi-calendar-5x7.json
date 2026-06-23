@@ -6,7 +6,7 @@
     "quantity": null
   },
   "theme": "小兔子文具主题演示",
-  "illustrations_dir": "/Users/mantou/Downloads/小兔子文具主题1 ：1 比例",
+  "illustrations_dir": "xiaotuzi_images",
   "series": {
     "type": "monthly_calendar",
     "count": 12,
