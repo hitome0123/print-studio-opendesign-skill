@@ -15,6 +15,7 @@ The job: import images, choose production specs, and quickly create a proofing p
 
 - `config.example.json`: editable job configuration.
 - `examples/`: ready-to-copy configs for greeting cards, postcards, bookmarks, and gift tags.
+- `scripts/advise_project.py`: image-first guided advisor that analyzes supplied images and recommends products, sizes, materials, layouts, typography, provider previews, and print checks with reasons.
 - `scripts/preview_config.py`: fast no-AI preview and 24-material selector page.
 - `scripts/run.py`: full delivery run through the bundled calendar-series engine.
 - `assets/calendar_series/`: bundled print template engine, including calendar and generic-card renderers.
@@ -22,17 +23,20 @@ The job: import images, choose production specs, and quickly create a proofing p
 
 ## MVP Workflow
 
-1. Read or create a config based on `config.example.json`.
-2. Confirm the four decision layers:
+1. Start image-first when images are available:
+   - `python scripts/advise_project.py <illustrations_dir>`
+   - Use the report to explain choices before asking for product/size/material decisions.
+2. Read or create a config based on `config.example.json`.
+3. Confirm the four decision layers:
    - `job`: project metadata.
    - `preset`: size, material, product form, visual style, language.
    - `series`: monthly, quarterly, seasonal, custom N-card set.
    - `outputs`: screen, print, commerce, single/grid/whitebg/ambiance.
-3. For quick review confirmation, run:
+4. For quick review confirmation, run:
    - `python scripts/preview_config.py config.example.json --all-materials`
-4. For full delivery, run:
+5. For full delivery, run:
    - `python scripts/run.py config.example.json`
-5. Inspect:
+6. Inspect:
    - `output/<theme>/preview/` job config/material preview.
    - `output/<theme>/screen/` preview files.
    - `output/<theme>/print/` 300dpi print files with bleed.
@@ -41,7 +45,15 @@ The job: import images, choose production specs, and quickly create a proofing p
    - `output/<theme>/provider_previews/` optional Jimeng / Gemini / GPT-Image2 comparison page.
    - `output/<theme>/qc_report.json`.
    - `output/<theme>/*_交付包.zip`.
-6. Report whether the result is fit for: proposal preview, sample proof, or final print handoff.
+7. Report whether the result is fit for: proposal preview, sample proof, or final print handoff.
+
+## Guided Advisor Rules
+
+- Do not force the user to provide a complete spec upfront.
+- When images are available, analyze image orientation, brightness, saturation, contrast, detail density, subject position, subject coverage, and series consistency first.
+- Recommend product, size, material, layout, typography, and model-preview choices with a reason and caution.
+- Offer a default recommendation, but keep alternatives visible.
+- Ground every recommendation in the supplied images plus print constraints.
 
 ## Configuration Rules
 

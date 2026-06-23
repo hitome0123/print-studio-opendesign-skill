@@ -73,6 +73,12 @@ Print Studio OpenDesign 是一个给印刷品系列打样使用的 Codex / Claud
 导入插画 / 图片
         │
         ▼
+先分析图片：方向、色彩、复杂度、主体位置、系列统一性
+        │
+        ▼
+给出带理由的产品、尺寸、材质、排版、字体建议
+        │
+        ▼
 选择产品类型、尺寸、纸张、系列结构
         │
         ▼
@@ -443,6 +449,20 @@ AI 不能随便改：
 cd plugins/print-studio-opendesign/skills/print-studio-runtime
 ```
 
+如果已经有图片，先跑图片优先建议：
+
+```bash
+python scripts/advise_project.py /path/to/images
+```
+
+它会输出：
+
+```text
+print_studio_advice.md
+```
+
+这份报告会先从图片本身给出产品、尺寸、材质、排版、字体、三模型预览和印刷检查建议。
+
 先跑材质预览：
 
 ```bash
@@ -584,4 +604,3 @@ V1 不承诺：
 4. 双面卡片的生产级拼版规则。
 5. 烫金 / UV / 压纹的可视化但不冒充生产级模拟。
 6. 更漂亮的 Web 预览入口，把配置、材质、输出集中到一个页面。
-

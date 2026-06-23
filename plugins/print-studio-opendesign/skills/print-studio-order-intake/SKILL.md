@@ -11,12 +11,25 @@ Turn a print request into a runnable Print Studio OpenDesign config.
 
 ## Workflow
 
-1. Identify the product type: card, postcard, desk calendar, wall calendar, bookmark, tag, insert, card set, or custom.
-2. Identify the series: single, monthly, quarterly, seasonal, festival set, or custom `N` cards.
-3. Select production specs: size, material, bleed, safe margin, double-sided, round corners, binding, finishing.
-4. Select outputs: `screen`, `print`, `commerce`, `single`, `grid`, `whitebg`, `ambiance`, `back`.
-5. Copy `../print-studio-runtime/config.example.json` or an example from `../print-studio-runtime/examples/`.
-6. Save a job-specific config next to the project assets.
+1. If images are available, run the image-first advisor before asking for choices:
+   ```bash
+   cd ../print-studio-runtime
+   python scripts/advise_project.py <illustrations_dir>
+   ```
+2. Use the advisor report to explain product, size, material, layout, typography, model-preview, and print-check recommendations.
+3. Identify the product type: card, postcard, desk calendar, wall calendar, bookmark, tag, insert, card set, or custom.
+4. Identify the series: single, monthly, quarterly, seasonal, festival set, or custom `N` cards.
+5. Select production specs: size, material, bleed, safe margin, double-sided, round corners, binding, finishing.
+6. Select outputs: `screen`, `print`, `commerce`, `single`, `grid`, `whitebg`, `ambiance`, `back`, `download_4k`.
+7. Copy `../print-studio-runtime/config.example.json` or an example from `../print-studio-runtime/examples/`.
+8. Save a job-specific config next to the project assets.
+
+## Choice Style
+
+- Always provide choices with reasons.
+- Explain what each choice is good for and what risk it has.
+- Recommend one default option based on the supplied images.
+- Do not ask the user to decide typography, layout, material, or model route blindly.
 
 ## Required Fields
 
