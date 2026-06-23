@@ -1,0 +1,295 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Print Studio OpenDesign · Codex Skill 交付展示</title>
+  <style>
+    :root{
+      --bg:#f7f1e8; --paper:#fffaf2; --ink:#2c241d; --muted:#7b6d60;
+      --line:#e4d7c7; --accent:#9a5f36; --accent2:#b9855b; --green:#64775a;
+      --blue:#536f91; --red:#a95243; --shadow:0 18px 50px rgba(84,55,28,.12);
+      --radius:24px;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;background:linear-gradient(180deg,#fbf6ee 0%,var(--bg) 45%,#f4eadc 100%);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif}
+    a{color:var(--accent);text-decoration:none}
+    .wrap{max-width:1180px;margin:0 auto;padding:0 28px}
+    .nav{position:sticky;top:0;z-index:20;background:rgba(247,241,232,.86);backdrop-filter:blur(18px);border-bottom:1px solid rgba(228,215,199,.7)}
+    .nav .wrap{display:flex;align-items:center;justify-content:space-between;height:64px}
+    .brand{font-weight:800;letter-spacing:.02em}
+    .navlinks{display:flex;gap:18px;font-size:14px;color:var(--muted)}
+    .hero{padding:74px 0 54px}
+    .hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:36px;align-items:center}
+    .eyebrow{display:inline-flex;gap:8px;align-items:center;background:#efe1d1;border:1px solid #dec9b4;color:#80512d;border-radius:999px;padding:8px 13px;font-size:13px;font-weight:700}
+    h1{font-size:58px;line-height:1.02;margin:22px 0 18px;letter-spacing:-.045em}
+    .lead{font-size:20px;line-height:1.75;color:#5e5146;margin:0 0 28px}
+    .hero-actions{display:flex;gap:14px;flex-wrap:wrap}
+    .btn{display:inline-flex;align-items:center;gap:10px;border-radius:16px;padding:14px 18px;font-weight:800;border:1px solid #d5bea5;background:var(--ink);color:#fff;box-shadow:0 12px 32px rgba(44,36,29,.18)}
+    .btn.secondary{background:#fff8ee;color:var(--ink);box-shadow:none}
+    .hero-card{background:rgba(255,250,242,.82);border:1px solid var(--line);border-radius:32px;box-shadow:var(--shadow);padding:22px}
+    .mock-window{background:#2b241e;border-radius:20px;padding:14px;color:#f8eadc}
+    .dots{display:flex;gap:7px;margin-bottom:14px}.dot{width:11px;height:11px;border-radius:99px}.r{background:#ff6b5f}.y{background:#f6c55d}.g{background:#67c96f}
+    .terminal{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:13px;line-height:1.75;color:#ead9c6}
+    .terminal b{color:#ffd7a3}.terminal .ok{color:#91d18b}.terminal .dim{color:#aa9b8a}
+    section{padding:56px 0}
+    .section-head{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;margin-bottom:24px}
+    h2{font-size:36px;line-height:1.12;margin:0;letter-spacing:-.03em}
+    .sub{color:var(--muted);line-height:1.7;max-width:680px;margin:10px 0 0}
+    .grid{display:grid;gap:18px}.grid-3{grid-template-columns:repeat(3,1fr)}.grid-2{grid-template-columns:repeat(2,1fr)}
+    .card{background:rgba(255,250,242,.9);border:1px solid var(--line);border-radius:var(--radius);box-shadow:0 10px 30px rgba(84,55,28,.07);padding:22px}
+    .card h3{font-size:20px;margin:0 0 10px}.card p{color:var(--muted);line-height:1.65;margin:0}
+    .tag{display:inline-flex;border-radius:999px;background:#f0e1cf;color:#865532;padding:5px 10px;font-size:12px;font-weight:800;margin-bottom:12px}
+    .workflow{position:relative;display:grid;grid-template-columns:repeat(7,1fr);gap:12px}
+    .step{background:#fffaf2;border:1px solid var(--line);border-radius:20px;padding:16px;min-height:150px;position:relative}
+    .step .num{width:32px;height:32px;border-radius:50%;display:grid;place-items:center;background:var(--accent);color:white;font-weight:900;margin-bottom:12px}
+    .step h3{font-size:16px;margin:0 0 8px}.step p{font-size:13px;line-height:1.55;color:var(--muted);margin:0}
+    .case{display:grid;grid-template-columns:.9fr 1.1fr;gap:22px;align-items:stretch}
+    .image-board{background:#f2e7d9;border:1px dashed #cbb59e;border-radius:24px;padding:16px;display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+    .thumb{aspect-ratio:1;border-radius:18px;background:radial-gradient(circle at 50% 45%,#c95043 0 10%,#9b5a31 11% 22%,#e8c788 23% 32%,#f7ead7 33% 100%);box-shadow:inset 0 0 0 1px rgba(130,90,55,.15)}
+    .thumb:nth-child(2n){background:radial-gradient(circle at 56% 42%,#e7d8b5 0 13%,#bd6c5a 14% 25%,#6c7b54 26% 35%,#f8efdf 36% 100%)}
+    .thumb:nth-child(3n){background:radial-gradient(circle at 45% 52%,#f1d4a1 0 12%,#b74d43 13% 23%,#7b8b62 24% 34%,#faf0df 35% 100%)}
+    .insight{display:grid;gap:10px}
+    .insight-row{display:grid;grid-template-columns:132px 1fr;gap:14px;border-bottom:1px solid #eadccc;padding:10px 0}
+    .insight-row b{color:#5b3d28}.insight-row span{color:var(--muted);line-height:1.55}
+    .feature{display:grid;grid-template-columns:90px 1fr;gap:18px;align-items:start}
+    .icon{width:70px;height:70px;border-radius:22px;background:linear-gradient(135deg,#c98a5f,#8f5a32);color:white;display:grid;place-items:center;font-size:28px;font-weight:900;box-shadow:0 14px 34px rgba(154,95,54,.22)}
+    .feature ul{padding-left:18px;color:var(--muted);line-height:1.75;margin:8px 0 0}
+    .artifact{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+    .file{background:#2b241e;color:#ead9c6;border-radius:22px;padding:18px;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:13px;line-height:1.7;overflow:hidden}
+    .file .title{color:#ffd7a3;font-weight:900;margin-bottom:8px}.file .green{color:#93d68c}.file .blue{color:#9dc6ff}.file .red{color:#ffad9e}
+    .demo-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+    .demo-card{background:white;border:1px solid var(--line);border-radius:24px;overflow:hidden;box-shadow:0 10px 30px rgba(84,55,28,.08)}
+    .demo-img{height:190px;background:#f8efe1;position:relative}
+    .demo-img:before{content:"";position:absolute;left:50%;top:40%;transform:translate(-50%,-50%);width:95px;height:95px;border-radius:28px;background:radial-gradient(circle,#cb5546 0 22%,#e9b860 23% 42%,#738557 43% 60%,transparent 61%);filter:drop-shadow(0 16px 22px rgba(105,70,40,.22))}
+    .demo-img:after{content:"January";position:absolute;left:0;right:0;bottom:26px;text-align:center;font-family:Georgia,serif;font-style:italic;font-size:28px;color:#a56d4d}
+    .demo-meta{padding:15px}.demo-meta b{display:block;margin-bottom:5px}.demo-meta span{font-size:13px;color:var(--muted);line-height:1.5}
+    .split{display:grid;grid-template-columns:1fr 1fr;gap:18px;align-items:start}
+    .download-preview{background:white;border:1px solid var(--line);border-radius:26px;padding:18px}
+    .download-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.download-item{border:1px solid #eadccc;border-radius:18px;padding:10px;background:#fffaf2}.download-item .pic{height:130px;border-radius:14px;background:#f6ead8;position:relative}.download-item .pic:after{content:"下载 4K";position:absolute;right:8px;bottom:8px;background:#2b241e;color:#fff;border-radius:999px;font-size:12px;padding:5px 8px}
+    .quote{font-size:26px;line-height:1.5;font-weight:800;background:#fffaf2;border:1px solid var(--line);border-radius:30px;padding:28px;box-shadow:var(--shadow)}
+    .footer{padding:40px 0 70px;color:var(--muted);text-align:center}
+    @media(max-width:980px){.hero-grid,.case,.split,.artifact{grid-template-columns:1fr}.workflow,.grid-3,.grid-2,.demo-grid{grid-template-columns:1fr 1fr}.navlinks{display:none}h1{font-size:44px}}
+    @media(max-width:620px){.workflow,.grid-3,.grid-2,.demo-grid{grid-template-columns:1fr}.wrap{padding:0 18px}h1{font-size:36px}.hero{padding-top:46px}.section-head{display:block}}
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <div class="wrap">
+      <div class="brand">Print Studio OpenDesign</div>
+      <div class="navlinks">
+        <a href="#workflow">工作流</a>
+        <a href="#case">案例</a>
+        <a href="#features">功能设计</a>
+        <a href="#delivery">交付产物</a>
+        <a href="#codex">Codex 展示</a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <span class="eyebrow">Codex Skill · 印刷品 AI 打样工作台</span>
+        <h1>从一组图片，到一套可确认的印刷打样包。</h1>
+        <p class="lead">这不是单纯的 AI 生图工具，而是一套在 Codex 中使用的印刷品设计打样流程：先看图、再推荐、再预览、再生成排版、最后输出印刷文件、4K 下载页和印前报告。</p>
+        <div class="hero-actions">
+          <a class="btn" href="#demo">看完整案例</a>
+          <a class="btn secondary" href="#codex">Codex 里怎么演示</a>
+        </div>
+      </div>
+      <div class="hero-card">
+        <div class="mock-window">
+          <div class="dots"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span></div>
+          <div class="terminal">
+            <span class="dim">用户：</span>使用 print-studio-opendesign，先看这组图片适合做什么。<br>
+            <span class="dim">Codex：</span><b>图片诊断完成</b><br>
+            - 构图：方形/接近方形，主体居中<br>
+            - 色彩：柔和浅色，偏暖<br>
+            - 建议：5×5 方卡 / 5×7 贺卡 / 12 张月历卡<br>
+            - 材质：白卡纸最稳，珠光纸更有礼品感<br>
+            <span class="ok">下一步：生成材质选择页和版式预览 →</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <section id="workflow">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <h2>完整工作流：不是功能堆叠，而是一条交付路径</h2>
+          <p class="sub">展示时就按这条线讲：每一步都有输入、判断、产物和下一步，不需要先解释所有技术细节。</p>
+        </div>
+      </div>
+      <div class="workflow">
+        <div class="step"><div class="num">1</div><h3>提供图片</h3><p>先给一组插画或图片，不要求一开始就决定产品、尺寸和材质。</p></div>
+        <div class="step"><div class="num">2</div><h3>图片诊断</h3><p>分析横竖比例、主体位置、色彩深浅、细节密度和系列统一性。</p></div>
+        <div class="step"><div class="num">3</div><h3>带理由推荐</h3><p>推荐产品、尺寸、纸张、排版和字体，每个选项说明适合原因与风险。</p></div>
+        <div class="step"><div class="num">4</div><h3>材质预览</h3><p>先生成材质选择页和版式预览，低成本确认方向。</p></div>
+        <div class="step"><div class="num">5</div><h3>完整排版</h3><p>确认后生成屏幕预览、印刷文件、展示图和系列总览。</p></div>
+        <div class="step"><div class="num">6</div><h3>4K 下载</h3><p>每张图单独保存，适合确认、归档、发图和展示。</p></div>
+        <div class="step"><div class="num">7</div><h3>报告交付</h3><p>输出设计计划、QC 报告、中文印前说明和 ZIP 交付包。</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="case">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <h2>案例：一组插画进来，系统先做“设计判断”</h2>
+          <p class="sub">演示时先展示这个案例。重点不是“能生成图”，而是 Codex 会先从图片本身推导设计选择。</p>
+        </div>
+      </div>
+      <div class="case">
+        <div class="image-board" aria-label="示例图片">
+          <div class="thumb"></div><div class="thumb"></div><div class="thumb"></div>
+          <div class="thumb"></div><div class="thumb"></div><div class="thumb"></div>
+          <div class="thumb"></div><div class="thumb"></div><div class="thumb"></div>
+        </div>
+        <div class="card">
+          <span class="tag">图片优先建议器</span>
+          <h3>Codex 先输出一份 `print_studio_advice.md`</h3>
+          <div class="insight">
+            <div class="insight-row"><b>图片判断</b><span>接近方形，主体居中，整体偏暖，色彩柔和，适合做系列。</span></div>
+            <div class="insight-row"><b>产品建议</b><span>5×5 方卡更有礼品感；5×7 贺卡更适合放标题；12 张图可以做月历卡。</span></div>
+            <div class="insight-row"><b>材质建议</b><span>300g 超白白卡纸最稳；珠光纸更梦幻；牛皮纸不优先，因为浅色图容易发灰。</span></div>
+            <div class="insight-row"><b>排版建议</b><span>主体较满时适合“大插画 + 小标题”；需要文字时留底部信息区。</span></div>
+            <div class="insight-row"><b>印刷提醒</b><span>浅色图印刷容易变灰，文字和日期要提高对比，细节要检查缩小后的清晰度。</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="features">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <h2>每一个功能点的设计：它解决什么问题，效果是什么</h2>
+          <p class="sub">这里不是列功能，而是解释每个功能在真实接单里的作用。</p>
+        </div>
+      </div>
+      <div class="grid grid-2">
+        <div class="card feature"><div class="icon">1</div><div><h3>图片优先设计顾问</h3><p>解决“使用者不知道该做什么产品”的问题。</p><ul><li>先分析图片，不先逼使用者填复杂表格。</li><li>从图片比例、主体位置、色彩和细节推导建议。</li><li>每个建议都有理由、风险和默认推荐。</li></ul></div></div>
+        <div class="card feature"><div class="icon">2</div><div><h3>材质选择页</h3><p>解决“纸张太多，无法快速比较”的问题。</p><ul><li>一次展示多种纸张/PVC 材质。</li><li>模拟珠光、布纹、PVC 高光、蓝芯/黑芯侧边。</li><li>每种材质提示适合场景和印刷风险。</li></ul></div></div>
+        <div class="card feature"><div class="icon">3</div><div><h3>规则内 AI 排版</h3><p>解决“AI 好看但不安全”的问题。</p><ul><li>AI 可以判断视觉重点和风格。</li><li>尺寸、出血、安全边距、日期和 DPI 由规则控制。</li><li>避免贴边、日期错误、字号过小和文件混用。</li></ul></div></div>
+        <div class="card feature"><div class="icon">4</div><div><h3>字体 / 版式 / 色彩 preset</h3><p>解决“每次从零设计、不稳定”的问题。</p><ul><li>像 Figma 组件一样沉淀设计选择。</li><li>字体、版式、色彩都有适用场景和风险。</li><li>让 AI 从设计系统里组合，而不是随便发挥。</li></ul></div></div>
+        <div class="card feature"><div class="icon">5</div><div><h3>白底图 / 氛围图 / 系列总览</h3><p>解决“印刷文件和展示素材需求不同”的问题。</p><ul><li>白底图适合商品展示。</li><li>氛围图适合提案和社媒。</li><li>系列总览适合看整套统一性。</li></ul></div></div>
+        <div class="card feature"><div class="icon">6</div><div><h3>4K 单张下载页</h3><p>解决“一张张保存很麻烦”的问题。</p><ul><li>打开 `download_4k/index.html` 即可逐张下载。</li><li>长边 4096px，适合确认和归档。</li><li>不用截图，不用在 ZIP 里翻文件。</li></ul></div></div>
+        <div class="card feature"><div class="icon">7</div><div><h3>三模型预览</h3><p>解决“不同模型稳定性不同”的问题。</p><ul><li>即梦、Gemini、GPT-Image2 可先小样比较。</li><li>先用 1 张图看白底图和氛围图表现。</li><li>选定路线后再批量出图，降低翻车风险。</li></ul></div></div>
+        <div class="card feature"><div class="icon">8</div><div><h3>设计计划 + 印前报告</h3><p>解决“AI 黑盒、印前风险不清楚”的问题。</p><ul><li>`design_plan.json` 说明为什么这样排。</li><li>`prepress_report.zh-CN.md` 说明为什么可进入下一步。</li><li>让结果可解释、可复核、可交接。</li></ul></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="demo">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <h2>完整排版生成后的视觉效果</h2>
+          <p class="sub">这部分适合现场打开输出目录展示：从预览图，到印刷文件，再到单张下载和报告。</p>
+        </div>
+      </div>
+      <div class="demo-grid">
+        <div class="demo-card"><div class="demo-img"></div><div class="demo-meta"><b>screen/ 预览图</b><span>用于线上确认，颜色更适合屏幕查看。</span></div></div>
+        <div class="demo-card"><div class="demo-img"></div><div class="demo-meta"><b>print/ 印刷图</b><span>300dpi，含出血和安全边距，生产前检查用。</span></div></div>
+        <div class="demo-card"><div class="demo-img"></div><div class="demo-meta"><b>commerce/ 展示图</b><span>白底图、氛围图、系列总览，不替代印刷源文件。</span></div></div>
+        <div class="demo-card"><div class="demo-img"></div><div class="demo-meta"><b>download_4k/</b><span>每张图都可以单独保存，适合确认和归档。</span></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="delivery">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <h2>交付产物：不是一张图，而是一套可使用的文件包</h2>
+          <p class="sub">最终交付到 Codex 后，运行一次会产出多个用途清晰的文件夹和报告。</p>
+        </div>
+      </div>
+      <div class="artifact">
+        <div class="file">
+          <div class="title">output/花园贺卡/</div>
+          <span class="blue">screen/</span>                 # 屏幕预览<br>
+          <span class="blue">print/</span>                  # 300dpi 印刷文件<br>
+          <span class="blue">commerce/</span>               # 白底图 / 氛围图 / 总览<br>
+          <span class="blue">download_4k/</span>            # 单张 4K 下载页<br>
+          <span class="blue">provider_previews/</span>      # 三模型首轮预览<br>
+          <span class="green">design_plan.json</span>       # 多层设计计划<br>
+          <span class="green">qc_report.json</span>         # 机器可读质检<br>
+          <span class="green">prepress_report.zh-CN.md</span> # 中文印前说明<br>
+          <span class="green">reports/</span>                # 报告打包目录<br>
+          <span class="red">花园贺卡_交付包.zip</span>
+        </div>
+        <div class="download-preview">
+          <h3 style="margin:0 0 14px">4K 单张下载页示意</h3>
+          <div class="download-grid">
+            <div class="download-item"><div class="pic"></div><b>B_01_4k.jpg</b></div>
+            <div class="download-item"><div class="pic"></div><b>B_02_4k.jpg</b></div>
+            <div class="download-item"><div class="pic"></div><b>B_03_4k.jpg</b></div>
+            <div class="download-item"><div class="pic"></div><b>C_series_4k.jpg</b></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap split">
+      <div class="card">
+        <span class="tag">design_plan.json</span>
+        <h3>设计计划让 AI 结果不是黑盒</h3>
+        <p>每张图都会记录：版式 preset、字体 preset、色彩 preset、图片层、文字层、印刷安全层，以及这些选择如何影响后续 prompt 和渲染规则。</p>
+        <div class="file" style="margin-top:16px">
+          {<br>
+          &nbsp;&nbsp;"layout_preset": "上方插画 + 下方留白文字区",<br>
+          &nbsp;&nbsp;"typography_preset": "复古衬线 + 小号大写副标题",<br>
+          &nbsp;&nbsp;"layers": ["background","illustration","title_text","production_safety"]<br>
+          }
+        </div>
+      </div>
+      <div class="card">
+        <span class="tag">prepress_report.zh-CN.md</span>
+        <h3>印前报告解释为什么可进入下一步</h3>
+        <p>它会用中文说明：当前是否 PASS、哪些检查通过、哪些风险需要人工确认、哪些文件用于印刷、哪些文件只是展示。</p>
+        <div class="file" style="margin-top:16px">
+          # 印前检查说明<br>
+          - 状态：<span class="green">PASS</span><br>
+          - 印刷·尺寸&300dpi：正确<br>
+          - 安全边距：全部留足<br>
+          - 人工确认：批量生产前建议实物打样
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="codex">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <h2>在 Codex 里怎么展示交付</h2>
+          <p class="sub">现场演示时不要讲命令参数，讲“我说一句话，Codex 做一个阶段”。</p>
+        </div>
+      </div>
+      <div class="grid grid-3">
+        <div class="card"><span class="tag">第一句话</span><h3>先让 Codex 看图</h3><p>“使用 print-studio-opendesign，先分析这组图片适合做什么印刷品。”</p></div>
+        <div class="card"><span class="tag">第二句话</span><h3>确认方向</h3><p>“按推荐方向，先做 5×7 贺卡，材质看白卡、珠光纸和布纹纸。”</p></div>
+        <div class="card"><span class="tag">第三句话</span><h3>生成预览</h3><p>“先生成材质选择页和版式预览，我看一下效果。”</p></div>
+        <div class="card"><span class="tag">第四句话</span><h3>完整排版</h3><p>“这个方向可以，生成完整排版、4K 下载页和交付包。”</p></div>
+        <div class="card"><span class="tag">第五句话</span><h3>看报告</h3><p>“打开设计计划和中文印前报告，解释这版为什么可以进入下一步。”</p></div>
+        <div class="card"><span class="tag">第六句话</span><h3>交付</h3><p>“把 ZIP、4K 下载页、print 文件和报告作为这次打样交付。”</p></div>
+      </div>
+      <div style="height:22px"></div>
+      <div class="quote">最终要让对方记住一句话：这不是 AI 随机出图，而是 Codex 里的印刷品打样助理——看图给建议，规则内排版，最后交付可检查的文件包。</div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="wrap">Print Studio OpenDesign · Codex Skill Showcase</div>
+  </footer>
+</body>
+</html>
