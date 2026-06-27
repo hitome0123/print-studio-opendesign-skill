@@ -26,14 +26,15 @@ Create beautiful but controlled proofs for generic print products.
 
 ## Layout Rules
 
+- Do not use ChatGPT/image-generation output as final layout. It may crop, rewrite, or recompose the artwork. Use the deterministic renderer for `screen/` and `print/`.
 - Do not place important text near trim edges.
 - Keep small text readable after print.
 - Increase print-version saturation and contrast, but keep backgrounds restrained.
 - Use warm white / ivory backgrounds instead of dirty gray.
 - Avoid pure black for soft illustration styles; prefer deep brown or warm dark gray.
 - For pale pink, yellow, and light green, check contrast carefully.
+- Use `local_mockup` for default presentation images; use AI mockups only as optional presentation variants after deterministic layout is approved.
 
 ## Handoff
 
 Use `print-studio-commerce-mockup` for white-background and ambiance display images, then `print-studio-prepress-qc`.
-

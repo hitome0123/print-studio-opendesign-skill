@@ -90,8 +90,8 @@
     "brand_logo": null
   },
   "image_gen": {
-    "backend": "gemini",
-    "model": "gemini-2.5-flash-image",
+    "backend": "local_mockup",
+    "model": null,
     "provider_previews": {
       "enabled": false,
       "_note": "首轮需要比较即梦/Gemini/GPT-Image2时改为 true;缺少对应 API 时会生成对比页并标注失败原因。",
@@ -119,7 +119,8 @@
           "label": "GPT-Image2"
         }
       ]
-    }
+    },
+    "_note": "默认使用 local_mockup 确定性展示图，避免生图模型裁切/改图；需要模型对比时开启 provider_previews。"
   },
   "ai_layout": true,
   "qc_ai": false,

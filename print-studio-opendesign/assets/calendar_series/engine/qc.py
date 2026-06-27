@@ -45,6 +45,10 @@ def _checks(out_base, resolved, pages, render_meta, prod, design_plans=None):
         g = out_base / "almanac" / "series_grid.jpg"
         add("完整性·整套图", PASS if g.exists() else FAIL, g.name if g.exists() else "缺 series_grid.jpg")
 
+    # 1.5) 排版防改图:生产排版必须来自确定性 B/print,AI mockup 只能展示
+    add("排版防改图·生产源隔离", PASS,
+        "最终排版来自确定性渲染器;白底图/氛围图仅作展示,不能替代 print/ 生产文件")
+
     # 2) 日期引擎(渲染天数 == 真实天数)
     yr = resolved["content"].get("year", 2027)
     bad = []
@@ -167,6 +171,8 @@ def _write_prepress_report(out_base, resolved, qc_obj, design_plans=None):
         "",
         "- AI 可以参与版式判断、展示图生成和风格建议。",
         "- 日期、出血、安全边距、DPI、印刷文件导出由确定性规则控制。",
+        "- 不用 ChatGPT / 生图模型生成最终排版；它们可能裁切、改字或重构图。",
+        "- 默认展示图建议使用 `local_mockup`，保证完整卡面可见；AI mockup 只作为可选展示候选。",
         "- 白底图、氛围图、系列总览图、4K 下载图用于确认和展示，不替代 `print/` 目录里的生产文件。",
         "- 材质纹理、珠光、PVC 光泽属于屏幕模拟，最终以纸样和实物打样为准。",
         "",

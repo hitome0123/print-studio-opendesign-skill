@@ -112,7 +112,8 @@
           "label": "GPT-Image2"
         }
       ]
-    }
+    },
+    "_note": "默认使用 local_mockup 确定性展示图，避免生图模型裁切/改图；需要模型对比时开启 provider_previews。"
   },
   "ai_layout": true,
   "qc_ai": false,

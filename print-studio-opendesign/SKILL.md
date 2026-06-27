@@ -70,12 +70,15 @@ The job: import images, choose production specs, and quickly create a proofing p
 
 ## Delivery Rules
 
+- Never ask ChatGPT / image-generation models to create the final layout from a layout prompt. Generative models may crop, recompose, rewrite text, or alter artwork. Final layout must come from the deterministic renderer (`screen/`, `print/`, `design_plan.json`).
 - Keep AI layout constrained. AI may choose visual emphasis, title accent, and layout hints. Rendering, date accuracy, bleed, safe margins, and print sizing must remain deterministic.
 - Keep print files separate from commerce mockups. Product mockups are for visual confirmation and presentation; print files are the production source.
+- Default commerce mockups should use `local_mockup` unless the user explicitly wants model comparison. This keeps the full card visible and prevents accidental AI cropping during demos or delivery.
 - Treat all non-tested paper compensation as estimated. Recommend physical proofing before batch print.
 - Do not promise CMYK/ICC-perfect color unless a real ICC workflow is added and tested.
 - Material selector previews are screen simulations only: paper core colors, PVC gloss, pearl reflections, and texture strength are visual aids, not production guarantees.
 - If white-background or ambiance mockups drift in product form, tighten product-form prompts before delivery.
+- If AI white-background or ambiance mockups crop, rewrite, or change the card, discard those mockups and regenerate with `local_mockup` or deterministic layout files.
 
 ## Read When Needed
 
