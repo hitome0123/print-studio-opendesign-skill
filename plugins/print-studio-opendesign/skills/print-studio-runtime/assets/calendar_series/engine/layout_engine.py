@@ -129,7 +129,7 @@ def render_page(W, H, family, year, month, illustration, out_path,
         grid_top = bottom - 6 * row_h
         hdr_top = grid_top - round(hdr_sz * 1.5) - round(0.02 * H)
         kw_top = hdr_top - round(kw_sz * 2.2)
-        month_top = kw_top - round(month_sz * 0.95)
+        month_top = kw_top - round(month_sz * 1.18)
         # 左区插画
         content_top = max(round(0.08 * H), top_reserved + round(0.025 * H))
         _draw_illo(cv, illustration, round(0.04 * W), content_top,
@@ -150,7 +150,7 @@ def render_page(W, H, family, year, month, illustration, out_path,
         grid_top = bottom - 6 * row_h
         hdr_top = grid_top - round(hdr_sz * 1.5) - round(0.012 * H)
         kw_top = hdr_top - round(kw_sz * 2.0)
-        month_top = kw_top - round(month_sz * 0.95)
+        month_top = kw_top - round(month_sz * 1.18)
         illo_y0 = max(round(0.05 * H), top_reserved + round(0.02 * H))
         illo_y1 = month_top - round(0.012 * H)
         _decor(d, W, H, poem_left, poem_right, seal, poem_sz)
