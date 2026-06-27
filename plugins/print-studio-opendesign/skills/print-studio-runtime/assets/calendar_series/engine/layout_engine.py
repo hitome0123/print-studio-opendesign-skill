@@ -26,7 +26,7 @@ def _draw_calendar(d, year, month, x0, top, cols_w, row_h, hdr_sz, day_sz, week_
     """无格线日历(真实日期引擎)。返回占用高度。"""
     hdr, firstwd = _weekhdr(week_start)
     colw = cols_w / 7
-    f_hdr, f_day = A._font(A.F_DIDOT, hdr_sz), A._font(A.F_DIDOT, day_sz)
+    f_hdr, f_day = A._font(A.F_DIDOT, hdr_sz), A._font(A.F_NUM, day_sz)
     for i, wd in enumerate(hdr):
         A._ctext(d, x0 + i * colw + colw / 2, top, wd, f_hdr, INK)
     grid_top = top + round(hdr_sz * 1.5)

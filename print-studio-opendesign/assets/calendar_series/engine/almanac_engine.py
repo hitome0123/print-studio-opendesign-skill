@@ -35,6 +35,7 @@ ROWH = 52                   # 6 行 × 52 + 字高 ≈ 装进 1500 底边
 F_SCRIPT = "/System/Library/Fonts/Supplemental/SnellRoundhand.ttc"
 F_DIDOT = "/System/Library/Fonts/Supplemental/Didot.ttc"
 F_HOEFLER = "/System/Library/Fonts/Supplemental/Hoefler Text.ttc"
+F_NUM = "/System/Library/Fonts/Supplemental/Times New Roman.ttf"
 F_CN = "/System/Library/Fonts/Hiragino Sans GB.ttc"  # 页脚中文兜底
 
 MONTH_EN = [None, "January", "February", "March", "April", "May", "June",
@@ -142,7 +143,7 @@ def render_almanac_page(year, month, illustration, out_path,
         _ctext(d, cx, HDR_Y, wd, f_hdr, INK)
 
     # 6) 日期(真实日期引擎,无格线)
-    f_day = _font(F_DIDOT, 42)
+    f_day = _font(F_NUM, 42)
     cal = calendar.Calendar(firstweekday=firstwd)
     for r, week in enumerate(cal.monthdayscalendar(year, month)):
         for c, day in enumerate(week):
