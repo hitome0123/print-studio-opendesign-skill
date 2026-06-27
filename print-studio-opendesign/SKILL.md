@@ -16,6 +16,8 @@ The job: import images, choose production specs, and quickly create a proofing p
 - `config.example.json`: editable job configuration.
 - `examples/`: ready-to-copy configs for greeting cards, postcards, bookmarks, and gift tags.
 - `scripts/advise_project.py`: image-first guided advisor that analyzes supplied images and recommends products, sizes, materials, layouts, typography, provider previews, and print checks with reasons.
+- `scripts/generate_layout_candidates.py`: generate A/B/C constrained layout candidates for selection.
+- `scripts/lock_layout.py`: write the selected candidate into `layout_lock` so batch rendering stays stable.
 - `scripts/preview_config.py`: fast no-AI preview and 24-material selector page.
 - `scripts/run.py`: full delivery run through the bundled calendar-series engine.
 - `assets/calendar_series/`: bundled print template engine, including calendar and generic-card renderers.
@@ -35,9 +37,13 @@ The job: import images, choose production specs, and quickly create a proofing p
    - `outputs`: screen, print, commerce, single/grid/whitebg/ambiance.
 4. For quick review confirmation, run:
    - `python scripts/preview_config.py config.example.json --all-materials`
-5. For full delivery, run:
+5. If the user wants to choose a layout before batch output, run:
+   - `python scripts/generate_layout_candidates.py config.example.json`
+   - `python scripts/lock_layout.py config.example.json B config.locked-B.json`
+   - Then use the locked config for batch output.
+6. For full delivery, run:
    - `python scripts/run.py config.example.json`
-6. Inspect:
+7. Inspect:
    - `output/<theme>/preview/` job config/material preview.
    - `output/<theme>/screen/` preview files.
    - `output/<theme>/print/` 300dpi print files with bleed.
@@ -49,7 +55,7 @@ The job: import images, choose production specs, and quickly create a proofing p
    - `output/<theme>/prepress_report.zh-CN.md` Chinese print-readiness report: why it can proceed and what needs manual confirmation.
    - `output/<theme>/reports/` report files included in the ZIP.
    - `output/<theme>/*_交付包.zip`.
-7. Report whether the result is fit for: proposal preview, sample proof, or final print handoff.
+8. Report whether the result is fit for: proposal preview, sample proof, or final print handoff.
 
 ## Guided Advisor Rules
 

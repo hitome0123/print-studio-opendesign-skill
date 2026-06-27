@@ -115,6 +115,22 @@ def _provider_label(provider):
     return provider.get("label") or provider.get("backend") or "provider"
 
 
+def _safe_locked_plan(layout_lock):
+    layout_lock = layout_lock or {}
+    if not layout_lock.get("enabled"):
+        return None
+    plan = layout_lock.get("plan") or {}
+    if not isinstance(plan, dict):
+        return None
+    locked = ai_planner.default_plan(plan.get("dominant_hue", "warm"))
+    for key in ("subject_position", "density", "dominant_hue", "accent", "vbias"):
+        if plan.get(key):
+            locked[key] = plan[key]
+    locked["source"] = "locked"
+    locked["locked_candidate_id"] = layout_lock.get("candidate_id") or plan.get("candidate_id")
+    return locked
+
+
 def _write_provider_preview_html(out_dir, theme, results):
     rows = []
     for item in results:
@@ -229,15 +245,17 @@ def main():
     W, H = size.get("trim_px") or (1500, 1500)
     family = "landscape" if W > H else "portrait"
     ai_on = r.get("ai_layout", True)
+    locked_plan = _safe_locked_plan(r.get("layout_lock"))
 
     # ── 渲染 masters:AI 排版脑 plan → 自适应渲染器 ──
     pages, plans, render_meta, design_plans = {}, {}, {}, {}
     if types & {"single", "grid", "whitebg", "ambiance"}:
-        print(f"  版式: {family} {W}×{H}  AI排版: {'on' if ai_on else 'off(默认计划)'}")
+        layout_mode = f"locked({locked_plan.get('locked_candidate_id')})" if locked_plan else ('on' if ai_on else 'off(默认计划)')
+        print(f"  版式: {family} {W}×{H}  AI排版: {layout_mode}")
         for mon, src in illos.items():
             if ai_on and template == "calendar_series" and mon != min(illos):
                 time.sleep(1.0)            # 月间轻节流,降限速
-            plan = ai_planner.plan_for(str(src), enabled=ai_on and template == "calendar_series")
+            plan = dict(locked_plan) if locked_plan else ai_planner.plan_for(str(src), enabled=ai_on and template == "calendar_series")
             plans[mon] = plan
             out = alm_dir / (f"almanac_{mon:02d}.jpg" if template == "calendar_series" else f"card_{mon:02d}_front.jpg")
             if template == "calendar_series":

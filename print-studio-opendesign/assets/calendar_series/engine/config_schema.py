@@ -158,6 +158,7 @@ def resolve_config(config_path=None):
         "outputs": outs,
         "advanced": adv,
         "image_gen": cfg.get("image_gen", {"backend": "gemini", "model": None}),
+        "layout_lock": cfg.get("layout_lock", {"enabled": False}),
         "ai_layout": cfg.get("ai_layout", True),
         "qc_ai": cfg.get("qc_ai", False),
         "warnings": W, "errors": E,

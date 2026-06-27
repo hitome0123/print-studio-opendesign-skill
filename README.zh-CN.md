@@ -113,6 +113,23 @@ python scripts/run.py config.example.json
 - `reports/`：随 ZIP 打包的报告文件
 - `*_交付包.zip`：可交付压缩包
 
+### 4 · 选一版后批量出图
+
+这个流程用于解决“不同大模型/聊天客户端每次结果会变”的问题：
+
+```bash
+python scripts/generate_layout_candidates.py demo/xiaotuzi-calendar-5x7.json
+python scripts/lock_layout.py demo/xiaotuzi-calendar-5x7.json B demo/xiaotuzi-calendar-5x7.locked-B.json
+python scripts/run.py demo/xiaotuzi-calendar-5x7.locked-B.json
+```
+
+含义：
+
+- `generate_layout_candidates.py`：先出 A/B/C 三个候选版式，并生成 `layout_candidates.json`。
+- `lock_layout.py`：把选中的候选写入配置里的 `layout_lock`，形成可复用锁版配置。
+- `run.py`：按锁定版式批量渲染整套图片，输出 `screen/`、`print/`、`commerce/`、`download_4k/` 和 ZIP。
+- 大模型可以参与“建议版式方向”，但最终批量排版由确定性渲染器执行，避免裁切、改字、重排和每次重跑漂移。
+
 ---
 
 ## 适用产品线

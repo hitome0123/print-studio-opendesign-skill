@@ -1,0 +1,145 @@
+{
+  "job": {
+    "client_name": "小兔子文具演示",
+    "job_name": "小兔子文具主题月历打样",
+    "product_line": "calendar card / greeting card / print proof",
+    "quantity": null
+  },
+  "theme": "小兔子文具主题演示",
+  "illustrations_dir": "xiaotuzi_images",
+  "series": {
+    "type": "monthly_calendar",
+    "count": 12,
+    "template": "calendar_series"
+  },
+  "preset": {
+    "size": "desk_cal_5x7",
+    "material": "white_card_300g",
+    "product_form": "single_card",
+    "style": "vintage_botanical",
+    "language": "en",
+    "product_type": "calendar_card"
+  },
+  "content": {
+    "year": 2027,
+    "real_dates": true,
+    "week_start": "sunday",
+    "month_keywords": [
+      "HOPE",
+      "LOVE",
+      "DREAM",
+      "BLOOM",
+      "GRACE",
+      "JOY",
+      "WARMTH",
+      "SHINE",
+      "CALM",
+      "HARVEST",
+      "GRATITUDE",
+      "PEACE"
+    ],
+    "corner_poem_left": "A quiet beginning,\nsoft as morning light.",
+    "corner_poem_right": "Where small things\nbloom in their season.",
+    "seal_initials": "JB",
+    "keep_poems": true,
+    "keep_seal": true,
+    "keep_botanical_notes": true,
+    "front_title": "January",
+    "front_subtitle": "HOPE",
+    "message": "A quiet beginning, soft as morning light.",
+    "back_title": "Thank you",
+    "back_body": "Printed with care. Final colors should be confirmed by physical proof.",
+    "card_titles": [],
+    "card_subtitles": []
+  },
+  "outputs": {
+    "versions": [
+      "screen",
+      "print",
+      "commerce"
+    ],
+    "types": [
+      "single",
+      "grid",
+      "whitebg",
+      "ambiance"
+    ],
+    "series_grid_layout": "4x3",
+    "product_shot_months": [
+      1
+    ],
+    "download_4k": true
+  },
+  "advanced": {
+    "_note": "留空(null)= 用预设/印刷经验默认。填了才覆盖。高风险值 resolver 会警告。",
+    "custom_size": null,
+    "bleed_mm": null,
+    "safe_margin_mm": null,
+    "bg_tone": null,
+    "saturation_boost_pct": null,
+    "title_font_scale": null,
+    "decor_complexity": null,
+    "ambiance_scene": null,
+    "brand_logo": null
+  },
+  "image_gen": {
+    "backend": "local_mockup",
+    "model": null,
+    "provider_previews": {
+      "enabled": false,
+      "_note": "首轮需要比较即梦/Gemini/GPT-Image2时改为 true;缺少对应 API 时会生成对比页并标注失败原因。",
+      "months": [
+        1
+      ],
+      "types": [
+        "whitebg",
+        "ambiance"
+      ],
+      "providers": [
+        {
+          "backend": "jimeng",
+          "model": "jimeng-image",
+          "label": "即梦"
+        },
+        {
+          "backend": "gemini",
+          "model": "gemini-2.5-flash-image",
+          "label": "Gemini"
+        },
+        {
+          "backend": "gpt_image2",
+          "model": "gpt-image-1",
+          "label": "GPT-Image2"
+        }
+      ]
+    },
+    "_note": "默认使用 local_mockup 确定性展示图，避免生图模型裁切/改图；需要模型对比时开启 provider_previews。"
+  },
+  "ai_layout": false,
+  "qc_ai": false,
+  "production": {
+    "double_sided": false,
+    "round_corners": {
+      "enabled": true,
+      "radius_mm": 3
+    },
+    "binding": "none",
+    "finishing": [],
+    "custom_notes": ""
+  },
+  "layout_lock": {
+    "enabled": true,
+    "candidate_id": "B",
+    "name": "主视觉放大版",
+    "reason": "让插画成为第一视觉，适合主体可爱、装饰细节丰富的系列。",
+    "plan": {
+      "subject_position": "top-heavy",
+      "density": "airy",
+      "dominant_hue": "red",
+      "accent": "#c1604f",
+      "vbias": "top-heavy",
+      "source": "candidate",
+      "candidate_id": "B"
+    }
+  }
+}
