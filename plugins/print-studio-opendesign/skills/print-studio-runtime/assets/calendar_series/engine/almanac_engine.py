@@ -162,25 +162,40 @@ def render_almanac_page(year, month, illustration, out_path,
 
 
 def render_series_grid(page_paths, out_path, cols=4, gap=46, pad=80, title=""):
-    """整套系列平面排版图:N 页平铺成 1:1 大图"""
+    """整套系列平面排版图:N 页平铺成 1:1 大图.
+
+    Keep the title+grid block optically centered on the square canvas.
+    Preserve the source page aspect ratio instead of forcing every card into
+    a square thumbnail, otherwise 5×7 cards look distorted and bottom whitespace
+    becomes visibly heavier than the top/side margins.
+    """
     n = len(page_paths)
     rows = (n + cols - 1) // cols
     inner = 1900
-    cell = (inner - gap * (cols - 1)) // cols
-    cell_h = cell  # 子图也是 1:1
-    W = pad * 2 + inner
-    H = pad * 2 + cell_h * rows + gap * (rows - 1) + (90 if title else 0)
-    # 收成 1:1 正方形画布(取较大边)
-    S = max(W, H)
+    first = Image.open(page_paths[0]).convert("RGB")
+    src_w, src_h = first.size
+    aspect = src_h / src_w if src_w else 1
+    title_h = 112 if title else 0
+    S = pad * 2 + inner
+    available_w = inner
+    available_h = S - pad * 2 - title_h
+    cell_by_w = (available_w - gap * (cols - 1)) / cols
+    cell_h_by_h = (available_h - gap * (rows - 1)) / rows
+    cell = max(1, round(min(cell_by_w, cell_h_by_h / aspect)))
+    cell_h = max(1, round(cell * aspect))
+    block_w = cell * cols + gap * (cols - 1)
+    grid_h = cell_h * rows + gap * (rows - 1)
+    block_h = title_h + grid_h
     cv = Image.new("RGB", (S, S), BG)
     d = ImageDraw.Draw(cv)
-    ox = (S - inner) // 2
-    oy = pad + (90 if title else 0)
+    ox = (S - block_w) // 2
+    block_y = (S - block_h) // 2
+    oy = block_y + title_h
     if title:
         # 含中文用 CJK 字体(花体无中文字形会出方块),纯西文才用花体
         has_cjk = any("一" <= ch <= "鿿" for ch in title)
         tfont = _font(F_CN, 64) if has_cjk else _font(F_SCRIPT, 88)
-        _ctext(d, S / 2, pad - 10, title, tfont, SCRIPT, ls=6 if has_cjk else 0)
+        _ctext(d, S / 2, block_y, title, tfont, SCRIPT, ls=6 if has_cjk else 0)
     for i, p in enumerate(page_paths):
         r, c = divmod(i, cols)
         im = Image.open(p).convert("RGB").resize((cell, cell_h), Image.LANCZOS)
