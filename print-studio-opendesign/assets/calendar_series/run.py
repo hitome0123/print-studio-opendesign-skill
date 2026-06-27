@@ -280,8 +280,9 @@ def main():
     grid = None
     if "grid" in types and pages:
         grid = alm_dir / "series_grid.jpg"
+        series_title = outs.get("series_grid_title") or ""
         render_series_grid([str(pages[m]) for m in sorted(pages)], str(grid), cols=cols,
-                           title=f"{theme} · {year}")
+                           title=series_title)
         print(f"  渲染 C master ({outs.get('series_grid_layout')})")
 
     # ── D/E 生图 masters ──
