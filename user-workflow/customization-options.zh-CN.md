@@ -66,11 +66,11 @@
 可开启：
 
 - `download_4k`：每张输出图生成长边 4096px 的单独下载版。
-- `provider_previews`：首轮比较即梦、Gemini、GPT-Image2 的白底图和氛围图。
+- `provider_previews`：首轮比较即梦、Gemini、GPT-Image2 的空白白底/氛围背景。
 - `provider_previews.months`：只选 1–2 张先比较，避免浪费额度。
-- `provider_previews.types`：可只看白底图，也可同时看氛围图。
+- `provider_previews.types`：可只看白底背景，也可同时看氛围背景。
 
-建议：确认模型路线后，再批量生成完整白底图和氛围图。
+建议：确认模型路线后，再批量生成空白背景，并用本地合成把真实卡面叠上去。
 
 ## 不建议随便改
 
@@ -82,4 +82,3 @@
 - 材质 key 名称
 
 这些属于系统规则，建议由开发者或设计负责人维护。
-

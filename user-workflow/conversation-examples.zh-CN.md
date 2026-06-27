@@ -191,7 +191,7 @@ preset.product_type = packaging_insert
 ```text
 使用 print-studio-commerce-mockup。
 这套贺卡先不要批量出图，先拿第 1 张比较即梦、Gemini、GPT-Image2。
-白底图和氛围图都要，方便选后续使用哪个模型。
+只比较空白白底背景和空白氛围背景，不要让模型处理成品卡面。
 ```
 
 AI 应该做：
@@ -223,7 +223,7 @@ python scripts/run.py <config.json>
 
 - `provider_previews/index.html`
 - `download_4k/index.html`
-- 每个模型的白底图 / 氛围图是否保持产品形态
+- 每个模型的空白背景是否干净、占位区是否完整、是否没有文字图案、是否方便后期叠加真实卡面
 
 ## 确认话术
 
@@ -235,4 +235,3 @@ python scripts/run.py <config.json>
 材质纹理、珠光、PVC 光泽、纸芯侧边效果以实物纸样和打样为准。
 如果确认版式和材质，我们再出最终生产交付包。
 ```
-

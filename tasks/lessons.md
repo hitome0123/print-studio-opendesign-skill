@@ -18,3 +18,10 @@
 - For print design guidance, do not ask users to fully specify product, size, material, layout, and typography upfront.
 - Analyze supplied images first, then recommend choices with reasons, risks, and a default option.
 - Ground choices in image traits: orientation, brightness, saturation, contrast, detail density, subject position, subject coverage, and series consistency.
+
+## 2026-06-27 · Model Mockup Safety
+
+- Do not ask image models to place the final card layout into white-background or ambiance scenes when text/layout fidelity matters.
+- Image models may crop, rewrite text, redraw details, or recompose even when prompts forbid it.
+- Safer workflow: generate blank white/lifestyle backgrounds only, then composite the deterministic card output as a separate layer.
+- Treat direct model mockups with final card images as disposable experiments, never as print or delivery sources.
