@@ -2,7 +2,7 @@
 """
 ③ Rule Renderer · 自适应版式渲染器(复古植物志风,任意比例原生出图)
 - 版式族:portrait(H≥W,竖版/方版) / landscape(W>H,横版)
-- 自底向上算布局:日历 6 行先锚底,再往上推标题/插画,保证任意尺寸都装得下
+- 自底向上算布局:日历按当月实际周数锚底,再往上推标题/插画,保证任意尺寸都装得下
 - 复用 almanac_engine 的视觉基元(抠白底/字体/色/居中/真实日期)= 同一套护城河视觉
 - AI 只通过 plan 影响:主体重心(vbias)、标题色(accent);坐标/字号/日期全由规则算
 """
@@ -20,6 +20,11 @@ DEFAULT_ACCENT = A.SCRIPT
 def _weekhdr(week_start):
     return (["M", "T", "W", "T", "F", "S", "S"], 0) if week_start == "monday" \
         else (["S", "M", "T", "W", "T", "F", "S"], 6)
+
+
+def _calendar_rows(year, month, week_start):
+    _, firstwd = _weekhdr(week_start)
+    return len(calendar.Calendar(firstweekday=firstwd).monthdayscalendar(year, month))
 
 
 def _draw_calendar(d, year, month, x0, top, cols_w, row_h, hdr_sz, day_sz, week_start):
@@ -125,8 +130,9 @@ def render_page(W, H, family, year, month, illustration, out_path,
         row_h = round(0.10 * S)
         # 右区自底向上
         rx0, rcols_w = round(0.55 * W), round(0.40 * W)
+        cal_rows = _calendar_rows(year, month, week_start)
         bottom = H - round(0.06 * H)
-        grid_top = bottom - 6 * row_h
+        grid_top = bottom - cal_rows * row_h
         hdr_top = grid_top - round(hdr_sz * 1.5) - round(0.02 * H)
         kw_top = hdr_top - round(kw_sz * 2.2)
         month_top = kw_top - round(month_sz * 1.35)
@@ -138,7 +144,7 @@ def render_page(W, H, family, year, month, illustration, out_path,
         if kw:
             A._ctext(d, rx0 + rcols_w / 2, kw_top, kw, A._font(A.F_DIDOT, kw_sz), GRAY, ls=round(0.004 * S))
         _draw_calendar(d, year, month, rx0, hdr_top, rcols_w, row_h, hdr_sz, day_sz, week_start)
-        cx0, cy0, cx1, cy1, dsz = round(0.04 * W), content_top, rx0 + rcols_w, grid_top + 6 * row_h, day_sz
+        cx0, cy0, cx1, cy1, dsz = round(0.04 * W), content_top, rx0 + rcols_w, grid_top + cal_rows * row_h, day_sz
     else:  # portrait / square
         month_sz, kw_sz = round(0.10 * W), round(0.026 * W)
         hdr_sz = day_sz = round(0.032 * W)
@@ -146,8 +152,9 @@ def render_page(W, H, family, year, month, illustration, out_path,
         row_h = round(0.045 * W)
         cols_w = round(0.76 * W)
         x0 = (W - cols_w) // 2
-        bottom = H - round(0.035 * H)
-        grid_top = bottom - 6 * row_h
+        cal_rows = _calendar_rows(year, month, week_start)
+        bottom = H - round(0.030 * H)
+        grid_top = bottom - cal_rows * row_h
         hdr_top = grid_top - round(hdr_sz * 1.5) - round(0.012 * H)
         kw_top = hdr_top - round(kw_sz * 2.0)
         month_top = kw_top - round(month_sz * 1.35)
@@ -161,7 +168,7 @@ def render_page(W, H, family, year, month, illustration, out_path,
         if kw:
             A._ctext(d, W / 2, kw_top, kw, A._font(A.F_DIDOT, kw_sz), GRAY, ls=round(0.005 * W))
         _draw_calendar(d, year, month, x0, hdr_top, cols_w, row_h, hdr_sz, day_sz, week_start)
-        cx0, cy0, cx1, cy1, dsz = x0, illo_y0, x0 + cols_w, grid_top + 6 * row_h, day_sz
+        cx0, cy0, cx1, cy1, dsz = x0, illo_y0, x0 + cols_w, grid_top + cal_rows * row_h, day_sz
 
     _draw_binding_guide(d, W, H, binding)
     Path(out_path).parent.mkdir(parents=True, exist_ok=True)
