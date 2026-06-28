@@ -61,6 +61,25 @@ CANDIDATES = [
 ]
 
 
+def build_candidates(api_seed):
+    seed = api_seed or ai_planner.default_plan()
+    seeded_plan = {
+        "subject_position": seed.get("subject_position", "center"),
+        "density": seed.get("density", "medium"),
+        "dominant_hue": seed.get("dominant_hue", "warm"),
+        "accent": seed.get("accent", "#b07a5a"),
+        "vbias": seed.get("vbias", "center"),
+        "source": seed.get("source", "default"),
+    }
+    candidates = json.loads(json.dumps(CANDIDATES))
+    candidates[0]["name"] = "API/规则推荐版"
+    candidates[0]["reason"] = f"根据首张图的主体位置、细节密度和主色建议生成；来源: {seeded_plan['source']}。"
+    candidates[0]["plan"] = seeded_plan
+    candidates[1]["plan"]["dominant_hue"] = seeded_plan["dominant_hue"]
+    candidates[1]["plan"]["accent"] = seeded_plan["accent"]
+    return candidates
+
+
 def prepare_config(config_path):
     cfg = json.loads(config_path.read_text(encoding="utf-8"))
     illustrations = Path(cfg.get("illustrations_dir", "example_illustrations"))
@@ -124,7 +143,7 @@ pre{{white-space:pre-wrap;background:#2d261f;color:#f6eadb;border-radius:12px;pa
 </style><main>
 <h1>{html.escape(payload['theme'])} · 选择一个版式</h1>
 <p>先看 A/B/C 的视觉方向。选中后复制对应命令，生成 locked 配置，再用 locked 配置批量输出。模型只参与建议，最终排版由规则引擎稳定执行。</p>
-<div class="note">建议：如果要稳定批量出图，先锁定一版，不要每张重新让模型自由发挥。</div>
+<div class="note">建议：如果要稳定批量出图，先锁定一版，不要每张重新让模型自由发挥。当前顾问来源：{html.escape(payload.get('planner_seed', {}).get('source', 'default'))}</div>
 <section class="grid">{''.join(cards)}</section>
 </main></html>"""
     (out_dir / "index.html").write_text(page, encoding="utf-8")
@@ -149,7 +168,9 @@ def main():
     poem_right = content.get("corner_poem_right", "") if content.get("keep_poems", True) else ""
     seal = content.get("seal_initials", "") if content.get("keep_seal", True) else ""
 
-    api_seed = ai_planner.plan_for(str(image_path), enabled=bool(os.getenv("GEMINI_API_KEY")))
+    layout_ai = resolved.get("layout_ai", {})
+    api_seed = ai_planner.plan_for(str(image_path), enabled=True, options=layout_ai)
+    candidates = build_candidates(api_seed)
     out_root = Path(os.environ.get("PRINT_STUDIO_OUTPUT_ROOT", HERE / "output"))
     out_dir = out_root / resolved["theme"] / "layout_candidates"
     out_dir.mkdir(parents=True, exist_ok=True)
@@ -160,11 +181,13 @@ def main():
         "prepared_config": str(prepared_config),
         "source_image": str(image_path),
         "planner_seed": api_seed,
+        "layout_ai": layout_ai,
         "selection_instruction": "选择 candidate_id 后运行 scripts/lock_layout.py <config> <candidate_id>",
         "candidates": [],
     }
-    for candidate in CANDIDATES:
-        plan = {**candidate["plan"], "source": "candidate", "candidate_id": candidate["candidate_id"]}
+    for candidate in candidates:
+        plan = {**candidate["plan"], "candidate_id": candidate["candidate_id"]}
+        plan["source"] = f"candidate:{candidate['candidate_id']}:{candidate['plan'].get('source', 'preset')}"
         preview_path = out_dir / f"candidate_{candidate['candidate_id']}.jpg"
         render_page(
             width,
@@ -200,7 +223,8 @@ def main():
     write_candidate_html(out_dir, payload)
     print(f"done -> {out_dir}")
     print(f"打开选择页: {out_dir / 'index.html'}")
-    print("候选: " + " / ".join(f"{c['candidate_id']}={c['name']}" for c in CANDIDATES))
+    print(f"顾问来源: {api_seed.get('source')}")
+    print("候选: " + " / ".join(f"{c['candidate_id']}={c['name']}" for c in candidates))
 
 
 if __name__ == "__main__":

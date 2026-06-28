@@ -122,6 +122,13 @@
     },
     "_note": "默认使用 local_mockup 确定性展示图，避免生图模型裁切/改图；需要模型对比时开启 provider_previews。"
   },
+  "layout_ai": {
+    "enabled": true,
+    "provider": "auto",
+    "openai_model": "gpt-4.1-mini",
+    "gemini_model": "gemini-2.5-flash",
+    "_note": "API 只做版式顾问,输出受限 design_plan 种子;最终排版仍由本地渲染器执行。provider 可选 auto/openai/gemini/local;缺少 API key 会自动降级本地默认。"
+  },
   "ai_layout": true,
   "qc_ai": false,
   "production": {

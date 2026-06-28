@@ -324,7 +324,11 @@ def main():
         for mon, src in illos.items():
             if ai_on and template == "calendar_series" and mon != min(illos):
                 time.sleep(1.0)            # 月间轻节流,降限速
-            plan = dict(locked_plan) if locked_plan else ai_planner.plan_for(str(src), enabled=ai_on and template == "calendar_series")
+            plan = dict(locked_plan) if locked_plan else ai_planner.plan_for(
+                str(src),
+                enabled=ai_on and template == "calendar_series",
+                options=r.get("layout_ai", {}),
+            )
             plans[mon] = plan
             out = alm_dir / (f"almanac_{mon:02d}.jpg" if template == "calendar_series" else f"card_{mon:02d}_front.jpg")
             if template == "calendar_series":

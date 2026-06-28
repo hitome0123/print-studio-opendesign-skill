@@ -38,3 +38,10 @@
 - Any visual decision step should have an HTML review surface, not just a JSON artifact.
 - If a generated review page influences delivery, include it in the final ZIP and link it from the delivery homepage.
 - Keep material choices backed by actual preset keys; never offer friendly labels that cannot run.
+
+## 2026-06-28 · API Is Advisor, Renderer Is Authority
+
+- Direct API calls improve consistency over chatbot copy-paste, but do not make image models safe as final layout renderers.
+- Keep provider output constrained to a small JSON design plan and clamp every field into preset enums before rendering.
+- Always persist provider/source metadata in candidates and locked configs so results can be explained and reproduced.
+- Locked configs should write absolute asset paths when saved outside the source config folder.

@@ -72,6 +72,7 @@ The job: import images, choose production specs, and quickly create a proofing p
 - Ground every recommendation in the supplied images plus print constraints.
 - Emit `design_plan.json` so typography/layout/color choices are explicit, reusable, and reviewable.
 - Emit `prepress_report.zh-CN.md` so every run explains print-readiness and manual confirmation points.
+- If `layout_ai` is enabled, API providers may analyze the first/source image and suggest a constrained JSON layout seed. This seed may influence candidates, but it must not render or alter the final artwork.
 
 ## Configuration Rules
 
@@ -83,6 +84,7 @@ The job: import images, choose production specs, and quickly create a proofing p
 ## Delivery Rules
 
 - Never ask ChatGPT / image-generation models to create the final layout from a layout prompt. Generative models may crop, recompose, rewrite text, or alter artwork. Final layout must come from the deterministic renderer (`screen/`, `print/`, `design_plan.json`).
+- API layout providers are advisor-only. They may return `subject_position`, `density`, `dominant_hue`, `confidence`, and `reason`; all values are clamped to the preset design system before rendering.
 - Keep AI layout constrained. AI may choose visual emphasis, title accent, and layout hints. Rendering, date accuracy, bleed, safe margins, and print sizing must remain deterministic.
 - Keep print files separate from commerce mockups. Product mockups are for visual confirmation and presentation; print files are the production source.
 - Default commerce mockups should use `local_mockup` unless the user explicitly wants model comparison. This keeps the full card visible and prevents accidental AI cropping during demos or delivery.

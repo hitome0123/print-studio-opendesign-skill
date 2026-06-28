@@ -141,6 +141,30 @@ python scripts/run.py demo/xiaotuzi-calendar-5x7.locked-B.json
 - `run.py`：按锁定版式批量渲染整套图片，输出 `screen/`、`print/`、`commerce/`、`download_4k/` 和 ZIP。
 - 大模型可以参与“建议版式方向”，但最终批量排版由确定性渲染器执行，避免裁切、改字、重排和每次重跑漂移。
 
+### 5 · API 版式顾问
+
+如果配置了 API key，系统可以直接调用 API 辅助判断首张图的主体位置、细节密度和主色调，并把结果作为 A/B/C 候选里的“API/规则推荐版”。
+
+配置项：
+
+```json
+"layout_ai": {
+  "enabled": true,
+  "provider": "auto",
+  "openai_model": "gpt-4.1-mini",
+  "gemini_model": "gemini-2.5-flash"
+}
+```
+
+使用方式：
+
+- `provider=auto`：优先尝试 OpenAI，失败后尝试 Gemini，再失败则本地默认。
+- `provider=openai`：使用 `OPENAI_API_KEY`。
+- `provider=gemini`：使用 `GEMINI_API_KEY`。
+- `provider=local`：完全不调用 API，只用本地规则。
+
+注意：API 只输出受限 JSON 版式建议，不直接生成最终图。最终卡面、文字、日期、出血、安全区和批量输出仍由本地渲染器执行。
+
 ---
 
 ## 适用产品线
