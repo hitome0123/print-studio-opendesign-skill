@@ -25,3 +25,9 @@
 - Image models may crop, rewrite text, redraw details, or recompose even when prompts forbid it.
 - Safer workflow: generate blank white/lifestyle backgrounds only, then composite the deterministic card output as a separate layer.
 - Treat direct model mockups with final card images as disposable experiments, never as print or delivery sources.
+
+## 2026-06-28 · Generalize Visual Fixes
+
+- When a visual issue is found in one case, first decide whether it is a template rule, a product rule, or a one-off asset issue.
+- Prefer engine-level quality rules over case-specific tweaks: text layer spacing, safe margins, series-grid balance, and font consistency should apply across products.
+- Add QC checks for newly discovered visual risks so the same issue is caught in greeting cards, postcards, bookmarks, gift tags, and calendars.

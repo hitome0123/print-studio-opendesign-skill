@@ -1,5 +1,6 @@
 from pathlib import Path
 from PIL import Image, ImageDraw, ImageFont, ImageOps, ImageFilter
+from layout_quality import vertical_stack_start
 
 MONTH_NAMES = [
     "January", "February", "March", "April", "May", "June",
@@ -74,6 +75,16 @@ def _draw_round_corner_guide(draw, w, h, radius):
         draw.arc((x, y, x + 2*r, y + 2*r), start, end, fill=color, width=3)
 
 
+def _text_bbox_at(draw, x, y, text, font):
+    bbox = draw.textbbox((x, y), text, font=font)
+    return [round(v) for v in bbox]
+
+
+def _text_x(draw, text, font, align_x, max_text_w, landscape, W):
+    bbox = draw.textbbox((0, 0), text, font=font)
+    return align_x if landscape else round((W - (bbox[2] - bbox[0])) / 2)
+
+
 def render_generic_card(W, H, index, image_path, out_path, resolved, side="front"):
     content = resolved.get("content", {})
     product = resolved.get("product_type", {}).get("key", "greeting_card")
@@ -91,6 +102,7 @@ def render_generic_card(W, H, index, image_path, out_path, resolved, side="front
     accent = (139, 94, 58)
     text = (74, 63, 52)
     muted = (142, 126, 108)
+    text_boxes = []
 
     if side == "back":
         title = content.get("back_title") or "Thank you"
@@ -121,14 +133,17 @@ def render_generic_card(W, H, index, image_path, out_path, resolved, side="front
         landscape = W > H
         narrow = W / H < 0.55
         if narrow:
+            text_gap = round(min(W, H) * 0.070)
             art_box = (margin, margin, W - margin, round(H * 0.54))
-            title_y = round(H * 0.60)
+            preferred_title_y = round(H * 0.60)
         elif landscape:
+            text_gap = round(min(W, H) * 0.050)
             art_box = (margin, margin, round(W * 0.58), H - margin)
-            title_y = round(H * 0.27)
+            preferred_title_y = round(H * 0.27)
         else:
+            text_gap = round(min(W, H) * 0.060)
             art_box = (margin, margin, W - margin, round(H * 0.58))
-            title_y = round(H * 0.64)
+            preferred_title_y = round(H * 0.64)
 
         x1, y1, x2, y2 = art_box
         aw, ah = x2 - x1, y2 - y1
@@ -153,17 +168,33 @@ def render_generic_card(W, H, index, image_path, out_path, resolved, side="front
         font_title = _fit_text(draw, title, max_text_w, round(min(W, H) * (0.12 if not narrow else 0.10)), italic=True)
         font_sub = _font(round(min(W, H) * 0.035))
         font_msg = _font(round(min(W, H) * 0.028))
-        tb = draw.textbbox((0, 0), title, font=font_title)
-        tx = align_x if landscape else (W - (tb[2] - tb[0])) / 2
+        message_lines = _wrap(draw, message, font_msg, max_text_w, max_lines=3)
+        sub_gap = max(18, round(min(W, H) * 0.070))
+        msg_gap = max(18, round(min(W, H) * 0.040))
+        line_step = round(font_msg.size * 1.45)
+        title_bbox0 = draw.textbbox((0, 0), title, font=font_title)
+        sub_bbox0 = draw.textbbox((0, 0), subtitle, font=font_sub)
+        title_h = title_bbox0[3] - title_bbox0[1]
+        sub_h = sub_bbox0[3] - sub_bbox0[1]
+        msg_h = line_step * len(message_lines)
+        stack_h = title_h + sub_gap + sub_h + (msg_gap + msg_h if message_lines else 0)
+        min_text_y = margin if landscape else art_box[3] + text_gap
+        max_text_y = H - margin
+        title_y = vertical_stack_start(preferred_title_y, stack_h, min_text_y, max_text_y)
+
+        tx = _text_x(draw, title, font_title, align_x, max_text_w, landscape, W)
         draw.text((tx, title_y), title, fill=accent, font=font_title)
-        sb = draw.textbbox((0, 0), subtitle, font=font_sub)
-        sx = align_x if landscape else (W - (sb[2] - sb[0])) / 2
-        draw.text((sx, title_y + round(font_title.size * 0.95)), subtitle, fill=muted, font=font_sub)
-        y = title_y + round(font_title.size * 1.55)
-        for line in _wrap(draw, message, font_msg, max_text_w, max_lines=3):
+        text_boxes.append({"name": "title", "bbox": _text_bbox_at(draw, tx, title_y, title, font_title)})
+        sub_y = title_y + title_h + sub_gap
+        sx = _text_x(draw, subtitle, font_sub, align_x, max_text_w, landscape, W)
+        draw.text((sx, sub_y), subtitle, fill=muted, font=font_sub)
+        text_boxes.append({"name": "subtitle", "bbox": _text_bbox_at(draw, sx, sub_y, subtitle, font_sub)})
+        y = sub_y + sub_h + msg_gap
+        for line in message_lines:
             lb = draw.textbbox((0, 0), line, font=font_msg)
             lx = align_x if landscape else (W - (lb[2] - lb[0])) / 2
             draw.text((lx, y), line, fill=text, font=font_msg)
+            text_boxes.append({"name": "message", "bbox": _text_bbox_at(draw, lx, y, line, font_msg)})
             y += round(font_msg.size * 1.45)
 
         seal = content.get("seal_initials") or ""
@@ -195,6 +226,8 @@ def render_generic_card(W, H, index, image_path, out_path, resolved, side="front
         "day_sz_px": None,
         "days": None,
         "safe_margin_px": margin,
+        "text_boxes": text_boxes,
+        "image_box": list(art_box) if side == "front" else None,
         "side": side,
         "template": "generic_card",
         "product_type": product,

@@ -9,6 +9,7 @@
 import calendar, json, os
 from pathlib import Path
 from PIL import Image
+from layout_quality import bbox_inside_safe, bbox_intersects
 
 PASS, WARN, FAIL = "pass", "warn", "fail"
 MIN_PT = 6.0          # 印刷可读最小字号(pt)
@@ -103,6 +104,24 @@ def _checks(out_base, resolved, pages, render_meta, prod, design_plans=None):
         pt = _pt(dsz)
         add("可印字号·日历数字", PASS if pt >= MIN_PT else WARN,
             f"日期 {dsz}px≈{pt}pt {'≥' if pt >= MIN_PT else '<'}{MIN_PT}pt")
+
+    # 5.5) 通用文本层:标题/副标题/正文不可互相接触,也不能贴边
+    touch = []
+    unsafe_text = []
+    for m, meta in render_meta.items():
+        text_boxes = meta.get("text_boxes") or []
+        canvas = meta.get("canvas") or (0, 0)
+        for i, item in enumerate(text_boxes):
+            if not bbox_inside_safe(item["bbox"], canvas, safe_px):
+                unsafe_text.append(f"{m:02d}:{item.get('name')}")
+            for other in text_boxes[i + 1:]:
+                if bbox_intersects(item["bbox"], other["bbox"], gap=max(4, round(safe_px * 0.12))):
+                    touch.append(f"{m:02d}:{item.get('name')}×{other.get('name')}")
+    if any((meta.get("text_boxes") or []) for meta in render_meta.values()):
+        add("通用排版·文本不接触", PASS if not touch else WARN,
+            "标题/副标题/正文层级有空气感" if not touch else "文本层接触风险: " + "; ".join(touch[:6]))
+        add("通用排版·文本安全边", PASS if not unsafe_text else WARN,
+            "文本都在安全区内" if not unsafe_text else "文本贴边风险: " + "; ".join(unsafe_text[:6]))
 
     # 6) 系列底色一致
     if len(pages) >= 2:
