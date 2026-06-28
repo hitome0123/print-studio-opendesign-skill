@@ -34,6 +34,7 @@ If the user has already supplied an image folder, skip asking for it again and p
 
 - `config.example.json`: editable job configuration.
 - `examples/`: ready-to-copy configs for greeting cards, postcards, bookmarks, and gift tags.
+- `scripts/run_project_flow.py`: guided one-command flow from image folder to final delivery package.
 - `scripts/start_project.py`: interactive project wizard for users who should not edit JSON by hand.
 - `scripts/advise_project.py`: image-first guided advisor that analyzes supplied images and recommends products, sizes, materials, layouts, typography, provider previews, and print checks with reasons.
 - `scripts/generate_layout_candidates.py`: generate A/B/C constrained layout candidates plus a visual `layout_candidates/index.html` selection page.
@@ -46,28 +47,32 @@ If the user has already supplied an image folder, skip asking for it again and p
 
 ## MVP Workflow
 
-1. If the user wants step-by-step guidance, run:
+1. For the smooth first-run experience, prefer:
+   - `python scripts/run_project_flow.py`
+   - Or non-interactive: `python scripts/run_project_flow.py --images <illustrations_dir> --theme <project_name>`
+   - This runs image advice, material preview, A/B/C candidates, layout lock, full delivery, and prints the final delivery homepage path.
+2. If the user only wants to create a config first, run:
    - `python scripts/start_project.py`
    - This creates a runnable config by asking for image folder, project name, product type, series count, material, and year.
-2. Start image-first when images are available:
+3. Start image-first when images are available:
    - `python scripts/advise_project.py <illustrations_dir>`
    - Use the report to explain choices before asking for product/size/material decisions.
-3. Read or create a config based on `config.example.json`.
-4. Confirm the four decision layers:
+4. Read or create a config based on `config.example.json`.
+5. Confirm the four decision layers:
    - `job`: project metadata.
    - `preset`: size, material, product form, visual style, language.
    - `series`: monthly, quarterly, seasonal, custom N-card set.
    - `outputs`: screen, print, commerce, single/grid/whitebg/ambiance.
-5. For quick review confirmation, run:
+6. For quick review confirmation, run:
    - `python scripts/preview_config.py config.example.json --all-materials`
-6. If the user wants to choose a layout before batch output, run:
+7. If the user wants to choose a layout before batch output, run:
    - `python scripts/generate_layout_candidates.py config.example.json`
    - Open `output/<theme>/layout_candidates/index.html` and select A/B/C with visible reasons.
    - `python scripts/lock_layout.py config.example.json B config.locked-B.json`
    - Then use the locked config for batch output.
-7. For full delivery, run:
+8. For full delivery, run:
    - `python scripts/run.py config.example.json`
-8. Inspect:
+9. Inspect:
    - `output/<theme>/交付说明.html` delivery homepage for all generated assets.
    - `output/<theme>/preview/` job config/material preview.
    - `output/<theme>/screen/` preview files.
@@ -80,7 +85,7 @@ If the user has already supplied an image folder, skip asking for it again and p
    - `output/<theme>/prepress_report.zh-CN.md` Chinese print-readiness report: why it can proceed and what needs manual confirmation.
    - `output/<theme>/reports/` report files included in the ZIP.
    - `output/<theme>/*_交付包.zip`.
-9. Report whether the result is fit for: proposal preview, sample proof, or final print handoff.
+10. Report whether the result is fit for: proposal preview, sample proof, or final print handoff.
 
 ## Guided Advisor Rules
 

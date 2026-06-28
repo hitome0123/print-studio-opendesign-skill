@@ -119,18 +119,25 @@ def write_delivery_index(out_base, theme, resolved, qc, vdirs):
     series = resolved.get("series", {}) or {}
     rows = [
         ("预览图", "screen/", "给使用者确认画面和系列统一性"),
+        ("材质预览", "preview/materials.html", "尺寸、纸张、纹理和材质选择页"),
         ("印刷文件", "print/", "300dpi、含出血，生产优先看这里"),
         ("展示图", "commerce/", "白底图、氛围图、系列总览"),
         ("4K 下载", "download_4k/index.html", "单张打开和保存"),
         ("版式候选", "layout_candidates/index.html", "A/B/C 候选版式和选择理由"),
+        ("图片建议", "reports/print_studio_advice.md", "从图片本身推导产品、材质和排版建议"),
         ("质检报告", "reports/prepress_report.zh-CN.md", "检查 WARN/FAIL 和人工确认点"),
         ("设计计划", "reports/design_plan.json", "查看版式、字体、颜色和图层结构"),
         ("多模型预览", "provider_previews/index.html", "可选的模型背景/展示候选"),
     ]
     cards = []
+    standard_report_links = {
+        "reports/prepress_report.zh-CN.md",
+        "reports/design_plan.json",
+    }
     for title, href, desc in rows:
         root = href.split("/", 1)[0]
-        if root in vdirs or root == "reports":
+        report_ready = href in standard_report_links or (out_base / href).exists()
+        if root in vdirs or (root == "reports" and report_ready):
             cards.append(f"<a class='card' href='{html.escape(href)}'><b>{html.escape(title)}</b><span>{html.escape(desc)}</span></a>")
     status_class = qc["status"]
     html_page = f"""<!doctype html><html lang="zh-CN"><meta charset="utf-8">
@@ -172,7 +179,8 @@ code{{background:#efe6d9;padding:2px 6px;border-radius:6px}}
     ]
     for title, href, desc in rows:
         root = href.split("/", 1)[0]
-        if root in vdirs or root == "reports":
+        report_ready = href in standard_report_links or (out_base / href).exists()
+        if root in vdirs or (root == "reports" and report_ready):
             md_lines.append(f"- [{title}]({href})：{desc}")
     md_lines += ["", "最终生产以 `print/` 为准；展示图和 4K 图用于确认。"]
     (out_base / "交付说明.html").write_text(html_page, encoding="utf-8")
@@ -403,6 +411,9 @@ def main():
     layout_candidates_dir = out_base / "layout_candidates"
     if (layout_candidates_dir / "index.html").exists():
         vdirs["layout_candidates"] = layout_candidates_dir
+    preview_dir = out_base / "preview"
+    if (preview_dir / "preview.html").exists() or (preview_dir / "materials.html").exists():
+        vdirs["preview"] = preview_dir
     if provider_preview_dir:
         vdirs["provider_previews"] = provider_preview_dir
     # screen:B + C,柔和预览

@@ -51,3 +51,9 @@
 - A user-facing skill should not assume the user knows the workflow after loading it.
 - Always start with a guided first response: ask for the image folder, explain the 4-step path, and recommend the next action.
 - Keep commands and JSON behind the guided flow; expose them only when the user is ready to run or customize.
+
+## 2026-06-28 · One Command Beats Four Commands
+
+- If the happy path requires multiple scripts, provide a wrapper that runs the whole flow and prints the final delivery homepage.
+- Intermediate artifacts from early steps, such as material previews and advice reports, should be included in the final delivery homepage and ZIP.
+- Wrapper logs should flush before subprocess output so the user sees progress in the correct order.

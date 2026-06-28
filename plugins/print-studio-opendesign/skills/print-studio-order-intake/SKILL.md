@@ -31,18 +31,24 @@ If the image folder is already known, proceed directly to the image-first adviso
 
 ## Workflow
 
-1. If images are available, run the image-first advisor before asking for choices:
+1. For a smooth end-to-end first run, prefer the guided flow:
+   ```bash
+   cd ../print-studio-runtime
+   python scripts/run_project_flow.py --images <illustrations_dir> --theme <project_name>
+   ```
+   This creates the config, writes the image advice report, renders material preview, generates A/B/C candidates, locks one candidate, and builds the delivery package.
+2. If images are available and the user only wants advice before rendering, run the image-first advisor:
    ```bash
    cd ../print-studio-runtime
    python scripts/advise_project.py <illustrations_dir>
    ```
-2. Use the advisor report to explain product, size, material, layout, typography, model-preview, and print-check recommendations.
-3. Identify the product type: card, postcard, desk calendar, wall calendar, bookmark, tag, insert, card set, or custom.
-4. Identify the series: single, monthly, quarterly, seasonal, festival set, or custom `N` cards.
-5. Select production specs: size, material, bleed, safe margin, double-sided, round corners, binding, finishing.
-6. Select outputs: `screen`, `print`, `commerce`, `single`, `grid`, `whitebg`, `ambiance`, `back`, `download_4k`.
-7. Copy `../print-studio-runtime/config.example.json` or an example from `../print-studio-runtime/examples/`.
-8. Save a job-specific config next to the project assets.
+3. Use the advisor report to explain product, size, material, layout, typography, model-preview, and print-check recommendations.
+4. Identify the product type: card, postcard, desk calendar, wall calendar, bookmark, tag, insert, card set, or custom.
+5. Identify the series: single, monthly, quarterly, seasonal, festival set, or custom `N` cards.
+6. Select production specs: size, material, bleed, safe margin, double-sided, round corners, binding, finishing.
+7. Select outputs: `screen`, `print`, `commerce`, `single`, `grid`, `whitebg`, `ambiance`, `back`, `download_4k`.
+8. Copy `../print-studio-runtime/config.example.json` or an example from `../print-studio-runtime/examples/`.
+9. Save a job-specific config next to the project assets.
 
 ## Choice Style
 

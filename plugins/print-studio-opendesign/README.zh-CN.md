@@ -37,6 +37,14 @@ plugins/print-studio-opendesign/
 
 ```bash
 cd skills/print-studio-runtime
+python scripts/run_project_flow.py
+```
+
+这是一键引导流程，会自动跑完图片理解、材质预览、A/B/C 版式候选、锁版和完整交付包。
+
+如果只想先生成配置，不立刻跑完整交付：
+
+```bash
 python scripts/start_project.py
 ```
 
