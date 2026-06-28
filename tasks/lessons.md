@@ -45,3 +45,9 @@
 - Keep provider output constrained to a small JSON design plan and clamp every field into preset enums before rendering.
 - Always persist provider/source metadata in candidates and locked configs so results can be explained and reproduced.
 - Locked configs should write absolute asset paths when saved outside the source config folder.
+
+## 2026-06-28 · Skills Need a First-Run Script
+
+- A user-facing skill should not assume the user knows the workflow after loading it.
+- Always start with a guided first response: ask for the image folder, explain the 4-step path, and recommend the next action.
+- Keep commands and JSON behind the guided flow; expose them only when the user is ready to run or customize.

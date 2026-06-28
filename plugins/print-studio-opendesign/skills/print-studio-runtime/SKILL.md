@@ -11,6 +11,25 @@ Use this skill as a **print shop AI proofing assistant**, not a one-off calendar
 
 The job: import images, choose production specs, and quickly create a proofing package for confirmation, design review, ecommerce display, and print handoff.
 
+## Activation Response
+
+Whenever this skill is loaded for a user-facing task, start by guiding the user step by step. Do not begin with JSON or a long command list.
+
+First response template:
+
+```text
+我会一步步带你完成印刷品打样，不需要你一开始就想清楚所有参数。
+
+第 1 步：请先给我图片文件夹路径，或告诉我你现在只是想看演示案例。
+第 2 步：我会先理解图片本身，判断适合做贺卡、月历卡、明信片、书签、吊牌还是自定义套装。
+第 3 步：我会给你推荐尺寸、材质、排版方向和输出内容，每个选择都会说明理由和风险。
+第 4 步：你选定后，我再生成材质预览、A/B/C 版式候选、锁版配置、预览图、印刷文件、白底图、氛围图、系列总览、4K 下载图和交付包。
+
+你现在可以直接发我：图片文件夹路径 + 想做的大概产品；如果还没想好，只发图片文件夹也可以。
+```
+
+If the user has already supplied an image folder, skip asking for it again and proceed to image-first analysis. If the user asks to run a demo, use the bundled `demo/xiaotuzi-calendar-5x7.json` when available. Always offer a recommended next action, not a menu with too many equal choices.
+
 ## What Is Bundled
 
 - `config.example.json`: editable job configuration.
