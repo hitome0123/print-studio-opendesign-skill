@@ -5,6 +5,7 @@ This is the safe API/AI handoff shape:
 AI may suggest a constrained plan, but rendering is deterministic.
 """
 import json
+import html
 import os
 import re
 import sys
@@ -94,6 +95,41 @@ def find_first_illustration(folder):
     return sorted(found, key=lambda item: item[0])[0]
 
 
+def write_candidate_html(out_dir, payload):
+    cards = []
+    config = payload.get("config", "config.json")
+    for item in payload["candidates"]:
+        preview = Path(item["preview"]).name
+        cid = item["candidate_id"]
+        command = f"python scripts/lock_layout.py {config} {cid} {Path(config).with_suffix('').name}.locked-{cid}.json"
+        cards.append(f"""
+        <article class="card">
+          <img src="{html.escape(preview)}" alt="候选 {html.escape(cid)}">
+          <div class="body">
+            <h2>{html.escape(cid)} · {html.escape(item['name'])}</h2>
+            <p>{html.escape(item['reason'])}</p>
+            <pre>{html.escape(command)}</pre>
+          </div>
+        </article>""")
+    page = f"""<!doctype html><html lang="zh-CN"><meta charset="utf-8">
+<title>{html.escape(payload['theme'])} · 版式候选</title>
+<style>
+body{{margin:0;background:#f6f0e8;color:#302920;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC",sans-serif;padding:30px}}
+main{{max-width:1280px;margin:auto}} h1{{font-size:30px;margin:0 0 8px}} p{{color:#6d6258;line-height:1.65}}
+.grid{{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px;margin-top:22px}}
+.card{{background:#fff;border:1px solid #e2d8ca;border-radius:18px;overflow:hidden;box-shadow:0 10px 30px rgba(62,47,31,.08)}}
+img{{width:100%;display:block;background:#fbf7ef}} .body{{padding:14px 16px 16px}} h2{{font-size:18px;margin:0 0 8px}}
+pre{{white-space:pre-wrap;background:#2d261f;color:#f6eadb;border-radius:12px;padding:12px;line-height:1.5;font-size:12px;overflow:auto}}
+.note{{background:#fff7e8;border:1px solid #ead9b9;border-radius:14px;padding:14px 16px;margin-top:16px}}
+</style><main>
+<h1>{html.escape(payload['theme'])} · 选择一个版式</h1>
+<p>先看 A/B/C 的视觉方向。选中后复制对应命令，生成 locked 配置，再用 locked 配置批量输出。模型只参与建议，最终排版由规则引擎稳定执行。</p>
+<div class="note">建议：如果要稳定批量出图，先锁定一版，不要每张重新让模型自由发挥。</div>
+<section class="grid">{''.join(cards)}</section>
+</main></html>"""
+    (out_dir / "index.html").write_text(page, encoding="utf-8")
+
+
 def main():
     cfg_path = Path(sys.argv[1]) if len(sys.argv) > 1 else HERE / "config.example.json"
     prepared_config = prepare_config(cfg_path.resolve())
@@ -161,7 +197,9 @@ def main():
         })
 
     (out_dir / "layout_candidates.json").write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
+    write_candidate_html(out_dir, payload)
     print(f"done -> {out_dir}")
+    print(f"打开选择页: {out_dir / 'index.html'}")
     print("候选: " + " / ".join(f"{c['candidate_id']}={c['name']}" for c in CANDIDATES))
 
 

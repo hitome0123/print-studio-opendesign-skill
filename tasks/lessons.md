@@ -31,3 +31,10 @@
 - When a visual issue is found in one case, first decide whether it is a template rule, a product rule, or a one-off asset issue.
 - Prefer engine-level quality rules over case-specific tweaks: text layer spacing, safe margins, series-grid balance, and font consistency should apply across products.
 - Add QC checks for newly discovered visual risks so the same issue is caught in greeting cards, postcards, bookmarks, gift tags, and calendars.
+
+## 2026-06-28 · Productize the First-Run Experience
+
+- Do not make users edit JSON as the first contact with a skill; add a guided starter that creates a runnable config.
+- Any visual decision step should have an HTML review surface, not just a JSON artifact.
+- If a generated review page influences delivery, include it in the final ZIP and link it from the delivery homepage.
+- Keep material choices backed by actual preset keys; never offer friendly labels that cannot run.

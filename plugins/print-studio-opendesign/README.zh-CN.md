@@ -33,6 +33,26 @@ plugins/print-studio-opendesign/
 
 先让 Codex 走 `print-studio-order-intake` 建配置，再按需要进入材质、排版、展示、质检。
 
+如果使用者不想编辑 JSON，可先进入运行时目录使用项目向导：
+
+```bash
+cd skills/print-studio-runtime
+python scripts/start_project.py
+```
+
+项目向导会一步步询问图片文件夹、产品类型、系列张数、材质和年份，并生成后续可用于材质预览、A/B/C 版式候选、锁版和完整交付的配置文件。
+
+版式选择推荐流程：
+
+```bash
+python scripts/generate_layout_candidates.py <配置文件>
+open output/<项目名>/layout_candidates/index.html
+python scripts/lock_layout.py <配置文件> B <锁版配置文件>
+python scripts/run.py <锁版配置文件>
+```
+
+完整交付后优先打开 `output/<项目名>/交付说明.html`，里面集中入口到预览图、印刷文件、白底图、氛围图、系列总览、4K 下载图和质检报告。
+
 如果第一次使用，先读仓库根目录：
 
 - `user-workflow/user-order-form.zh-CN.md`

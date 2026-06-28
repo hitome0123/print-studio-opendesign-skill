@@ -111,6 +111,75 @@ def export_download_4k(out_base, theme, pages, grid, prod, material, sat_boost):
     return out_dir if files else None
 
 
+def write_delivery_index(out_base, theme, resolved, qc, vdirs):
+    out_base = Path(out_base)
+    size = resolved.get("size", {}) or {}
+    material = resolved.get("material", {}) or {}
+    product = resolved.get("product_type", {}) or {}
+    series = resolved.get("series", {}) or {}
+    rows = [
+        ("预览图", "screen/", "给使用者确认画面和系列统一性"),
+        ("印刷文件", "print/", "300dpi、含出血，生产优先看这里"),
+        ("展示图", "commerce/", "白底图、氛围图、系列总览"),
+        ("4K 下载", "download_4k/index.html", "单张打开和保存"),
+        ("版式候选", "layout_candidates/index.html", "A/B/C 候选版式和选择理由"),
+        ("质检报告", "reports/prepress_report.zh-CN.md", "检查 WARN/FAIL 和人工确认点"),
+        ("设计计划", "reports/design_plan.json", "查看版式、字体、颜色和图层结构"),
+        ("多模型预览", "provider_previews/index.html", "可选的模型背景/展示候选"),
+    ]
+    cards = []
+    for title, href, desc in rows:
+        root = href.split("/", 1)[0]
+        if root in vdirs or root == "reports":
+            cards.append(f"<a class='card' href='{html.escape(href)}'><b>{html.escape(title)}</b><span>{html.escape(desc)}</span></a>")
+    status_class = qc["status"]
+    html_page = f"""<!doctype html><html lang="zh-CN"><meta charset="utf-8">
+<title>{html.escape(theme)} · 交付说明</title>
+<style>
+body{{margin:0;background:#f7f1e8;color:#302920;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC",sans-serif;padding:34px}}
+main{{max-width:1080px;margin:auto}} h1{{font-size:30px;margin:0 0 8px}} p{{color:#6f6458;line-height:1.7}}
+.meta{{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px;margin:22px 0}}
+.pill,.card{{background:#fff;border:1px solid #e2d8ca;border-radius:14px;padding:14px 16px;box-shadow:0 8px 26px rgba(65,49,31,.06)}}
+.pill b{{display:block;margin-bottom:6px}} .grid{{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:18px}}
+.card{{display:block;text-decoration:none;color:#302920}} .card b{{display:block;font-size:17px;margin-bottom:8px}} .card span{{color:#74695f;line-height:1.55}}
+.status{{display:inline-block;border-radius:999px;padding:7px 12px;font-weight:700;background:#fff3d6;color:#8b5b00}}
+.status.pass{{background:#e9f7ea;color:#28743a}} .status.fail{{background:#ffe7e1;color:#a23020}}
+code{{background:#efe6d9;padding:2px 6px;border-radius:6px}}
+</style><main>
+<h1>{html.escape(theme)} · 交付说明</h1>
+<p>这是本次自动生成的交付首页。先看状态，再进入对应文件夹下载或复核。</p>
+<p><span class="status {html.escape(status_class)}">QC {html.escape(qc['status'].upper())} · FAIL {qc['fail']} / WARN {qc['warn']}</span></p>
+<section class="meta">
+<div class="pill"><b>产品</b>{html.escape(product.get('label', product.get('key', '')))}</div>
+<div class="pill"><b>系列</b>{html.escape(series.get('label', series.get('key', '')))} × {html.escape(str(series.get('count', '')))}</div>
+<div class="pill"><b>尺寸</b>{html.escape(size.get('label', ''))}<br><code>{html.escape(str(size.get('trim_px', '')))}</code></div>
+<div class="pill"><b>材质</b>{html.escape(material.get('label', material.get('key', '')))}</div>
+</section>
+<h2>文件入口</h2><section class="grid">{''.join(cards)}</section>
+<p>注意：最终生产以 <code>print/</code> 为准；白底图、氛围图、4K 图用于展示和确认。批量印刷前建议实物打样。</p>
+</main></html>"""
+    md_lines = [
+        f"# {theme} · 交付说明",
+        "",
+        f"- QC：{qc['status'].upper()}，FAIL {qc['fail']} / WARN {qc['warn']}",
+        f"- 产品：{product.get('label', product.get('key', ''))}",
+        f"- 系列：{series.get('label', series.get('key', ''))} × {series.get('count', '')}",
+        f"- 尺寸：{size.get('label', '')} {size.get('trim_px', '')}",
+        f"- 材质：{material.get('label', material.get('key', ''))}",
+        "",
+        "## 文件入口",
+        "",
+    ]
+    for title, href, desc in rows:
+        root = href.split("/", 1)[0]
+        if root in vdirs or root == "reports":
+            md_lines.append(f"- [{title}]({href})：{desc}")
+    md_lines += ["", "最终生产以 `print/` 为准；展示图和 4K 图用于确认。"]
+    (out_base / "交付说明.html").write_text(html_page, encoding="utf-8")
+    (out_base / "交付说明.md").write_text("\n".join(md_lines) + "\n", encoding="utf-8")
+    return out_base / "交付说明.html", out_base / "交付说明.md"
+
+
 def _provider_label(provider):
     return provider.get("label") or provider.get("backend") or "provider"
 
@@ -327,6 +396,9 @@ def main():
     # ── 导出三版本 ──
     vdirs = {}
     notes = set()
+    layout_candidates_dir = out_base / "layout_candidates"
+    if (layout_candidates_dir / "index.html").exists():
+        vdirs["layout_candidates"] = layout_candidates_dir
     if provider_preview_dir:
         vdirs["provider_previews"] = provider_preview_dir
     # screen:B + C,柔和预览
@@ -376,6 +448,10 @@ def main():
         if it["level"] != "pass":
             print(f"  {icon[it['level']]} {it['check']}: {it['detail']}")
     print("  (完整报告 qc_report.json / prepress_report.zh-CN.md)")
+
+    delivery_html, delivery_md = write_delivery_index(out_base, theme, r, qc, vdirs)
+    vdirs["交付说明.html"] = delivery_html
+    vdirs["交付说明.md"] = delivery_md
 
     reports_dir = out_base / "reports"
     reports_dir.mkdir(exist_ok=True)

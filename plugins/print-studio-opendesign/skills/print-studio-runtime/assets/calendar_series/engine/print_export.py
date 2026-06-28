@@ -74,6 +74,9 @@ def build_package(version_dirs, zip_path):
             d = Path(d)
             if not d.exists():
                 continue
+            if d.is_file():
+                z.write(d, arcname=ver)
+                continue
             for f in sorted(d.rglob("*")):
                 if f.is_file() and not f.name.startswith("_guide_"):
                     z.write(f, arcname=f"{ver}/{f.relative_to(d)}")
