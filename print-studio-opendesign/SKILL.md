@@ -57,6 +57,31 @@ Default templates:
 
 For the full prompt library, refer to `../user-workflow/prompt-templates.zh-CN.md` if available in the repository.
 
+## Guided Conversation Protocol
+
+Use the same step-by-step conversation flow for every product type. The user may want a calendar, greeting card, postcard, bookmark, tag, wall calendar, packaging insert, or custom set; the guidance pattern stays the same.
+
+Conversation phases:
+
+1. **Start**: explain that the user can drag images or provide an image folder path, then speak naturally.
+2. **Collect assets**: get images or a folder path; if absent, offer the demo case.
+3. **Understand images**: analyze orientation, color, subject position, detail density, and series consistency before recommending anything.
+4. **Recommend choices**: recommend one default product/size/material/layout with reasons, plus 2-3 alternatives with risks.
+5. **Generate first preview**: create material preview and A/B/C layout candidates before full batch output.
+6. **Select and lock**: ask the user to choose A/B/C; if unsure, recommend one and explain why. Lock the selected layout before batch rendering.
+7. **Deliver**: generate preview, print files, commerce mockups, 4K downloads, QC, and ZIP. Always point to `output/<theme>/交付说明.html`.
+8. **Iterate**: treat feedback as rule/config changes first; do not ask image models to redraw final layouts.
+
+Rules:
+
+- Ask only one small decision at a time.
+- Always provide a recommended default.
+- If the user is unsure, continue with the recommended default and explain it.
+- Do not expose commands or JSON unless the user asks or is ready to run locally.
+- Always tell the user what was generated and what to open next.
+
+Full protocol: `../user-workflow/guided-conversation-flow.zh-CN.md`.
+
 ## What Is Bundled
 
 - `config.example.json`: editable job configuration.
@@ -71,6 +96,7 @@ For the full prompt library, refer to `../user-workflow/prompt-templates.zh-CN.m
 - `assets/calendar_series/`: bundled print template engine, including calendar and generic-card renderers.
 - `assets/calendar_series/design_presets.json`: typography, layout, and color preset library with reasons and risks.
 - `../user-workflow/prompt-templates.zh-CN.md`: copyable user prompt templates for common print jobs.
+- `../user-workflow/guided-conversation-flow.zh-CN.md`: generalized step-by-step customer guidance protocol.
 - `references/operator-guide.md`: sales/operator notes and V1 boundaries.
 
 ## MVP Workflow

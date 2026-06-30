@@ -46,6 +46,18 @@ If the user is unsure how to ask, offer copyable templates:
 我要做 5×7 英寸贺卡，300g 超白白卡纸。请先生成 A/B/C 版式候选，我确认后再批量输出。
 ```
 
+For every product type, follow the generalized guidance flow:
+
+1. Collect images.
+2. Understand image traits.
+3. Recommend a default product/spec with reasons.
+4. Offer 2-3 alternatives with risks.
+5. Generate material preview and A/B/C candidates.
+6. Lock the chosen candidate.
+7. Generate delivery package and explain where to look.
+
+Ask one small question at a time. If the user is unsure, recommend a default and continue. Full protocol: `../../../../user-workflow/guided-conversation-flow.zh-CN.md`.
+
 ## Workflow
 
 1. For a smooth end-to-end first run, prefer the guided flow:
