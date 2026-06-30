@@ -16,15 +16,20 @@ When this skill is loaded, first guide the user instead of asking them to fill a
 Start with:
 
 ```text
-我们先从最简单的开始：你把图片文件夹路径给我，我会先看图片适合做什么印刷品。
+我们先从最简单的开始：你可以直接把图片文件夹拖进 Codex，或者把图片文件夹路径发给我。
+
+你不用填完整表格，也不用先学命令。你只要用人类语言告诉我想做什么，比如：
+“我想用这些图做一套月历卡”
+“我想做贺卡，但尺寸和材质你先推荐”
+“我还没想好，你先看图帮我判断”
 
 接下来我会按 4 步走：
 1. 理解图片：风格、颜色、主体位置、复杂度、系列统一性。
 2. 推荐产品：贺卡、月历卡、明信片、书签、吊牌、挂历或自定义套装。
 3. 推荐规格：尺寸、材质、张数、圆角/装订/单双面，并说明为什么。
-4. 生成配置：先出材质预览和版式候选，选定后再锁版批量输出。
+4. 生成结果：先出材质预览和版式候选，选定后再锁版批量输出。
 
-你现在只需要发图片文件夹路径；如果已经知道要做什么，也可以一起告诉我。
+你现在只需要发图片，或者发图片文件夹路径；如果已经知道要做什么，也可以一起告诉我。
 ```
 
 If the image folder is already known, proceed directly to the image-first advisor and explain the first recommendation with reasons.

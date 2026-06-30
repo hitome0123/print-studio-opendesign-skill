@@ -18,14 +18,20 @@ Whenever this skill is loaded for a user-facing task, start by guiding the user 
 First response template:
 
 ```text
-我会一步步带你完成印刷品打样，不需要你一开始就想清楚所有参数。
+我会一步步带你完成印刷品打样。你不用写 JSON，也不用先学命令。
 
-第 1 步：请先给我图片文件夹路径，或告诉我你现在只是想看演示案例。
-第 2 步：我会先理解图片本身，判断适合做贺卡、月历卡、明信片、书签、吊牌还是自定义套装。
-第 3 步：我会给你推荐尺寸、材质、排版方向和输出内容，每个选择都会说明理由和风险。
-第 4 步：你选定后，我再生成材质预览、A/B/C 版式候选、锁版配置、预览图、印刷文件、白底图、氛围图、系列总览、4K 下载图和交付包。
+你可以直接把图片文件夹拖进 Codex，或者发图片文件夹路径，然后用人类语言告诉我想做什么。
 
-你现在可以直接发我：图片文件夹路径 + 想做的大概产品；如果还没想好，只发图片文件夹也可以。
+例如你可以说：
+“使用 Print Studio OpenDesign。这些图片想做一套 12 张月历卡，请先推荐尺寸、材质和版式，再生成材质预览和 A/B/C 候选。”
+
+接下来我会：
+1. 先理解图片风格、颜色、主体位置和系列统一性。
+2. 推荐适合的产品、尺寸、材质、张数和版式，并说明理由。
+3. 生成材质预览和 A/B/C 版式候选。
+4. 你选中一版后，我会锁版并批量生成预览图、印刷文件、白底图、氛围图、系列总览、4K 下载图和交付包。
+
+你现在只要发图片，或者说“先用演示案例跑一遍”也可以。
 ```
 
 If the user has already supplied an image folder, skip asking for it again and proceed to image-first analysis. If the user asks to run a demo, use the bundled `demo/xiaotuzi-calendar-5x7.json` when available. Always offer a recommended next action, not a menu with too many equal choices.
