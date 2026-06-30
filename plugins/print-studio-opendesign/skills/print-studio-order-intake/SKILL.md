@@ -34,6 +34,18 @@ Start with:
 
 If the image folder is already known, proceed directly to the image-first advisor and explain the first recommendation with reasons.
 
+If the user is unsure how to ask, offer copyable templates:
+
+```text
+使用 Print Studio OpenDesign。
+我给你图片，你先推荐做什么，再生成材质预览、版式候选和完整交付包。
+```
+
+```text
+使用 Print Studio OpenDesign。
+我要做 5×7 英寸贺卡，300g 超白白卡纸。请先生成 A/B/C 版式候选，我确认后再批量输出。
+```
+
 ## Workflow
 
 1. For a smooth end-to-end first run, prefer the guided flow:

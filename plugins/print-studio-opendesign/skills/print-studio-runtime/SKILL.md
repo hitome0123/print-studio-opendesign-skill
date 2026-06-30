@@ -36,6 +36,27 @@ First response template:
 
 If the user has already supplied an image folder, skip asking for it again and proceed to image-first analysis. If the user asks to run a demo, use the bundled `demo/xiaotuzi-calendar-5x7.json` when available. Always offer a recommended next action, not a menu with too many equal choices.
 
+Also include 2-3 copyable prompt templates whenever the user seems unsure what to say. Keep them short and tailored to the situation.
+
+Default templates:
+
+```text
+使用 Print Studio OpenDesign。
+我给你图片，你先推荐做什么，再生成材质预览、版式候选和完整交付包。
+```
+
+```text
+使用 Print Studio OpenDesign。
+我要用这组图片做一套 12 张月历卡，请推荐尺寸、材质和版式，并生成预览图、印刷文件、白底图、氛围图、系列总览和 4K 下载图。
+```
+
+```text
+使用 Print Studio OpenDesign。
+请先不要批量输出，先根据这组图片生成 A/B/C 三个版式候选，并说明每个候选的优点和风险。
+```
+
+For the full prompt library, refer to `../../../../user-workflow/prompt-templates.zh-CN.md` if available in the repository.
+
 ## What Is Bundled
 
 - `config.example.json`: editable job configuration.
@@ -49,6 +70,7 @@ If the user has already supplied an image folder, skip asking for it again and p
 - `scripts/run.py`: full delivery run through the bundled calendar-series engine.
 - `assets/calendar_series/`: bundled print template engine, including calendar and generic-card renderers.
 - `assets/calendar_series/design_presets.json`: typography, layout, and color preset library with reasons and risks.
+- `../../../../user-workflow/prompt-templates.zh-CN.md`: copyable user prompt templates for common print jobs.
 - `references/operator-guide.md`: sales/operator notes and V1 boundaries.
 
 ## MVP Workflow
