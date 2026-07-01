@@ -57,6 +57,46 @@ Default templates:
 
 For the full prompt library, refer to `../../../../user-workflow/prompt-templates.zh-CN.md` if available in the repository.
 
+## Windows Install Safety Protocol
+
+If the user or their customer reports a Windows / PowerShell security popup during download or installation, handle it inside the conversation before continuing the install.
+
+Typical popup:
+
+```text
+Invoke-WebRequest 分析页面时可能会运行网页中的脚本代码，存在安全风险。
+建议使用 "-UseBasicParsing" 开关来避免脚本代码执行。
+是否继续执行？
+```
+
+Required response:
+
+1. Tell the user to choose **No / 否** first. Do not tell them to blindly click Yes.
+2. Explain briefly: this is usually a generic Windows PowerShell 5.1 `Invoke-WebRequest` webpage parsing warning, not proof that the Skill package is malicious.
+3. Recommend safer install paths in this order:
+   - Browser: GitHub `Code → Download ZIP`.
+   - Git: `git clone https://github.com/hitome0123/print-studio-opendesign-skill.git`.
+   - PowerShell fallback with `-UseBasicParsing`.
+4. Keep the explanation non-technical and reassuring.
+5. If the user needs a copyable answer for their customer, provide this:
+
+```text
+这个弹窗是 Windows PowerShell 下载网页时的通用安全提醒，不是项目文件报毒。
+建议先点“否”，不要继续用这个下载命令。
+请改用 GitHub 页面里的 Code → Download ZIP，或者用 git clone 下载仓库。
+```
+
+PowerShell fallback only when necessary:
+
+```powershell
+$url = "https://github.com/hitome0123/print-studio-opendesign-skill/archive/refs/heads/main.zip"
+$zip = "$env:TEMP\print-studio-opendesign-skill.zip"
+Invoke-WebRequest -UseBasicParsing -Uri $url -OutFile $zip
+Expand-Archive -Path $zip -DestinationPath "$env:USERPROFILE\Downloads" -Force
+```
+
+Detailed note: `../../../../WINDOWS_SAFE_INSTALL.zh-CN.md`.
+
 ## Guided Conversation Protocol
 
 Use the same step-by-step conversation flow for every product type. The user may want a calendar, greeting card, postcard, bookmark, tag, wall calendar, packaging insert, or custom set; the guidance pattern stays the same.
@@ -95,6 +135,7 @@ Full protocol: `../../../../user-workflow/guided-conversation-flow.zh-CN.md`.
 - `scripts/run.py`: full delivery run through the bundled calendar-series engine.
 - `assets/calendar_series/`: bundled print template engine, including calendar and generic-card renderers.
 - `assets/calendar_series/design_presets.json`: typography, layout, and color preset library with reasons and risks.
+- `../../../../WINDOWS_SAFE_INSTALL.zh-CN.md`: Windows safe download/install note for PowerShell `Invoke-WebRequest` warnings.
 - `../../../../user-workflow/prompt-templates.zh-CN.md`: copyable user prompt templates for common print jobs.
 - `../../../../user-workflow/guided-conversation-flow.zh-CN.md`: generalized step-by-step customer guidance protocol.
 - `references/operator-guide.md`: sales/operator notes and V1 boundaries.

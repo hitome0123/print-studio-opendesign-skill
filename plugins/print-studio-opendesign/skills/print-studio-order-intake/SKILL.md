@@ -58,6 +58,27 @@ For every product type, follow the generalized guidance flow:
 
 Ask one small question at a time. If the user is unsure, recommend a default and continue. Full protocol: `../../../../user-workflow/guided-conversation-flow.zh-CN.md`.
 
+## Windows Install Safety
+
+If the user reports a Windows / PowerShell popup that says `Invoke-WebRequest` may run webpage scripts, pause installation guidance and say:
+
+```text
+先点“否”，不要继续用这个下载命令。
+这个弹窗通常是 Windows PowerShell 下载网页时的通用安全提醒，不代表项目文件报毒。
+建议改用 GitHub 页面里的 Code → Download ZIP，或者用 git clone 下载仓库。
+```
+
+If PowerShell download is unavoidable, use `Invoke-WebRequest -UseBasicParsing` only:
+
+```powershell
+$url = "https://github.com/hitome0123/print-studio-opendesign-skill/archive/refs/heads/main.zip"
+$zip = "$env:TEMP\print-studio-opendesign-skill.zip"
+Invoke-WebRequest -UseBasicParsing -Uri $url -OutFile $zip
+Expand-Archive -Path $zip -DestinationPath "$env:USERPROFILE\Downloads" -Force
+```
+
+Detailed note: `../../../../WINDOWS_SAFE_INSTALL.zh-CN.md`.
+
 ## Workflow
 
 1. For a smooth end-to-end first run, prefer the guided flow:
