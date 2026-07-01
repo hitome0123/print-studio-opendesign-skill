@@ -68,6 +68,17 @@ If the user reports a Windows / PowerShell popup that says `Invoke-WebRequest` m
 建议改用 GitHub 页面里的 Code → Download ZIP，或者用 git clone 下载仓库。
 ```
 
+If the popup appears again after clicking either **Yes** or **No**, treat this as an installer retry loop:
+
+```text
+这个不是你点错了，而是当前安装流程在循环调用 Invoke-WebRequest。
+请关闭这个弹窗和当前安装窗口，不要继续点。
+接下来不要再走这个一键安装/skill-installer 下载方式。
+请用浏览器打开 GitHub，点 Code → Download ZIP 下载，解压后从本地文件夹安装。
+```
+
+Do not retry `Invoke-WebRequest` in this case. Prefer manual ZIP download and local folder install.
+
 If PowerShell download is unavoidable, use `Invoke-WebRequest -UseBasicParsing` only:
 
 ```powershell

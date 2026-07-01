@@ -86,6 +86,23 @@ Required response:
 请改用 GitHub 页面里的 Code → Download ZIP，或者用 git clone 下载仓库。
 ```
 
+If the popup keeps appearing whether the user clicks Yes or No, treat it as a retry loop. Do not keep asking the user to click either button. Required response:
+
+```text
+这个不是你点错了，而是当前安装流程在反复调用 PowerShell 的 Invoke-WebRequest。
+请先关闭这个弹窗和当前安装窗口，不要继续点“是”或“否”。
+接下来不要再用这个一键安装/skill-installer 下载方式。
+请改用浏览器打开 GitHub，点击 Code → Download ZIP 下载，解压后手动安装；如果会用 Git，也可以用 git clone。
+```
+
+When this retry loop happens:
+
+- Stop the current install command or ask the user to close the terminal/window.
+- Do not retry `Invoke-WebRequest`.
+- Do not recommend PowerShell fallback again unless the user explicitly says they must use PowerShell.
+- Prefer manual ZIP download and manual folder copy.
+- If the user is using an automated `skill-installer`, tell them to skip it on Windows and install from the local unzipped folder instead.
+
 PowerShell fallback only when necessary:
 
 ```powershell
